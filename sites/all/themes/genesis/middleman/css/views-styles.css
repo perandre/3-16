@@ -1,0 +1,63 @@
+
+/**********************************************************
+ *                    Views Styles
+ **********************************************************/
+
+/* Front page slideshow */
+
+.view-slideshow {
+padding: 16px;
+background: #000;
+font-family: Baskerville, Georgia, serif;
+color: #fff;
+font-size: 30px;
+line-height: 36px;
+font-style: italic;
+position: relative;
+}
+
+.slideshow-text {
+position: absolute;
+top: 100px;
+right: 16px;
+width: 450px;
+padding: 20px 24px;
+background: #000;
+}
+
+.slideshow-text p {
+margin: 0;
+}
+
+
+/* Calendar widget*/
+.view-kalender {
+background: #ccc;
+width: 290px;
+border: 5px solid #fff;
+border-radius: 3px;
+text-transform: uppercase;
+}
+
+.view-kalender .view-content{
+padding: 10px;
+}
+.view-kalender .views-row {
+background: url(../images/line-top.png)  0 bottom repeat-x;
+padding: 15px 0;
+}
+
+.view-kalender .date {
+color: white;
+font-family: Baskerville, Georgia, sans-serif;
+font-style: italic;
+font-size: 27px;
+line-height: 27px;
+}
+
+.view-kalender h3 {
+font-size: 14px;
+line-height: 20px;
+font-weight: bold;
+text-shadow: 1px 1px #fff;
+}

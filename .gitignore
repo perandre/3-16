@@ -1,0 +1,9 @@
+_Store
+sites/default/files
+sites/default/settings.php
+.htaccess
+CVS
+robots.txt
+backup
+cache
+_MACOSX

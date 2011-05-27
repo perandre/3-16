@@ -1,0 +1,11 @@
+
+#block-twitter-block-default {
+}
+
+#twitter_block_results .item-list {
+  list-style: none;
+  border: 0px 0px 0px 0px;
+  margin: 0;
+  padding: 0;
+
+}
