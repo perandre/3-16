@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Middle Man feature.
+ */
+
+include_once('middle_man.features.inc');
