@@ -364,7 +364,6 @@ function middle_man_views_default_views() {
 <li><a href="/node/add/tune?destination=/lovsang">Legg til ny låt</a></li>
 <li><a href="/node/add/worship?destination=/lovsang">Legg til nytt møte</a></li>
 </ul>';
-  $handler->display->display_options['header']['area']['format'] = 'filtered_html';
   $handler->display->display_options['defaults']['fields'] = FALSE;
   /* Felt: Innhold: Tittel */
   $handler->display->display_options['fields']['title']['id'] = 'title';

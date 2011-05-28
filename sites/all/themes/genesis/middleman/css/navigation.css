@@ -115,8 +115,11 @@ color: #1B9ECC;
 }
 
 /* Active trail classes. */
-#main-menu li.active {}
-#main-menu li.active-trail {}
+#main-menu li.active {
+font-weight: bold;
+}
+#main-menu li.active-trail {
+}
 #main-menu li.active-trail a {}
 
 

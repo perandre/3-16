@@ -3,6 +3,18 @@
 display: none;
 }
 
+/**********************************************************
+ *                    Layout overrrides
+ **********************************************************/
+
+/* Standard 3 column, px based widths (default). */
+#genesis-1c .two-sidebars .content-inner{margin:0 260px;}
+#genesis-1c .sidebar-first .content-inner{margin-left:260px;}
+#genesis-1c .sidebar-second .content-inner{margin-right:320px;}
+#genesis-1c #sidebar-first{width:240px;margin-left:-100%;}
+#genesis-1c #sidebar-second{width:300px;margin-left:-300px;}
+
+
 
 /**********************************************************
  *                    Body Classes

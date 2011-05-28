@@ -40,11 +40,15 @@ text-transform: uppercase;
 }
 
 .view-kalender .view-content{
-padding: 10px;
+padding: 15px;
 }
 .view-kalender .views-row {
-background: url(../images/line-top.png)  0 bottom repeat-x;
+background: url(../images/line.png)  0 bottom repeat-x;
 padding: 15px 0;
+}
+
+.view-kalender .views-row-first {
+padding-top: 0;
 }
 
 .view-kalender .date {
