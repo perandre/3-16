@@ -125,8 +125,13 @@ h1.logo-site-name  {}
  * .region-inner-div-name
  */
 /* Leaderboard */
-#leaderboard {}
-.region-leaderboard {}
+#leaderboard {
+margin-bottom: 20px;
+background: #fff;
+}
+.region-leaderboard {
+width: 940px;
+}
 
 /* Header blocks */
 #header-blocks {

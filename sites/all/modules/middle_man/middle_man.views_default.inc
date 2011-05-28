@@ -178,6 +178,13 @@ function middle_man_views_default_views() {
   $handler->display->display_options['style_plugin'] = 'default';
   $handler->display->display_options['row_plugin'] = 'fields';
   $handler->display->display_options['row_options']['hide_empty'] = 0;
+  /* Bunntekst: Global: Text area */
+  $handler->display->display_options['footer']['area']['id'] = 'area';
+  $handler->display->display_options['footer']['area']['table'] = 'views';
+  $handler->display->display_options['footer']['area']['field'] = 'area';
+  $handler->display->display_options['footer']['area']['empty'] = FALSE;
+  $handler->display->display_options['footer']['area']['content'] = '<p><a title="Kalender" href="/kalender">Se kalender</a></p>';
+  $handler->display->display_options['footer']['area']['format'] = 'full_html';
   /* Felt: Innhold: Dato */
   $handler->display->display_options['fields']['entity_id']['id'] = 'entity_id';
   $handler->display->display_options['fields']['entity_id']['table'] = 'field_data_field_date';
@@ -272,6 +279,7 @@ function middle_man_views_default_views() {
     t('Sort by'),
     t('Asc'),
     t('Desc'),
+    t('<p><a title="Kalender" href="/kalender">Se kalender</a></p>'),
     t('Blokk'),
   );
   $export['kalender'] = $view;

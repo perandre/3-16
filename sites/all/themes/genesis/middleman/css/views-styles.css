@@ -37,6 +37,7 @@ width: 290px;
 border: 5px solid #fff;
 border-radius: 3px;
 text-transform: uppercase;
+overflow: auto;
 }
 
 .view-kalender .view-content{
@@ -64,4 +65,47 @@ font-size: 14px;
 line-height: 20px;
 font-weight: bold;
 text-shadow: 1px 1px #fff;
+}
+
+.view-kalender .view-footer a {
+text-indent: -9000px;
+background: url(../images/cal-info.png) 0 0 no-repeat;
+width: 92px;
+height: 23px;
+display: block;
+float: right;
+margin: 0 14px 14px;
+}
+
+/* Front page */
+.view-frontpage .views-row {
+width: 300px;
+height: 340px;
+float: left;
+}
+
+.view-frontpage .views-row-even {
+margin-left: 20px;
+}
+
+.view-frontpage img {
+border: 1px solid #ccc;
+padding: 4px;
+margin-bottom: 10px;
+}
+
+.readmore a:link, .readmore a:visited {
+background: #1B9ECC;
+border: 3px solid #1583AB;
+color: #fff;
+text-transform: uppercase;
+font-family: "Lucida Grande", Arial;
+padding: 4px 6px;
+font-size: 11px;
+line-height: 11px;
+}
+
+.readmore a:hover {
+background: #1583AB;
+border: 3px solid #1B9ECC;
 }

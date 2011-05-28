@@ -59,7 +59,7 @@ ul.menu li.last  {}
 /* #main-menu-wrapper .main-menu-inner {display: table; margin: 0 auto; text-align: center;} */
 
 #main-menu-wrapper {
-  margin: 0;
+  margin: 0 0 20px 0;
   width: 761px;
   height: 57px;
   clear: none;
