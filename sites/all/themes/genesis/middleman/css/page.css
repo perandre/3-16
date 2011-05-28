@@ -21,7 +21,7 @@ display: none;
  **********************************************************/
 
 body {
-  padding: 0 10px;
+  padding: 0;
   margin: 0;
   background: #f6f6f8 url(../images/bg-grey.jpg) 0 0 repeat-x;
 }
@@ -222,3 +222,10 @@ ol.search-results .search-info {}
 .feed-icon img {
   padding:0 0.5em;
 }
+
+.region-page-bottom {
+  background: #101010 url(../images/footer.jpg) 0 0 no-repeat;
+  height: 374px;
+  width: 100%;
+}
+

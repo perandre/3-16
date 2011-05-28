@@ -141,9 +141,15 @@ li li, li p, td p, blockquote p {
 }
 
 blockquote, q {
-  font-style: italic;  /* LTR */
-  margin: 0 0 1.5em;
-  padding: 0 0 0 3em;  /* LTR */
+padding: 30px 30px 30px 200px;
+border-top: 1px solid #999;
+border-bottom: 1px solid #999;
+font-family: Baskerville, Georgia;
+font-style: italic;
+font-size: 30px;
+line-height: 36px;
+background: url(../images/quote-green.png) 36px 36px no-repeat;
+min-height: 105px;
 }
 
 /* Remove possible quote marks (") from <q>, <blockquote>. */
