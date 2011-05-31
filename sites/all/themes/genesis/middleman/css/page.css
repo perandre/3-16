@@ -156,7 +156,9 @@ width: 940px;
 .region-tertiary-content {}
 
 /* Tertiary content */
-#footer {}
+#footer {
+overflow: auto;
+}
 .region-footer {}
 
 
@@ -218,10 +220,19 @@ ol.search-results .search-info {}
  *                Footer, RSS Feed Icon
  **********************************************************/
 #footer {
-  margin: 0.375em 0;
+  height: 374px;
+  margin: 0 0 -374px 0;
+  position: relative;
+  color: #4B5155;
 }
 
-#footer .region {}
+#footer a:visited, #footer a:link {
+color: #4B5155;
+}
+
+#footer a:hover {
+color: #1B9ECC;
+}
 
 .feed-icon {}
 .feed-icon img {

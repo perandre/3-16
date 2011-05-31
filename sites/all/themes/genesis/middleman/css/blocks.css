@@ -97,9 +97,21 @@
 .region-tertiary-content .block-inner {}
 .region-tertiary_content .block .content {}
 
-.region-footer .block {}
-.region-footer .block-title {}
-.region-footer .block-inner {}
+.region-footer .block {
+width: 300px;
+float: left;
+display: inline-block;
+clear: none;
+margin-top: 40px;
+}
+.region-footer .block-title {
+font-family: "Lucida Grande", Arial;
+font-size: 22px;
+color: #1B9ECC;
+}
+.region-footer .block-inner {
+padding-right: 20px;
+}
 .region-footer .block .content {}
 
 
@@ -192,4 +204,16 @@
 .gpanel .block-inner {}
 
 
+#block-block-1 {
+position: absolute;
+bottom: 20px;
+left: 0;
+width: 940px;
+text-transform: uppercase;
+color: #4B5155;
+font-family: "Ludica Grande", Arial;
+}
 
+#block-block-1 .block-inner {
+text-align: center;
+}
