@@ -46,7 +46,9 @@
 #sidebar-first .block-inner {}
 #sidebar-first .block .content {}
 
-#sidebar-second .block {}
+#sidebar-second .block {
+margin-bottom: 20px;
+}
 #sidebar-second .block-title {}
 #sidebar-second .block-inner {}
 #sidebar-second .block .content {}
