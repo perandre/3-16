@@ -29,7 +29,12 @@
 }
 
 /* Submitted */
-.node .submitted {}
+.node .submitted {
+color: #999;
+font-size: 11px;
+text-transform: uppercase;
+margin-bottom: 10px;
+}
 .node .submitted span {}
 .node .submitted a    {}
 
@@ -81,3 +86,10 @@
  */
 .node-type-CONTENT_TYPE {}
 
+.node-article .field-type-image img {
+background: none repeat scroll 0 0 #FFFFFF;
+border: 1px solid #E0E0E1;
+box-shadow: 0 0 1px #D7D7D7;
+margin-bottom: 2em;
+padding: 8px;
+}

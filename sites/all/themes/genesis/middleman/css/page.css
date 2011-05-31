@@ -188,7 +188,7 @@ overflow: auto;
 .sidebar .region-sidebar-first {}
 
 #sidebar-second {}
-.sidebar .region-sidebar-second {
+.not-front .sidebar .region-sidebar-second {
 padding: 20px 0 0 0;
 }
 
