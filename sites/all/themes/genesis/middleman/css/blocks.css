@@ -49,6 +49,11 @@
 #sidebar-second .block {
 margin-bottom: 20px;
 }
+
+.not-front #sidebar-second .block {
+padding-right: 24px;
+}
+
 #sidebar-second .block-title {}
 #sidebar-second .block-inner {}
 #sidebar-second .block .content {}

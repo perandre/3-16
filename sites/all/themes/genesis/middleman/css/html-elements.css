@@ -153,6 +153,7 @@ font-size: 30px;
 line-height: 36px;
 background: url(../images/quote-green.png) 36px 36px no-repeat;
 min-height: 105px;
+margin: 30px 0;
 }
 
 /* Remove possible quote marks (") from <q>, <blockquote>. */
