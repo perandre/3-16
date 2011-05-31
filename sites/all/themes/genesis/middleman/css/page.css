@@ -60,7 +60,7 @@ body {
 /* Content wrappers */
 #content-column {
 }
-.content-inner {
+.not-front .content-inner {
 padding: 20px 24px;
 }
 
