@@ -54,7 +54,10 @@ margin-bottom: 20px;
 padding-right: 24px;
 }
 
-#sidebar-second .block-title {}
+#sidebar-second .block-title {
+background: #ddd;
+padding: 3px 6px;
+}
 #sidebar-second .block-inner {}
 #sidebar-second .block .content {}
 

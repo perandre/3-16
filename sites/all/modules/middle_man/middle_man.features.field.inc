@@ -49,7 +49,7 @@ function middle_man_field_default_fields() {
           'module' => 'text',
           'settings' => array(),
           'type' => 'text_default',
-          'weight' => 0,
+          'weight' => '0',
         ),
         'teaser' => array(
           'label' => 'hidden',
@@ -122,10 +122,10 @@ function middle_man_field_default_fields() {
           'module' => 'image',
           'settings' => array(
             'image_link' => '',
-            'image_style' => 'large',
+            'image_style' => 'node-full',
           ),
           'type' => 'image',
-          'weight' => -1,
+          'weight' => '-1',
         ),
         'teaser' => array(
           'label' => 'hidden',
@@ -208,7 +208,7 @@ function middle_man_field_default_fields() {
           'module' => 'taxonomy',
           'settings' => array(),
           'type' => 'taxonomy_term_reference_link',
-          'weight' => 10,
+          'weight' => '10',
         ),
         'teaser' => array(
           'label' => 'above',
