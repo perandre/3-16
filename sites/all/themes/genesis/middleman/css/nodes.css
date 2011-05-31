@@ -86,7 +86,7 @@ margin-bottom: 10px;
  */
 .node-type-CONTENT_TYPE {}
 
-.node .field-type-image img {
+.node-article .field-type-image img {
 background: none repeat scroll 0 0 #FFFFFF;
 border: 1px solid #E0E0E1;
 box-shadow: 0 0 1px #D7D7D7;
