@@ -71,7 +71,7 @@
       <div class="secondary-menu-inner"><?php print $secondary_menu_links; ?></div>
     </nav>
   <?php endif; ?>
-
+<div class="inner-wrapper">
   <header id="header" class="clearfix" role="banner">
 
      <?php if ($linked_site_logo || $site_name || $site_slogan): ?>
@@ -170,9 +170,11 @@
       <?php print $tertiary_content; ?>
     </div>
   <?php endif; ?>
-
+</div>
   <?php if ($page_footer = render($page['footer'])): ?>
     <footer id="footer" role="contentinfo">
-      <?php print $page_footer; ?>
+      <div class="inner-wrapper">
+        <?php print $page_footer; ?>
+      </div>
     </footer>
   <?php endif; ?>
