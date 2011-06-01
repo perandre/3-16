@@ -27,7 +27,9 @@ function middle_man_views_default_views() {
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['exposed_form']['type'] = 'basic';
   $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Nullstill';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortér på';
   $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elementer per side';
   $handler->display->display_options['style_plugin'] = 'default';
   $handler->display->display_options['row_plugin'] = 'fields';
   /* Felt: Innhold: Tittel */
@@ -125,7 +127,7 @@ function middle_man_views_default_views() {
   $handler->display->display_options['fields']['entity_id_2']['hide_empty'] = 0;
   $handler->display->display_options['fields']['entity_id_2']['empty_zero'] = 0;
   $handler->display->display_options['fields']['entity_id_2']['field_api_classes'] = 0;
-  /* Filter criterion: Innhold: Published or admin */
+  /* Filter criterion: Innhold: Publisert eller administrator */
   $handler->display->display_options['filters']['status_extra']['id'] = 'status_extra';
   $handler->display->display_options['filters']['status_extra']['table'] = 'node';
   $handler->display->display_options['filters']['status_extra']['field'] = 'status_extra';
@@ -143,12 +145,12 @@ function middle_man_views_default_views() {
   $translatables['blog'] = array(
     t('Defaults'),
     t('more'),
-    t('Apply'),
+    t('Bruk'),
     t('Nullstill'),
-    t('Sort by'),
+    t('Sortér på'),
     t('Asc'),
     t('Desc'),
-    t('Items per page'),
+    t('Elementer per side'),
     t('- All -'),
     t('Offset'),
     t('Nettside'),
@@ -172,13 +174,14 @@ function middle_man_views_default_views() {
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['exposed_form']['type'] = 'basic';
   $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Nullstill';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortér på';
   $handler->display->display_options['pager']['type'] = 'some';
   $handler->display->display_options['pager']['options']['items_per_page'] = '15';
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['style_plugin'] = 'default';
   $handler->display->display_options['row_plugin'] = 'fields';
   $handler->display->display_options['row_options']['hide_empty'] = 0;
-  /* Bunntekst: Global: Text area */
+  /* Bunntekst: Global: Tekstområde */
   $handler->display->display_options['footer']['area']['id'] = 'area';
   $handler->display->display_options['footer']['area']['table'] = 'views';
   $handler->display->display_options['footer']['area']['field'] = 'area';
@@ -237,7 +240,7 @@ function middle_man_views_default_views() {
   $handler->display->display_options['fields']['title']['hide_empty'] = 0;
   $handler->display->display_options['fields']['title']['empty_zero'] = 0;
   $handler->display->display_options['fields']['title']['link_to_node'] = 1;
-  /* Sort criterion: Fields: Dato (field_date) */
+  /* Sorteringskriterium: Felt: Dato (field_date) */
   $handler->display->display_options['sorts']['field_date_value']['id'] = 'field_date_value';
   $handler->display->display_options['sorts']['field_date_value']['table'] = 'field_data_field_date';
   $handler->display->display_options['sorts']['field_date_value']['field'] = 'field_date_value';
@@ -274,9 +277,9 @@ function middle_man_views_default_views() {
   $translatables['kalender'] = array(
     t('Defaults'),
     t('more'),
-    t('Apply'),
+    t('Bruk'),
     t('Nullstill'),
-    t('Sort by'),
+    t('Sortér på'),
     t('Asc'),
     t('Desc'),
     t('<p><a title="Kalender" href="/kalender">Se kalender</a></p>'),
@@ -301,10 +304,12 @@ function middle_man_views_default_views() {
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['exposed_form']['type'] = 'basic';
   $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Nullstill';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortér på';
   $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elementer per side';
   $handler->display->display_options['style_plugin'] = 'default';
   $handler->display->display_options['row_plugin'] = 'fields';
-  /* Topptekst: Global: Text area */
+  /* Topptekst: Global: Tekstområde */
   $handler->display->display_options['header']['area']['id'] = 'area';
   $handler->display->display_options['header']['area']['table'] = 'views';
   $handler->display->display_options['header']['area']['field'] = 'area';
@@ -348,7 +353,7 @@ function middle_man_views_default_views() {
   $handler->display->display_options['fields']['entity_id']['hide_empty'] = 0;
   $handler->display->display_options['fields']['entity_id']['empty_zero'] = 0;
   $handler->display->display_options['fields']['entity_id']['click_sort_column'] = 'nid';
-  /* Filter criterion: Innhold: Published or admin */
+  /* Filter criterion: Innhold: Publisert eller administrator */
   $handler->display->display_options['filters']['status_extra']['id'] = 'status_extra';
   $handler->display->display_options['filters']['status_extra']['table'] = 'node';
   $handler->display->display_options['filters']['status_extra']['field'] = 'status_extra';
@@ -363,7 +368,7 @@ function middle_man_views_default_views() {
   /* Display: Lovsang */
   $handler = $view->new_display('page', 'Lovsang', 'lovsang');
   $handler->display->display_options['defaults']['header'] = FALSE;
-  /* Topptekst: Global: Text area */
+  /* Topptekst: Global: Tekstområde */
   $handler->display->display_options['header']['area']['id'] = 'area';
   $handler->display->display_options['header']['area']['table'] = 'views';
   $handler->display->display_options['header']['area']['field'] = 'area';
@@ -417,12 +422,12 @@ function middle_man_views_default_views() {
   $translatables['lovsang'] = array(
     t('Defaults'),
     t('more'),
-    t('Apply'),
+    t('Bruk'),
     t('Nullstill'),
-    t('Sort by'),
+    t('Sortér på'),
     t('Asc'),
     t('Desc'),
-    t('Items per page'),
+    t('Elementer per side'),
     t('- All -'),
     t('Offset'),
     t('Tittel'),
@@ -447,14 +452,16 @@ function middle_man_views_default_views() {
 
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
-  $handler->display->display_options['title'] = 'Slideshow';
+  $handler->display->display_options['title'] = 'Lysbildevisning';
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['exposed_form']['type'] = 'basic';
   $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Nullstill';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortér på';
   $handler->display->display_options['pager']['type'] = 'full';
   $handler->display->display_options['pager']['options']['items_per_page'] = '3';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elementer per side';
   $handler->display->display_options['style_plugin'] = 'slideshow';
   $handler->display->display_options['style_options']['wrapper_class'] = 'slideshow';
   $handler->display->display_options['style_options']['slideshow_type'] = 'views_slideshow_cycle';
@@ -542,7 +549,7 @@ function middle_man_views_default_views() {
   $handler->display->display_options['fields']['field_body']['hide_empty'] = 0;
   $handler->display->display_options['fields']['field_body']['empty_zero'] = 0;
   $handler->display->display_options['fields']['field_body']['field_api_classes'] = 0;
-  /* Sort criterion: Innhold: Post date */
+  /* Sorteringskriterium: Innhold: Innleggsdato */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
   $handler->display->display_options['sorts']['created']['field'] = 'created';
@@ -572,14 +579,14 @@ function middle_man_views_default_views() {
   $handler->display->display_options['display_description'] = 'For front page';
   $translatables['slideshow'] = array(
     t('Master'),
-    t('Slideshow'),
+    t('Lysbildevisning'),
     t('more'),
-    t('Apply'),
+    t('Bruk'),
     t('Nullstill'),
-    t('Sort by'),
+    t('Sortér på'),
     t('Asc'),
     t('Desc'),
-    t('Items per page'),
+    t('Elementer per side'),
     t('- All -'),
     t('Offset'),
     t('Slideshow block'),
