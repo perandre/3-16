@@ -30,6 +30,49 @@ function middle_man_views_api() {
 function middle_man_image_default_styles() {
   $styles = array();
 
+  // Exported image style: 4col
+  $styles['4col'] = array(
+    'name' => '4col',
+    'effects' => array(
+      3 => array(
+        'label' => 'Skaler og beskjær',
+        'help' => 'Skaler og beskjær vil beholde størrelsesforhold i det originale bildet og så beskjære den største dimensjonen. Dette er mest nyttig for å lage perfekte kvadratiske miniatyrbilder uten å strekke bildet.',
+        'effect callback' => 'image_scale_and_crop_effect',
+        'form callback' => 'image_resize_form',
+        'summary theme' => 'image_resize_summary',
+        'module' => 'image',
+        'name' => 'image_scale_and_crop',
+        'data' => array(
+          'width' => '290',
+          'height' => '186',
+        ),
+        'weight' => '1',
+      ),
+    ),
+  );
+
+  // Exported image style: node-full
+  $styles['node-full'] = array(
+    'name' => 'node-full',
+    'effects' => array(
+      4 => array(
+        'label' => 'Skala',
+        'help' => 'Skalering vil beholde størrelsesforhold i det originale bildet. Hvis bare en dimensjon er oppgitt, så beregnes den andre dimensjonen.',
+        'effect callback' => 'image_scale_effect',
+        'form callback' => 'image_scale_form',
+        'summary theme' => 'image_scale_summary',
+        'module' => 'image',
+        'name' => 'image_scale',
+        'data' => array(
+          'width' => '554',
+          'height' => '',
+          'upscale' => 0,
+        ),
+        'weight' => '1',
+      ),
+    ),
+  );
+
   // Exported image style: slideshow
   $styles['slideshow'] = array(
     'name' => 'slideshow',
