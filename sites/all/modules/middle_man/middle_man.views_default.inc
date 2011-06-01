@@ -289,20 +289,6 @@ function middle_man_views_default_views() {
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
   $handler->display->display_options['path'] = 'hjem';
-
-  /* Display: Feed */
-  $handler = $view->new_display('feed', 'Feed', 'feed');
-  $handler->display->display_options['defaults']['title'] = FALSE;
-  $handler->display->display_options['title'] = 'Front page feed';
-  $handler->display->display_options['pager']['type'] = 'some';
-  $handler->display->display_options['style_plugin'] = 'rss';
-  $handler->display->display_options['row_plugin'] = 'node_rss';
-  $handler->display->display_options['path'] = 'rss.xml';
-  $handler->display->display_options['displays'] = array(
-    'default' => 'default',
-    'page' => 'page',
-  );
-  $handler->display->display_options['sitename_title'] = '1';
   $translatables['hjem'] = array(
     t('Master'),
     t('more'),
@@ -316,8 +302,6 @@ function middle_man_views_default_views() {
     t('Offset'),
     t('Les mer'),
     t('Page'),
-    t('Feed'),
-    t('Front page feed'),
   );
   $export['hjem'] = $view;
 
@@ -351,6 +335,7 @@ function middle_man_views_default_views() {
   $handler->display->display_options['footer']['area']['field'] = 'area';
   $handler->display->display_options['footer']['area']['empty'] = FALSE;
   $handler->display->display_options['footer']['area']['content'] = '<p><a title="Kalender" href="/kalender">Se kalender</a></p>';
+  $handler->display->display_options['footer']['area']['format'] = 'full_html';
   /* Felt: Innhold: Dato */
   $handler->display->display_options['fields']['entity_id']['id'] = 'entity_id';
   $handler->display->display_options['fields']['entity_id']['table'] = 'field_data_field_date';
@@ -540,7 +525,6 @@ function middle_man_views_default_views() {
 <li><a href="/node/add/tune?destination=/lovsang">Legg til ny låt</a></li>
 <li><a href="/node/add/worship?destination=/lovsang">Legg til nytt møte</a></li>
 </ul>';
-  $handler->display->display_options['header']['area']['format'] = 'filtered_html';
   $handler->display->display_options['defaults']['fields'] = FALSE;
   /* Felt: Innhold: Tittel */
   $handler->display->display_options['fields']['title']['id'] = 'title';

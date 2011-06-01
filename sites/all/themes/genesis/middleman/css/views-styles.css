@@ -78,16 +78,16 @@ margin: 0 14px 14px;
 }
 
 /* Front page */
-.view-frontpage .views-row {
+.view-hjem .views-row {
 width: 300px;
 float: left;
 }
 
-.view-frontpage .views-row-even {
+.view-hjem .views-row-even {
 margin-left: 20px;
 }
 
-.view-frontpage img {
+.view-hjem img {
 border: 1px solid #ccc;
 padding: 4px;
 margin-bottom: 10px;
