@@ -242,7 +242,7 @@ ol.search-results .search-info {}
 #footer {
   position: relative;
   color: #4B5155;
-  background: #333333;
+  background: #111111 url(../images/bg-footer.png) no-repeat center 0;
 }
 
 #footer .inner-wrapper {
