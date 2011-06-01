@@ -17,7 +17,7 @@ function _fb_social_livestream_fb_defaults() {
 function _fb_social_livestream_fb_attrs_form() {
   $form = array();
 
-  $form['app_id'] = array(
+  $form['event_app_id'] = array(
     '#type' => 'textfield',
     '#title' => t('App ID'),
     '#description' => t('Your facebook application ID or API key'),

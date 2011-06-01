@@ -91,7 +91,7 @@ function fb_social_block_info(){
   
   foreach ( $presets as $preset ) {
     // is any submodule implementing the hook_block ?
-    $module = 'fb_social_' . $preset->type;
+    $module = 'fb_social_' . $preset->plugin_type;
     $hook = module_hook($module, 'block');
     
     if (! $hook && $preset->settings['block']) {

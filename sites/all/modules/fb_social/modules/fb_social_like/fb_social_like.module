@@ -38,7 +38,7 @@ function fb_social_like_init() {
     $data .= '<meta property="og:site_name" content="' . variable_get('site_name', '') . '"/>' . "\n";
     // @todo maybe look for images/imagefields uploaded/attached to the node ?
     // $data .= '<meta property="og:image" content="http://ia.media-imdb.com/rock.jpg"/>';
-    drupal_add_html_head($data, $key = NULL /* TODO Set this variable. */);
+    drupal_add_html_head($data, $key = 'fb_social_opengraph');
 
   }
 }
@@ -149,7 +149,7 @@ function fb_social_like_node_view($node, $view_mode = 'full') {
   // preset in links area
   $links = fb_social_like_link('node', $node, $view_mode == 'teaser');
   if ($links){
-    $node->content['links']['flag'] = array(
+    $node->content['links']['fb_social_like'] = array(
       '#theme' => 'links__node__fb_social',
       '#links' => $links,
       '#attributes' => array('class' => array('links', 'inline')),
@@ -180,7 +180,7 @@ function fb_social_like_node_view($node, $view_mode = 'full') {
 function fb_social_like_nodeapi_OLD(&$node, $op, $a3 = NULL, $a4 = NULL) { }
 
 /**
- * Implements hook_link().
+ * Returns the html content to be included in node links.
  */
 function fb_social_like_link($type, $object, $teaser = FALSE) {
   $presets = fb_social_enabled_presets('like');
@@ -189,6 +189,12 @@ function fb_social_like_link($type, $object, $teaser = FALSE) {
     if ('node' != $type) {
       return;
     }
+    
+    // do we have to show for the content type ?
+    if (!($preset->settings['node_types']['types'][$object -> type])){
+    	return;
+    }
+
 
     // dont like unpublished nodes
     if (! $object->status) {
