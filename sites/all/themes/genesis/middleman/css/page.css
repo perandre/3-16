@@ -52,6 +52,10 @@ body {
   margin: auto;
 }
 
+.inner-wrapper > #columns {
+  display: block;
+}
+
 /* Column wrappers */
 .not-front #columns {
   background: none repeat scroll 0 0 #FFFFFF;
