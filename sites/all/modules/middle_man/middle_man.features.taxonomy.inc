@@ -32,6 +32,29 @@ function middle_man_taxonomy_default_vocabularies() {
         ),
       ),
     ),
+    'mest_for' => array(
+      'name' => 'Mest for',
+      'machine_name' => 'mest_for',
+      'description' => 'Målgruppe',
+      'hierarchy' => '0',
+      'module' => 'taxonomy',
+      'weight' => '0',
+      'rdf_mapping' => array(
+        'rdftype' => array(
+          0 => 'skos:ConceptScheme',
+        ),
+        'name' => array(
+          'predicates' => array(
+            0 => 'dc:title',
+          ),
+        ),
+        'description' => array(
+          'predicates' => array(
+            0 => 'rdfs:comment',
+          ),
+        ),
+      ),
+    ),
     'style' => array(
       'name' => 'Style',
       'machine_name' => 'style',
