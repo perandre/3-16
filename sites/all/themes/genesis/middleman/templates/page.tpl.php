@@ -106,7 +106,7 @@
       <div class="main-menu-inner"><?php print $main_menu_links; ?></div>
     </nav>
   <?php endif; ?>
-
+  <?php if (function_exists('twitter_pull_render')) { print twitter_pull_render('@316fredrikstad', '', 1); } ?>
   <?php print $breadcrumb; ?>
   <?php print $messages; ?>
   <?php if ($help = render($page['help'])): print $help; endif; ?>

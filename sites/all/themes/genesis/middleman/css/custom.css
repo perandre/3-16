@@ -12,6 +12,39 @@ html body.admin-menu {
   margin-top:45px !important;
 }
 
+div.tweets-pulled-listing {
+overflow: auto;
+margin: -15px 0 15px 0;
+font-family: Baskerville, Georgia, serif;
+font-style: italic;
+font-size: 14px;
+line-height: 14px;
+text-shadow: 1px 1px #fff;
+}
 
+div.tweets-pulled-listing ul {
+margin: 0;
+padding: 0;
+}
 
+.tweet-author a{
+display: block;
+width:30px;
+height:17px;
+background: url(../images/bird.png) 0 0 no-repeat;
+text-indent: -9000px;
+}
 
+div.tweets-pulled-listing a {
+    color: #1B9ECC;
+}
+
+.tweet-author {
+float: left;
+margin-right: 6px;
+display: inline-block;
+}
+
+.tweet-time {
+display: none;
+}

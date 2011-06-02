@@ -50,6 +50,7 @@ body {
 #container .inner-wrapper {
   width: 940px;
   margin: auto;
+  position: relative;
 }
 
 .inner-wrapper > #columns {
