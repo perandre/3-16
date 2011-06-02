@@ -57,7 +57,7 @@ body {
 }
 
 /* Column wrappers */
-.not-front #columns {
+.page-node #columns {
   background: none repeat scroll 0 0 #FFFFFF;
   border-radius: 6px;
   box-shadow: 1px 1px #ddd;
@@ -68,7 +68,7 @@ body {
 /* Content wrappers */
 #content-column {
 }
-.not-front .content-inner {
+.page-node .content-inner {
 padding: 20px 24px;
 }
 
@@ -192,7 +192,7 @@ overflow: auto;
 .sidebar .region-sidebar-first {}
 
 #sidebar-second {}
-.not-front .sidebar .region-sidebar-second {
+.page-node .sidebar .region-sidebar-second {
 padding: 20px 0 0 0;
 }
 
