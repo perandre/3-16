@@ -14,11 +14,21 @@ border-radius: 3px;
 .field-items {}
 .field-item  {}
 
-.field-name-field-teaser {
+.field-name-field-teaser, .date-display-single  {
+background: url("../images/cal.png") no-repeat scroll 0 0 transparent;
+color: #555555;
+display: block;
 font-size: 16px;
-line-height: 22px;
 font-weight: bold;
+line-height: 22px;
 margin-bottom: 20px;
+padding: 6px 54px;
+}
+
+.node-event p {
+font-size: 18px;
+color: #666;
+line-height: 24px;
 }
 
 /* Field items zebra */
@@ -37,8 +47,17 @@ margin-bottom: 20px;
 padding: 9px;
 background: #fff;
 box-shadow: 1px 1px 4px #ccc;
+-webkit-box-shadow: 1px 1px 4px #ccc;
 margin-bottom: 20px;
 }
+.node-article .field-type-image img {
+background: none repeat scroll 0 0 #FFFFFF;
+border: 1px solid #E0E0E1;
+box-shadow: 0 0 1px #D7D7D7;
+margin-bottom: 2em;
+padding: 8px;
+}
+
 .field-type-file              {}
 .field-type-number-decimal    {}
 .field-type-number-float      {}

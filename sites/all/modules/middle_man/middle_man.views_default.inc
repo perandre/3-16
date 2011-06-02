@@ -412,6 +412,10 @@ function middle_man_views_default_views() {
 
   /* Display: Blokk */
   $handler = $view->new_display('block', 'Blokk', 'kalender');
+
+  /* Display: Nettside */
+  $handler = $view->new_display('page', 'Nettside', 'page_1');
+  $handler->display->display_options['path'] = 'kalender';
   $translatables['kalender'] = array(
     t('Defaults'),
     t('more'),
@@ -421,6 +425,7 @@ function middle_man_views_default_views() {
     t('Asc'),
     t('Desc'),
     t('Blokk'),
+    t('Nettside'),
   );
   $export['kalender'] = $view;
 

@@ -40,6 +40,10 @@ text-transform: uppercase;
 overflow: auto;
 }
 
+.page-kalender .view-kalender{
+width: 100%;
+}
+
 .view-kalender .view-content{
 padding: 15px;
 }
