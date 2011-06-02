@@ -123,7 +123,14 @@ font-style: bold;
 
 /* Primary first and last classes. */
 #main-menu li.last a{
+background: url("../images/email.png") no-repeat scroll 0 5px transparent;
 color: #1B9ECC;
+display: block;
+padding-left: 30px;
+}
+
+#main-menu li.last a:hover {
+color: #1583AB;
 }
 
 /* Active trail classes. */
