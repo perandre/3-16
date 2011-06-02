@@ -42,7 +42,9 @@ margin-bottom: 10px;
 .node-content {}
 
 /* Links */
-.node-links {}
+.node-links {
+padding: 0;
+}
 .node-links ul.links {}
 .node-links ul.links li {}
 .node-links ul.links li a{}
