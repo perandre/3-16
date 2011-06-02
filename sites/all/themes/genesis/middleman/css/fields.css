@@ -14,7 +14,7 @@ border-radius: 3px;
 .field-items {}
 .field-item  {}
 
-.field-name-field-teaser, .date-display-single  {
+.node-view .date-display-single  {
 background: url("../images/cal.png") no-repeat scroll 0 0 transparent;
 color: #555555;
 display: block;
