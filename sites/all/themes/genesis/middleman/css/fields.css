@@ -4,9 +4,22 @@
  **********************************************************/
 
 .field {}
-.field-label {}
+.field-label {
+background: none repeat scroll 0 0 #F0F0F0;
+font-weight: bold;
+padding: 2px 6px;
+margin: 20px 0 5px;
+border-radius: 3px;
+}
 .field-items {}
 .field-item  {}
+
+.field-name-field-teaser {
+font-size: 16px;
+line-height: 22px;
+font-weight: bold;
+margin-bottom: 20px;
+}
 
 /* Field items zebra */
 .field-items .odd  {}
@@ -20,14 +33,20 @@
 /* File types */
 .field-type-text              {}
 .field-type-text-with-summary {} 
-.field-type-image             {}
+.node-view .field-type-image  img{
+padding: 9px;
+background: #fff;
+box-shadow: 1px 1px 4px #ccc;
+margin-bottom: 20px;
+}
 .field-type-file              {}
 .field-type-number-decimal    {}
 .field-type-number-float      {}
 .field-type-number-integer    {}
 .field-type-list              {}
 .field-type-list-boolean      {}
-.field-type-taxonomy-term-reference {}
+.field-type-taxonomy-term-reference {
+}
 
 /* Default core fields */
 .field-name-body {}
