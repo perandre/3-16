@@ -108,7 +108,35 @@ font-size: 11px;
 line-height: 11px;
 }
 
+.hover-more {
+    height: 186px;
+    left: 5px;
+    position: absolute;
+    top: 5px;
+    width: 290px;
+}
+
+.hover-more:hover {
+background: url("../images/trans-light.png") repeat scroll 0 0;
+}
+
 .readmore a:hover {
 background: #1583AB;
 border: 3px solid #1B9ECC;
 }
+
+.hover-more a {
+display: none;
+}
+
+.hover-more:hover  a {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 290px;
+    height: 186px;
+    background: url("../images/srch.png") no-repeat scroll 117px 59px;
+    text-indent: -9000px;
+}
+
