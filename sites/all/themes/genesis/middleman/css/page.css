@@ -109,7 +109,9 @@ h1.logo-site-name  {}
 }
 
 /* Logo. */
-#logo {}
+#logo:hover {
+opacity: 0.5;
+}
 
 #site-name {
   font-weight: bold; /* Bold or else the line heights vary. */
