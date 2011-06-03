@@ -224,3 +224,68 @@ font-family: "Ludica Grande", Arial;
 #block-block-1 .block-inner {
 text-align: center;
 }
+
+/**********************************************************
+ *                  Quicktabs blocks
+ **********************************************************/
+
+#quicktabs-hvem {
+min-height: 500px;
+width: 940px;
+}
+#quicktabs-hvem ul {
+clear: both;
+overflow: auto;
+margin: 0;
+padding: 0;
+text-indent: -9000px;
+margin: 20px 0;
+}
+#quicktabs-hvem li {
+float: left;
+width: 180px;
+}
+#quicktabs-hvem li + li {
+width: auto;
+}
+
+/* Tabs */
+
+#quicktabs-hvem li a {
+background-image: url(../images/om.png);
+background-repeat: no-repeat;
+display: block;
+height: 54px;
+}
+
+a#quicktabs-tab-hvem-0{
+background-position: 0 -70px;
+width: 180px;
+}
+
+a#quicktabs-tab-hvem-1{
+background-position: -193px -70px;
+width: 208px;
+}
+a#quicktabs-tab-hvem-2{
+background-position: -418px -70px;
+width: 250px;
+}
+a#quicktabs-tab-hvem-3{
+background-position: -671px -70px;
+width: 250px;
+}
+
+/* Tabs hover */
+a#quicktabs-tab-hvem-0:hover, .active a#quicktabs-tab-hvem-0 {
+background-position: 0 0;
+}
+a#quicktabs-tab-hvem-1:hover, .active a#quicktabs-tab-hvem-1 {
+background-position: -193px 0;
+}
+a#quicktabs-tab-hvem-2:hover, .active a#quicktabs-tab-hvem-2 {
+background-position: -418px 0;
+}
+a#quicktabs-tab-hvem-3:hover, .active a#quicktabs-tab-hvem-3 {
+background-position: -671px 0;
+}
