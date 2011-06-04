@@ -251,7 +251,7 @@ width: auto;
 
 /* Tabs */
 
-#quicktabs-hvem li a {
+#quicktabs-hvem a.qt_tab {
 background-image: url(../images/om.png);
 background-repeat: no-repeat;
 display: block;

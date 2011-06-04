@@ -85,6 +85,7 @@ margin: 0 14px 14px;
 .view-hjem .views-row {
 width: 300px;
 float: left;
+position: relative;
 }
 
 .view-hjem .views-row-even {
