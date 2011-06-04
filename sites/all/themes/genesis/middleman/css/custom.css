@@ -12,6 +12,11 @@ html body.admin-menu {
   margin-top:45px !important;
 }
 
+/* Display away :) */
+.section-hvem div.tweets-pulled-listing {display:none;}
+
+/* Twitter pull */
+
 div.tweets-pulled-listing {
 overflow: auto;
 margin: -15px 0 15px 0;
