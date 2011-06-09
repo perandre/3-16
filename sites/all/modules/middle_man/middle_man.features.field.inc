@@ -214,6 +214,15 @@ function middle_man_field_default_fields() {
         'active' => 1,
         'module' => 'file',
         'settings' => array(
+          'insert' => 0,
+          'insert_class' => '',
+          'insert_default' => array(
+            0 => 'auto',
+          ),
+          'insert_styles' => array(
+            0 => 'auto',
+          ),
+          'insert_width' => '',
           'progress_indicator' => 'throbber',
         ),
         'type' => 'file_generic',
@@ -294,6 +303,15 @@ function middle_man_field_default_fields() {
         'active' => 1,
         'module' => 'image',
         'settings' => array(
+          'insert' => 0,
+          'insert_class' => '',
+          'insert_default' => array(
+            0 => 'auto',
+          ),
+          'insert_styles' => array(
+            0 => 'auto',
+          ),
+          'insert_width' => '',
           'preview_image_style' => 'thumbnail',
           'progress_indicator' => 'throbber',
         ),
@@ -375,6 +393,15 @@ function middle_man_field_default_fields() {
       'widget' => array(
         'module' => 'image',
         'settings' => array(
+          'insert' => 0,
+          'insert_class' => '',
+          'insert_default' => array(
+            0 => 'auto',
+          ),
+          'insert_styles' => array(
+            0 => 'auto',
+          ),
+          'insert_width' => '',
           'preview_image_style' => 'thumbnail',
           'progress_indicator' => 'throbber',
         ),
@@ -727,6 +754,15 @@ function middle_man_field_default_fields() {
         'active' => 1,
         'module' => 'image',
         'settings' => array(
+          'insert' => 0,
+          'insert_class' => '',
+          'insert_default' => array(
+            0 => 'auto',
+          ),
+          'insert_styles' => array(
+            0 => 'auto',
+          ),
+          'insert_width' => '',
           'preview_image_style' => 'thumbnail',
           'progress_indicator' => 'throbber',
         ),
@@ -948,6 +984,15 @@ function middle_man_field_default_fields() {
         'active' => 1,
         'module' => 'image',
         'settings' => array(
+          'insert' => 0,
+          'insert_class' => '',
+          'insert_default' => array(
+            0 => 'auto',
+          ),
+          'insert_styles' => array(
+            0 => 'auto',
+          ),
+          'insert_width' => '',
           'preview_image_style' => 'thumbnail',
           'progress_indicator' => 'throbber',
         ),
@@ -1390,6 +1435,15 @@ function middle_man_field_default_fields() {
         'active' => 1,
         'module' => 'image',
         'settings' => array(
+          'insert' => 0,
+          'insert_class' => '',
+          'insert_default' => array(
+            0 => 'auto',
+          ),
+          'insert_styles' => array(
+            0 => 'auto',
+          ),
+          'insert_width' => '',
           'preview_image_style' => 'thumbnail',
           'progress_indicator' => 'throbber',
         ),
@@ -1466,7 +1520,7 @@ function middle_man_field_default_fields() {
           'summary_rows' => 5,
         ),
         'type' => 'text_textarea_with_summary',
-        'weight' => '3',
+        'weight' => '4',
       ),
       'widget_type' => 'text_textarea_with_summary',
     ),
@@ -1536,10 +1590,19 @@ function middle_man_field_default_fields() {
         'active' => 1,
         'module' => 'file',
         'settings' => array(
+          'insert' => 0,
+          'insert_class' => '',
+          'insert_default' => array(
+            0 => 'auto',
+          ),
+          'insert_styles' => array(
+            0 => 'auto',
+          ),
+          'insert_width' => '',
           'progress_indicator' => 'throbber',
         ),
         'type' => 'file_generic',
-        'weight' => '6',
+        'weight' => '7',
       ),
     ),
   );
@@ -1609,7 +1672,7 @@ function middle_man_field_default_fields() {
         'module' => 'options',
         'settings' => array(),
         'type' => 'options_buttons',
-        'weight' => '5',
+        'weight' => '6',
       ),
     ),
   );
@@ -1683,6 +1746,15 @@ function middle_man_field_default_fields() {
         'active' => 1,
         'module' => 'image',
         'settings' => array(
+          'insert' => 0,
+          'insert_class' => '',
+          'insert_default' => array(
+            0 => 'auto',
+          ),
+          'insert_styles' => array(
+            0 => 'auto',
+          ),
+          'insert_width' => '',
           'preview_image_style' => 'thumbnail',
           'progress_indicator' => 'throbber',
         ),
@@ -1728,7 +1800,7 @@ function middle_man_field_default_fields() {
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => '5',
+          'weight' => '6',
         ),
         'teaser' => array(
           'label' => 'above',
@@ -1752,7 +1824,7 @@ function middle_man_field_default_fields() {
           'rows' => '2',
         ),
         'type' => 'text_textarea',
-        'weight' => '4',
+        'weight' => '5',
       ),
     ),
   );
@@ -1881,6 +1953,15 @@ function middle_man_field_default_fields() {
         'active' => 1,
         'module' => 'file',
         'settings' => array(
+          'insert' => 0,
+          'insert_class' => '',
+          'insert_default' => array(
+            0 => 'auto',
+          ),
+          'insert_styles' => array(
+            0 => 'auto',
+          ),
+          'insert_width' => '',
           'progress_indicator' => 'throbber',
         ),
         'type' => 'file_generic',
@@ -1947,6 +2028,15 @@ function middle_man_field_default_fields() {
         'active' => 1,
         'module' => 'file',
         'settings' => array(
+          'insert' => 0,
+          'insert_class' => '',
+          'insert_default' => array(
+            0 => 'auto',
+          ),
+          'insert_styles' => array(
+            0 => 'auto',
+          ),
+          'insert_width' => '',
           'progress_indicator' => 'throbber',
         ),
         'type' => 'file_generic',
