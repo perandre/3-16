@@ -33,7 +33,7 @@
  * @see template_process()
  */
 ?><!DOCTYPE html>
-<html lang="<?php print $language->language; ?>" dir="<?php print $language->dir; ?>" <?php print $rdf_namespaces; ?> profile="<?php print $grddl_profile; ?>" xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://www.facebook.com/2008/fbml">>
+<html lang="<?php print $language->language; ?>" dir="<?php print $language->dir; ?>" <?php print $rdf_namespaces; ?> profile="<?php print $grddl_profile; ?>" xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://www.facebook.com/2008/fbml">
 <?php print $head; ?>
 <title><?php print $head_title; ?></title>
 <?php print $styles; ?>
