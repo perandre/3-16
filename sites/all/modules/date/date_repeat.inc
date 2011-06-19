@@ -42,7 +42,7 @@ function _date_repeat_widget(&$element, $field, $instance, $items, $delta) {
     '#prev_value2' => isset($items[0]['value2']) ? $items[0]['value2'] : '',
     '#prev_rrule' => isset($items[0]['rrule']) ? $items[0]['rrule'] : '',
     '#date_repeat_widget' => str_replace('_repeat', '', $instance['widget']['type']),
-    '#date_repeat_collapsed' => $instance['settings']['repeat_collapsed'],
+    '#date_repeat_collapsed' => $instance['widget']['settings']['repeat_collapsed'],
     );
   return $element;
 }
@@ -133,7 +133,7 @@ function date_repeat_build_dates($rrule = NULL, $rrule_values = NULL, $field, $i
     $rrule = date_api_ical_build_rrule($rrule_values);
   }
   elseif (empty($rrule_values)) {
-    $rrule_values = date_ical_parse($rrule);
+    $rrule_values = date_ical_parse_rrule(NULL, $rrule);
   }
 
   // By the time we get here, the start and end dates have been 

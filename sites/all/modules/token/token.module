@@ -10,6 +10,12 @@ define('TOKEN_MAX_DEPTH', 9);
  */
 function token_help($path, $arg) {
   if ($path == 'admin/help#token') {
+    if (current_path() != 'admin/help/token') {
+      // Because system_modules() executes hook_help() for each module to 'test'
+      // if they will return anything, but not actually display it, we want to
+      // return a TRUE value if this is not actually the help page.
+      return TRUE;
+    }
     $output = '<dl>';
     $output .= '<dt>' . t('List of the currently available tokens on this site') . '</dt>';
     $output .= '<dd>' . theme('token_tree', array('token_types' => 'all', 'click_insert' => FALSE, 'show_restricted' => TRUE)) . '</dd>';
@@ -159,6 +165,10 @@ function token_form_alter(&$form, $form_state, $form_id) {
     case 'profile_field_delete':
     // User picture form.
     case 'user_admin_settings':
+    // System date type form.
+    // @todo Remove when http://drupal.org/node/1173706 is fixed.
+    case 'system_add_date_format_type_form':
+    case 'system_delete_date_format_type_form':
       $form += array('#submit' => array());
       array_unshift($form['#submit'], 'token_clear_cache');
       break;
@@ -301,10 +311,13 @@ function token_get_info($token_type = NULL, $token = NULL) {
 
       foreach (array_keys($token_info['types']) as $type_key) {
         if (isset($token_info['types'][$type_key]['type'])) {
+          $base_type = $token_info['types'][$type_key]['type'];
           // If this token type extends another token type, then merge in
           // the base token type's tokens.
-          $token_info['tokens'] += array($type_key => array());
-          $token_info['tokens'][$type_key] += $token_info['tokens'][$token_info['types'][$type_key]['type']];
+          if (isset($token_info['tokens'][$base_type])) {
+            $token_info['tokens'] += array($type_key => array());
+            $token_info['tokens'][$type_key] += $token_info['tokens'][$base_type];
+          }
         }
         else {
           // Add a 'type' value to each token type so we can properly use
@@ -728,7 +741,7 @@ function _token_build_tree($token_type, array $options) {
   );
 
   $info = token_get_info();
-  if ($options['depth'] <= 0 || !isset($info['types'][$token_type])) {
+  if ($options['depth'] <= 0 || !isset($info['types'][$token_type]) || !isset($info['tokens'][$token_type])) {
     return array();
   }
 

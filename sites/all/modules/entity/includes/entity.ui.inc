@@ -1,5 +1,4 @@
 <?php
-// $Id: entity.ui.inc,v 1.1.2.3 2011/01/04 12:05:31 fago Exp $
 
 /**
  * @file
@@ -27,7 +26,7 @@ class EntityDefaultUIController {
   public function hook_menu() {
     $items = array();
     $id_count = count(explode('/', $this->path));
-    $wildcard = isset($this->entityInfo['admin ui']['menu wildcard']) ? $this->entityInfo['admin ui']['menu wildcard'] : '%' . $this->entityType;
+    $wildcard = isset($this->entityInfo['admin ui']['menu wildcard']) ? $this->entityInfo['admin ui']['menu wildcard'] : '%entity_object';
 
     $items[$this->path] = array(
       'title' => $this->entityInfo['label'] . 's',
@@ -180,8 +179,8 @@ class EntityDefaultUIController {
     ksort($entities);
 
     $rows = array();
-    foreach ($entities as $id => $entity) {
-      $rows[] = $this->overviewTableRow($conditions, $id, $entity);
+    foreach ($entities as $entity) {
+      $rows[] = $this->overviewTableRow($conditions, entity_id($this->entityType, $entity), $entity);
     }
     // Assemble the right table header.
     $header = array(t('Label'));
@@ -464,6 +463,11 @@ function entity_ui_main_form_defaults($form, &$form_state, $entity = NULL, $op =
     $entity_info = entity_get_info($form_state['entity_type']);
     $entity->{$entity_info['entity keys']['id']} = FALSE;
     $entity->is_new = TRUE;
+    // Make sure the status of a cloned exportable is custom.
+    if (!empty($entity_info['exportable'])) {
+      $status_key = isset($entity_info['entity keys']['status']) ? $entity_info['entity keys']['status'] : 'status';
+      $entity->$status_key = ENTITY_CUSTOM;
+    }
   }
   return entity_ui_form_defaults($form, $form_state, $form_state['entity_type'], $entity, $op);
 }

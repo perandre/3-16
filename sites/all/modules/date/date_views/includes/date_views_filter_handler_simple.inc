@@ -10,8 +10,7 @@ class date_views_filter_handler_simple extends views_handler_filter_date {
   function init(&$view, &$options) {
     parent::init($view, $options);
     module_load_include('inc', 'date_api', 'date_api_sql');
-    $this->date_handler = new date_sql_handler();
-    $this->date_handler->date_type = DATE_UNIX;
+    $this->date_handler = new date_sql_handler(DATE_UNIX);
     if (!empty($this->definition['field_name'])) {
       $field = field_info_field($this->definition['field_name']);
       if (!empty($field) && !empty($field['type'])) {
@@ -66,8 +65,12 @@ class date_views_filter_handler_simple extends views_handler_filter_date {
     // This is a date that needs to be constructed from options like 'now' .
     $default_option = $prefix == 'max' ? $options['default_to_date'] : $options['default_date'];
     if (!empty($default_option)) {
+      str_replace('now', 'today', $default_option);
       $date = date_create($default_option, date_default_timezone_object());
       $default_date = !empty($date) ? $date->format($this->format) : '';
+
+      // The format for our filter is in ISO format, but the widget will need it in datetime format.
+      $default_date = str_replace('T', ' ', $default_date);
     }
     // This a fixed date.
     else {
@@ -84,27 +87,32 @@ class date_views_filter_handler_simple extends views_handler_filter_date {
    * to swap in our default value logic.
    */
   function get_filter_value($prefix, $input) {
+    // All our date widgets provide datetime values but we use ISO in our SQL
+    // for consistency between the way filters and arguments work (arguments
+    // cannot contain spaces).
     if (empty($input)) {
       if (empty($this->options['exposed'])) {
-        return $this->date_default_value($prefix);
+        return str_replace(' ', 'T', $this->date_default_value($prefix));
       }
       elseif (isset($this->options['expose']['identifier']) && !isset($_GET[$this->options['expose']['identifier']])) {
-        return $this->date_default_value($prefix);
+        return str_replace(' ', 'T', $this->date_default_value($prefix));
       }
     }
-    return $input;
+    
+    return str_replace(' ', 'T', $input);
   }
 
   function accept_exposed_input($input) {
-    $element_input = $input[$this->options['expose']['identifier']];
-
-    $element_input['value'] = $this->get_filter_value('value', !empty($element_input['value']) ? $element_input['value'] : '');
-    $element_input['min'] = $this->get_filter_value('min', !empty($element_input['min']) ? $element_input['min'] : '');
-    $element_input['max'] = $this->get_filter_value('max', !empty($element_input['max']) ? $element_input['max'] : '');
-    unset($element_input['default_date']);
-    unset($element_input['default_to_date']);
-
-    $input[$this->options['expose']['identifier']] = $element_input;
+    if (!empty($this->options['exposed'])) {
+      $element_input = $input[$this->options['expose']['identifier']];
+      $element_input['value'] = $this->get_filter_value('value', !empty($element_input['value']) ? $element_input['value'] : '');
+      $element_input['min'] = $this->get_filter_value('min', !empty($element_input['min']) ? $element_input['min'] : '');
+      $element_input['max'] = $this->get_filter_value('max', !empty($element_input['max']) ? $element_input['max'] : '');
+      unset($element_input['default_date']);
+      unset($element_input['default_to_date']);
+  
+      $input[$this->options['expose']['identifier']] = $element_input;
+    }
     return parent::accept_exposed_input($input);
 
   }
@@ -118,8 +126,7 @@ class date_views_filter_handler_simple extends views_handler_filter_date {
     $placeholder_max = $this->placeholder();
     $group = !empty($this->options['date_group']) ? $this->options['date_group'] : $this->options['group'];
     if ($this->operator == 'between') {
-      $this->query->add_where_expression($group, "$field >= $placeholder_min", array($placeholder_min => $min_value));
-      $this->query->add_where_expression($group, "$field <= $placeholder_max", array($placeholder_max => $max_value));
+      $this->query->add_where_expression($group, "$field >= $placeholder_min AND $field <= $placeholder_max", array($placeholder_min => $min_value, $placeholder_max => $max_value));
     }
     else {
       $this->query->add_where_expression($group, "$field <= $placeholder_min OR $field >= $placeholder_max", array($placeholder_min => $min_value, $placeholder_max => $max_value));
@@ -211,12 +218,12 @@ class date_views_filter_handler_simple extends views_handler_filter_date {
     if (!empty($form_state['exposed'])) {
       $identifier = $this->options['expose']['identifier'];
 
-      if (empty($this->options['expose']['use_operator']) || empty($this->options['expose']['operator'])) {
+      if (empty($this->options['expose']['use_operator']) || empty($this->options['expose']['operator_id'])) {
         // exposed and locked.
         $which = in_array($this->operator, $this->operator_values(2)) ? 'minmax' : 'value';
       }
       else {
-        $source = 'edit-' . drupal_html_id($this->options['expose']['operator']);
+        $source = 'edit-' . drupal_html_id($this->options['expose']['operator_id']);
       }
     }
 
@@ -313,10 +320,9 @@ class date_views_filter_handler_simple extends views_handler_filter_date {
       '#suffix' => '</div></div>',
     );
     if ($which == 'all') {
-      //$form[$prefix]['#process'] = array('ctools_dependent_process', $type . '_element_process');
-      $form[$prefix]['#dependency'] = array($source => $operator_values);  
+      $form[$prefix]['#pre_render'][] = 'ctools_dependent_pre_render';
+      $form[$prefix]['#dependency'] = array($source => $operator_values);
     }
-
     if (!empty($form_state['exposed']) && !isset($form_state['input'][$identifier][$prefix])) {
       $form_state['input'][$identifier][$prefix] = $this->value[$prefix];
     } 

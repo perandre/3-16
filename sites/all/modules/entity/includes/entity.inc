@@ -1,5 +1,4 @@
 <?php
-// $Id: entity.inc,v 1.1.2.3 2011/01/04 12:05:31 fago Exp $
 
 /**
  * @file
@@ -18,12 +17,19 @@
  * hook_entity_info(). That way modules are able to override your defaults
  * by altering the hook_entity_info() callbacks, while $entity->label() and
  * $entity->uri() reflect this changes as well.
+ *
+ * Defaults for entity properties can be easily defined by adding class
+ * properties, e.g.:
+ * @code
+ *   public $name = '';
+ *   public $count = 0;
+ * @endcode
  */
 class Entity {
 
   protected $entityType;
   protected $entityInfo;
-  protected $idKey, $nameKey;
+  protected $idKey, $nameKey, $statusKey;
 
   /**
    * Creates a new entity.
@@ -38,6 +44,7 @@ class Entity {
     $this->entityInfo = entity_get_info($entityType);
     $this->idKey = $this->entityInfo['entity keys']['id'];
     $this->nameKey = isset($this->entityInfo['entity keys']['name']) ? $this->entityInfo['entity keys']['name'] : $this->idKey;
+    $this->statusKey = empty($info['entity keys']['status']) ? 'status' : $info['entity keys']['status'];
 
     // Set initial values.
     foreach ($values as $key => $value) {
@@ -48,21 +55,21 @@ class Entity {
   /**
    * Returns the internal, numeric identifier.
    *
-   * For exportable entities, this differs to the uniform identifier returned
-   * by Entity::identifier(). The internal identifier is supposed to be only
-   * used internally to refer to an entity, i.e. in the database. If unsure, use
-   * Entity:identifier().
+   * Returns the numeric identifier, even if the entity type has specified a
+   * name key. In the latter case, the numeric identifier is supposed to be used
+   * when dealing generically with entities or internally to refer to an entity,
+   * i.e. in a relational database. If unsure, use Entity:identifier().
    */
   public function internalIdentifier() {
     return isset($this->{$this->idKey}) ? $this->{$this->idKey} : NULL;
   }
 
   /**
-   * Returns the unified identifer.
+   * Returns the entity identifier, i.e. the entities name or numeric id.
    *
    * @return
-   *   The identifier of the entity. For exportable entities, this is their
-   *   machine readable name.
+   *   The identifier of the entity. If the entity type makes use of a name key,
+   *   the name is returned, else the numeric id.
    *
    * @see entity_id()
    */
@@ -98,7 +105,7 @@ class Entity {
     if (isset($this->entityInfo['label callback']) && $this->entityInfo['label callback'] == 'entity_class_label') {
       return $this->defaultLabel();
     }
-    return entity_label($entity_type, $entity);
+    return entity_label($this->entityType, $this);
   }
 
   /**
@@ -122,7 +129,7 @@ class Entity {
     if (isset($this->entityInfo['uri callback']) && $this->entityInfo['uri callback'] == 'entity_class_uri') {
       return $this->defaultUri();
     }
-    return entity_uri($entity_type, $entity);
+    return entity_uri($this->entityType, $this);
   }
 
   /**
@@ -130,7 +137,26 @@ class Entity {
    * 'entity_class_uri' as 'uri callback' hook_entity_info().
    */
   protected function defaultUri() {
-    return array('path' => 'default/' . $entity->identifier());
+    return array('path' => 'default/' . $this->identifier());
+  }
+
+  /**
+   * Checks if the entity has a certain exportable status.
+   *
+   * @param $status
+   *   A status constant, i.e. one of ENTITY_CUSTOM, ENTITY_IN_CODE,
+   *   ENTITY_OVERRIDDEN or ENTITY_FIXED.
+   *
+   * @return
+   *   For exportable entities TRUE if the entity has the status, else FALSE.
+   *   In case the entity is not exportable, NULL is returned.
+   *
+   * @see entity_has_status()
+   */
+  public function hasStatus($status) {
+    if (!empty($this->entityInfo['exportable'])) {
+      return isset($this->{$this->statusKey}) && ($this->{$this->statusKey} & $status) == $status;
+    }
   }
 
   /**
@@ -169,7 +195,7 @@ class Entity {
    * @see entity_view()
    */
   public function view($view_mode = 'full', $langcode = NULL) {
-    return entity_get_controller($this->entityType)->view(array($this->identifier() => $this), $view_mode, $langcode);
+    return entity_get_controller($this->entityType)->view(array($this), $view_mode, $langcode);
   }
 
   /**

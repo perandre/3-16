@@ -1,5 +1,4 @@
 <?php
-// $Id: entity.api.php,v 1.1.2.4 2011/01/04 12:05:31 fago Exp $
 
 /**
  * @file
@@ -16,7 +15,11 @@
  *
  * This is a placeholder for describing further keys for hook_entity_info(),
  * which are introduced the entity API for providing a new entity type with the
- * entity CRUD API.
+ * entity CRUD API. For that the entity API provides two controllers:
+ *  - EntityAPIController: A regular CRUD controller.
+ *  - EntityAPIControllerExportable: Extends the regular controller to
+ *    additionally support exportable entities and/or entities making use of a
+ *    name key.
  * See entity_metadata_hook_entity_info() for the documentation of additional
  * keys for hook_entity_info() as introduced by the entity API and supported for
  * any entity type.
@@ -35,19 +38,30 @@
  *   If enabled, a name key should be specified and db columns for the module
  *   and status key as defined by entity_exportable_schema_fields() have to
  *   exist in the entity's base table. Also see 'entity keys' below.
+ *   This option requires the EntityAPIControllerExportable to work.
  * - entity keys: An array of keys as defined by Drupal core. The following
  *   additional keys are used by the entity CRUD API:
  *   - name: (optional) The key of the entity property containing the unique,
  *     machine readable name of the entity. If specified, this is used as
- *     uniform identifier of the entity, while the usual 'id' key is still
- *     required. If a name key is given, the name is used as identifier for all
- *     API functions like entity_load(), but the numeric id as specified by the
- *     'id' key is still used to refer to the entity internally, i.e. in the
- *     database.
- *     For exportable entities, it's strongly recommended to use a machine name
- *     here as those are more portable across systems.
+ *     identifier of the entity, while the usual 'id' key is still required and
+ *     may be used when modules deal with entities generically, or to refer to
+ *     the entity internally, i.e. in the database.
+ *     If a name key is given, the name is used as entity identifier for most
+ *     API functions and hooks. However note that for consistency all generic
+ *     entity hooks like hook_entity_load() are invoked with the entities keyed
+ *     by numeric id, while entity-type specific hooks like
+ *     hook_{entity_type}_load() are invoked with the entities keyed by name.
+ *     Also, just as entity_load_single() entity_load() may be called
+ *     with names passed as the $ids parameter, while the results of
+ *     entity_load() are always keyed by numeric id. Thus, it is suggested to
+ *     make use of entity_load_multiple_by_name() to implement entity-type
+ *     specific loading functions like {entity_type}_load_multiple(), as this
+ *     function returns the entities keyed by name.
+ *     For exportable entities, it is strongly recommended to make use of a
+ *     machine name as names are portable across systems.
+ *     This option requires the EntityAPIControllerExportable to work.
  *   - module: (optional) A key for the module property used by the entity CRUD
- *     API to save the source module name for exportable entities, which are
+ *     API to save the source module name for exportable entities that have been
  *     provided in code. Defaults to 'module'.
  *   - status: (optional) The name of the entity property used by the entity
  *     CRUD API to save the exportable entity status using defined bit flags.
@@ -61,8 +75,7 @@
  * - admin ui: (optional) An array of optional information used for providing an
  *   administrative user interface. To enable the UI at least the path must be
  *   given. Apart from that, the 'access callback' (see below) is required for
- *   the entity, and at least a loader function ENTITY_TYPE_load() has to
- *   be defined, as well as the 'ENTITY_TYPE_form' for editing, adding and
+ *   the entity, as well as the 'ENTITY_TYPE_form' for editing, adding and
  *   cloning. The form gets the entity and the operation ('edit', 'add' or
  *   'clone') passed. See entity_ui_get_form() for more details.
  *   Known keys are:
@@ -77,8 +90,7 @@
  *     not set, it defaults to entity module's path, thus the entity types
  *     'module' key is required.
  *   - menu wildcard: The wildcard to use in paths of the hook_menu() items.
- *     Defaults to %ENTITY_TYPE, for which a respective loader function
- *     ENTITY_TYPE_load() has to be defined by the implementing module.
+ *     Defaults to %entity_object which is the loader provided by Entity API.
  * - rules controller class: (optional) A controller class for providing Rules
  *   integration. The given class has to inherit from the default class being
  *   EntityDefaultRulesController. Set it to FALSE to disable this feature.
@@ -95,8 +107,14 @@
  *   Features module integration for exportable entities. The given class has to
  *   inherit from the default class being EntityDefaultFeaturesController. Set
  *   it to FALSE to disable this feature.
+ * - views controller class: (optional) A controller class for providing views
+ *   integration. The given class has to inherit from the class
+ *   EntityDefaultViewsController, which is set as default in case the providing
+ *   module has been specified (see 'module') and the module does not provide
+ *   any views integration. Else it defaults to FALSE, which disables this
+ *   feature. See EntityDefaultViewsController.
  * - access callback: (optional) Specify a callback that returns access
- *   permissions for the operations 'create', 'updated', 'delete' and 'view'.
+ *   permissions for the operations 'create', 'update', 'delete' and 'view'.
  *   The callback gets optionally the entity and the user account to check for
  *   passed. See entity_access() for more details on the arguments and
  *   entity_metadata_no_hook_node_access() for an example.
@@ -143,7 +161,7 @@ function entity_crud_hook_entity_info() {
  *
  * Additional keys are:
  * - access callback: (optional) Specify a callback that returns access
- *   permissions for the operations 'create', 'updated', 'delete' and 'view'.
+ *   permissions for the operations 'create', 'update', 'delete' and 'view'.
  *   The callback gets optionally the entity and the user account to check for
  *   passed. See entity_access() for more details on the arguments and
  *   entity_metadata_no_hook_node_access() for an example.
@@ -183,7 +201,7 @@ function entity_metadata_hook_entity_info() {
  * separated from hook_entity_info() for performance reasons only.
  * For making use of the metadata have a look at the provided wrappers returned
  * by entity_metadata_wrapper().
- * For providing entity metadata for fields see entity_metadata_field_info().
+ * For providing property information for fields see entity_field_info().
  *
  * @return
  *   An array whose keys are entity type names and whose values are arrays
@@ -210,6 +228,9 @@ function entity_metadata_hook_entity_info() {
  *        - entities - You may use the type of each entity known by
  *          hook_entity_info(), e.g. 'node' or 'user'. Internally entities are
  *          represented by their identifieres.
+ *        - entity: A special type to be used generically for entities where the
+ *          entity type is not known beforehand. The entity has to be
+ *          represented using an EntityMetadataWrapper.
  *        - struct: This as well as any else not known type may be used for
  *          supporting arbitrary data structures. For that additional metadata
  *          has to be specified with the 'property info' key.
@@ -241,17 +262,24 @@ function entity_metadata_hook_entity_info() {
  *       callback which can be used to retrieve the raw, unprocessed value.
  *     - bundle: If the property is an entity, you may specify the bundle of the
  *       retrieved entity. Optional.
- *     - 'options list': Optionally, a callback that returns a list of key value
- *       pairs for the property. The callback has to return an array as
+ *     - 'options list': Optionally, a callback that returns a list of possible
+ *       values for the property. The callback has to return an array as
  *       used by hook_options_list().
+ *       Note that it is possible to return a different set of options depending
+ *       whether they are used in read or in write context. See
+ *       EntityMetadataWrapper::optionsList() for more details on that.
  *     - 'access callback': An optional access callback to allow for checking
  *       'view' and 'edit' access for the described property. If no callback
  *       is specified, a 'setter permission' may be specified instead.
  *     - 'setter permission': Optionally a permission, that describes whether
  *       a user has permission to set ('edit') this property. This permission
  *       should only be taken into account, if no 'access callback' is given.
+ *     - 'schema field': (optional) In case the property is directly based upon
+ *       a field specified in the entity's hook_schema(), the name of the field.
  *     - 'query callback: Optionally a callback for querying for entities
- *       having the given property value. See entity_metadata_entity_query().
+ *       having the given property value. See entity_property_query().
+ *       In case a 'schema field' has been specified, it is not necessary to
+ *       specify a callback as it will default to 'entity_metadata_table_query'.
  *     - required: Optionally, this may be set to TRUE, if this property is
  *       required for the creation of a new instance of its entity. See
  *       entity_property_values_create_entity().
@@ -269,6 +297,8 @@ function entity_metadata_hook_entity_info() {
  *       if necessary, e.g. as the data structure is not created yet but one of
  *       its properties is set. See entity_metadata_field_file_callback() for
  *       an example.
+ *     - translatable: (optional) Whether the property is translatable, defaults
+ *       to FALSE.
  *   - bundles: An array keyed by bundle name containing further metadata
  *     related to the bundles only. This array may contain the key 'properties'
  *     with an array of info about the bundle specific properties, structured in

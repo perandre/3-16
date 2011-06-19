@@ -1,5 +1,4 @@
 <?php
-// $Id: entity.property.inc,v 1.1.2.6 2010/12/29 12:03:11 fago Exp $
 
 /**
  * @file
@@ -84,7 +83,7 @@ function entity_get_all_property_info($entity_type = NULL) {
  * @param $property
  *   The name of the property to query for.
  * @param $value
- *   A property value or an array of possible values to query for.
+ *   A single property value or an array of possible values to query for.
  * @param $limit
  *   Limit the numer of results. Defaults to 30.
  *
@@ -94,8 +93,24 @@ function entity_get_all_property_info($entity_type = NULL) {
  */
 function entity_property_query($entity_type, $property, $value, $limit = 30) {
   $properties = entity_get_all_property_info($entity_type);
-  if (isset($properties[$property]['query callback'])) {
-    return $properties[$property]['query callback']($entity_type, $property, $value, $limit);
+  $info = $properties[$property] + array('type' => 'text', 'query callback' => isset($properties[$property]['schema field']) ? 'entity_metadata_table_query' : FALSE);
+
+  $type = $info['type'];
+  // Make sure an entity or a list of entities are passed on as identifiers
+  // with the help of the wrappers. For that ensure the data type matches the
+  // passed on value(s).
+  if (is_array($value) && !entity_property_list_extract_type($type)) {
+    $type = 'list<' . $type . '>';
+  }
+  elseif (!is_array($value) && entity_property_list_extract_type($type)) {
+    $type = entity_property_list_extract_type($type);
+  }
+
+  $wrapper = entity_metadata_wrapper($type, $value);
+  $value = $wrapper->value(array('identifier' => TRUE));
+
+  if (!empty($info['query callback'])) {
+    return $info['query callback']($entity_type, $property, $value, $limit);
   }
 }
 
@@ -202,6 +217,7 @@ function entity_property_verify_data_type($data, $type) {
   }
 
   switch ($type) {
+    case 'site':
     case 'unknown':
       return TRUE;
     case 'date':
@@ -220,6 +236,8 @@ function entity_property_verify_data_type($data, $type) {
       return valid_url($data, TRUE);
     case 'list':
       return (is_array($data) && array_values($data) == $data) || (is_object($data) && $data instanceof EntityMetadataArrayObject);
+    case 'entity':
+      return is_object($data) && $data instanceof EntityDrupalWrapper;
     default:
     case 'struct':
       return is_object($data) || is_array($data);
@@ -243,8 +261,10 @@ function entity_property_verify_data_type($data, $type) {
 function entity_property_values_create_entity($entity_type, $values = array()) {
   if (entity_type_supports($entity_type, 'create')) {
     $info = entity_get_info($entity_type);
-    // Create the initial entity.
-    $entity = entity_create($entity_type, array_intersect_key($values, array_flip($info['entity keys'])));
+    // Create the initial entity by passing the values for all 'entity keys'
+    // to entity_create().
+    $entity_keys = array_filter($info['entity keys']);
+    $entity = entity_create($entity_type, array_intersect_key($values, array_flip($entity_keys)));
     // Now set the remaining values using the wrapper.
     $wrapper = entity_metadata_wrapper($entity_type, $entity);
     foreach ($values as $key => $value) {
@@ -285,6 +305,13 @@ function entity_property_verbatim_get($data, array $options, $name) {
 }
 
 /**
+ * Date values are converted from ISO strings to timestamp, if needed.
+ */
+function entity_property_verbatim_date_get($data, array $options, $name) {
+  return is_numeric($data[$name]) ? $data[$name] : strtotime($data[$name], time());
+}
+
+/**
  * Sets the property to the given value. May be used as 'setter callback'.
  */
 function entity_property_verbatim_set(&$data, $name, $value) {
@@ -300,7 +327,9 @@ function entity_property_verbatim_set(&$data, $name, $value) {
  * Gets the property using the getter method (named just like the property).
  */
 function entity_property_getter_method($object, array $options, $name) {
-  return $object->$name();
+  // Remove any underscores as classes are expected to use CamelCase.
+  $method = strtr($name, array('_' => ''));
+  return $object->$method();
 }
 
 /**
@@ -308,7 +337,8 @@ function entity_property_getter_method($object, array $options, $name) {
  * 'setter callback'.
  */
 function entity_property_setter_method($object, $name, $value) {
-  $method = 'set' . $name;
+  // Remove any underscores as classes are expected to use CamelCase.
+  $method = 'set' . strtr($name, array('_' => ''));
   // Invoke the setProperty() method where 'Property' is the property name.
   $object->$method($value);
 }
@@ -342,6 +372,25 @@ function entity_property_create_array($property_name, $context) {
 }
 
 /**
+ * Flattens the given options in single dimensional array.
+ * We don't depend on options module, so we cannot use options_array_flatten().
+ *
+ * @see options_array_flatten()
+ */
+function entity_property_options_flatten($options) {
+  $result = array();
+  foreach ($options as $key => $value) {
+    if (is_array($value)) {
+      $result += $value;
+    }
+    else {
+      $result[$key] = $value;
+    }
+  }
+  return $result;
+}
+
+/**
  * Defines info for the properties of the text_formatted data structure.
  */
 function entity_property_text_formatted_info() {
@@ -351,6 +400,8 @@ function entity_property_text_formatted_info() {
       'label' => t('Text'),
       'sanitized' => TRUE,
       'getter callback' => 'entity_metadata_field_text_get',
+      'setter callback' => 'entity_property_verbatim_set',
+      'setter permission' => 'administer nodes',
       'raw getter callback' => 'entity_property_verbatim_get',
     ),
     'summary' => array(
@@ -358,6 +409,8 @@ function entity_property_text_formatted_info() {
       'label' => t('Summary'),
       'sanitized' => TRUE,
       'getter callback' => 'entity_metadata_field_text_get',
+      'setter callback' => 'entity_property_verbatim_set',
+      'setter permission' => 'administer nodes',
       'raw getter callback' => 'entity_property_verbatim_get',
     ),
     'format' => array(

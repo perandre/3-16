@@ -130,7 +130,7 @@ class date_views_argument_handler extends date_views_argument_handler_simple {
     $defaults = parent::default_actions();
   
     // There is no easy way to do summary queries on multiple fields, so remove that option.
-    unset($defaults['summary asc'], $defaults['summary desc'], $defaults['summary asc by count'], $defaults['summary desc by count']);
+    unset($defaults['summary']);
 
     if ($which) {
       if (!empty($defaults[$which])) {
@@ -148,8 +148,7 @@ class date_views_argument_handler extends date_views_argument_handler_simple {
     $this->query_fields = array();
     foreach ($this->options['date_fields'] as $delta => $name) {
       if (array_key_exists($name, $fields) && $field = $fields[$name]) {
-        $date_handler = new date_sql_handler();
-        $date_handler->construct($field['sql_type'], date_default_timezone());
+        $date_handler = new date_sql_handler($field['sql_type'], date_default_timezone());
         $date_handler->granularity = $this->options['granularity'];
         date_views_set_timezone($date_handler, $this, $field);
         $this->query_fields[] = array('field' => $field, 'date_handler' => $date_handler);
