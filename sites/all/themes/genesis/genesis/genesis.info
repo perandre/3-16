@@ -25,9 +25,6 @@
   stylesheets[all][] = css/layout.css
   stylesheets[all][] = css/admin-styles.css
 
-; Redefine the default location of scripts.js
-  scripts[] = js/script.js
-
 ; Information added by drupal.org packaging script on 2011-02-28
 version = "7.x-2.x-dev"
 core = "7.x"
