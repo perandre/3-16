@@ -68,7 +68,7 @@ line-height: 20px;
 font-size: 14px;
 line-height: 20px;
 font-weight: bold;
-text-shadow: 1px 1px #fff;
+text-shadow: 0 1px #fff;
 }
 
 .view-kalender .view-footer a {
@@ -142,3 +142,10 @@ display: none;
     text-indent: -9000px;
 }
 
+/* Sidebar second
+ *
+ */
+#sidebar-second .block-views .block-content {
+  background: none;
+  padding: 0;
+}

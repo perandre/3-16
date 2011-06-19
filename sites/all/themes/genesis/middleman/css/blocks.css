@@ -47,7 +47,11 @@
 #sidebar-first .block .content {}
 
 #sidebar-second .block {
-margin-bottom: 20px;
+margin-bottom: 39px;
+}
+
+#sidebar-second .block p {
+  margin-bottom: 13px;
 }
 
 .page-node #sidebar-second .block {
@@ -55,12 +59,29 @@ padding-right: 24px;
 }
 
 #sidebar-second .block-title {
-background: #ddd;
-padding: 3px 6px;
+  background: transparent url(../images/bg-block-title.png) no-repeat right 0 ;
+  color: #D1EBF4;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  padding: 1px 35px 10px 10px;
+  text-shadow: 0 -1px 0 #116684;
+  z-index: 1;
+  position: relative;
 }
 #sidebar-second .block-inner {}
-#sidebar-second .block .content {}
+#sidebar-second .block-content {
+  background-color: #E9E9EB;
+  z-index: 0;
+  margin-top: -19px;
+  padding: 15px 10px 5px;
+}
 
+/* Facebook reset */
+#sidebar-second #block-block-3 .block-content {
+  background: none;
+  padding: 0;
+}
 
 /**********************************************************
  *                  Region blocks

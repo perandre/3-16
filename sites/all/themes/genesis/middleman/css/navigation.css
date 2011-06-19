@@ -272,5 +272,42 @@ font-weight: bold;
   height: auto;
   overflow: visible;
   padding: 1px 10px 2px 10px;
+} 
+
+/* Sidebar second
+ *
+ */ 
+#sidebar-second .block-menu-block .block-content {
+  padding: 0;
+}
+ 
+#sidebar-second .block-menu-block ul {
+  margin: 0; 
 }
 
+#sidebar-second .block-menu-block li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  list-style-image: none;
+}
+
+#sidebar-second .block-menu-block li.active {
+  background: url(../images/bg-sidebar-menu-active.png) repeat-x 0 0;
+}
+
+#sidebar-second .block-menu-block a {
+  padding: 4px 10px 6px;
+  display: block;
+  background: transparent url(../images/horizontal-line.png) repeat-x 0 bottom;
+  font-size: 1.1em;
+}
+
+#sidebar-second .block-menu-block li.last a {
+  background: none;
+}
+
+#sidebar-second .block-menu-block a.active {
+  color: #137598;
+  font-weight: bold;
+}
