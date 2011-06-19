@@ -6,6 +6,7 @@ function _fb_social_likebox_fb_defaults() {
     'href' => '',
     'width' => 292,
     'height' => '',
+    'color', 'light',
     'connections' => 10,
     'stream' => 1,
     'header' => 1,
@@ -31,6 +32,13 @@ function _fb_social_likebox_fb_attrs_form() {
     '#type' => 'textfield',
     '#title' => t('Height'),
     '#description' => t('The height of the wiget in pixel'),
+  );
+  
+  $form['color'] = array(
+    '#type' => 'select',
+    '#title' => t('Color'),
+    '#description' => t('The color scheme of the plugin'),
+    '#options' => array('dark' => t('dark'), 'light' => t('light') )
   );
 
   $form['connections'] = array(

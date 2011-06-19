@@ -1,5 +1,7 @@
 <?php
 
+
+
 /**
  * Implements hook_theme().
  */
@@ -19,7 +21,26 @@ function theme_fb_social_comments_preset() {
     'absolute' => TRUE,
     'alias' => TRUE,
   ));
-  return theme('fb_social_preset', array('preset' => $preset, 'extra' => array('xid' => urlencode($xid))));
+  
+  $extra = array();
+  
+  $extra['xid'] = urlencode($xid);
+  
+  // migrate to the new version of facebook comments
+  $migrated = variable_get('fb_social_comments_migrated', 0);
+  if ($migrated){
+	$extra['migrated'] = '1';
+  }
+  else {
+    $extra['href'] = fb_social_url($_GET['q']); 
+  }
+  
+  if ($css = variable_get('fb_social_comments_css', '')) {
+    $extra['css'] = $css;
+  }
+  
+  
+  return theme('fb_social_preset', array('preset' => $preset, 'extra' => $extra));
 }
 
 /**

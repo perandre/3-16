@@ -6,6 +6,7 @@
  */
 define('FB_SOCIAL_REQUIRED_CTOOLS_API', '1.7.1');
 
+
 /**
  * Implements hook_menu().
  */
@@ -34,6 +35,22 @@ function fb_social_menu() {
   );
 
   return $items;
+}
+
+/**
+ * Implementation of hook_fb_social_event_subscribe
+ */
+function fb_social_like_fb_social_event_subscribe() {
+  // integration with google analytics
+  if (module_exists('googleanalytics')) {
+    global $user;
+    $id = variable_get('googleanalytics_account', '');
+    if (!empty($id) && _googleanalytics_visibility_pages() && _googleanalytics_visibility_user($user)) {		
+      return array('FB.Event.subscribe("edge.create", function(href, widget) {',
+        '_gaq.push(["_trackEvent", "Facebook like", "Drupal", href]);',
+      '});');
+    }
+  }
 }
 
 /**
@@ -257,6 +274,20 @@ function fb_social_page_alter(&$page) {
   $page['page_bottom']['fb_social'] = array(
     '#markup' => $output,
   );
+  
+  // set fb appid as administrator to moderate comments etc
+  // see "moderation tools section at http://developers.facebook.com/docs/reference/plugins/comments/
+  
+  if (module_exists('fb_social_like') || module_exists('fb_social_comments')) {
+    $element = array(
+        '#tag' => 'meta', 
+        '#attributes' => array( // Set up an array of attributes inside the tag
+            'property' => 'fb:app_id', 
+            'content' => check_plain(variable_get('fb_social_appid', '')) 
+        ) 
+    );
+    drupal_add_html_head($element, 'fb_social_fbadmin');
+  }
 }
 
 /**

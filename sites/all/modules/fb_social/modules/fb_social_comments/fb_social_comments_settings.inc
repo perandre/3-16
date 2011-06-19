@@ -75,6 +75,13 @@ function _fb_social_comments_settings_form($settings) {
     '#default_value' => isset($settings['node_types']['fb_social_comments_node_types']) ? $settings['node_types']['fb_social_comments_node_types'] : array(),
     '#options' => node_type_get_names(),
   );
+  
+  $form['fb_social_comments_migrated'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Migrate to the new version of facebook comments'),
+    '#description' => t('If you are using the original version of the Facebook Comments box, check and the comments box will automatically switch to the new version'),
+    '#default_value' =>  isset($settings['fb_social_comments_migrated']) ? $settings['fb_social_comments_migrated']:0,
+  );
 
   return $form;
 }
