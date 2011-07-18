@@ -53,3 +53,40 @@ display: inline-block;
 .tweet-time {
 display: none;
 }
+
+/* Hvem landing page*/
+.section-hvem .node-page {
+padding: 40px 100px;
+margin: 40px 100px;
+background: #fff;
+border-top: 1px solid #ccc;
+}
+
+
+.section-hvem .field-name-field-teaser {
+font-family: Georgia;
+font-size: 24px;
+line-height: 35px;
+padding-bottom: 30px;
+margin-bottom: 30px;
+border-bottom: 4px solid #777;
+}
+
+.section-hvem .field-name-body div {
+padding: 0 20px;
+}
+
+.section-hvem .field-name-body div > p {
+font-size: 16px;
+line-height: 30px;
+color: #555;
+}
+
+.section-hvem h2 {
+font-size: 26px;
+line-height: 35px;
+color: #000;
+font-weight: bold;
+font-family: Helvetica;
+margin-top: 40px;
+}
