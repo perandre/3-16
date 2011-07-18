@@ -77,6 +77,10 @@ padding-right: 24px;
   padding: 15px 10px 5px;
 }
 
+#sidebar-second #block-views-kalender-kalender .block-content {
+margin-top: 0;
+}
+
 /* Facebook reset */
 #sidebar-second #block-block-3 .block-content {
   background: none;

@@ -83,14 +83,22 @@ margin: 0 14px 14px;
 
 /* Front page */
 .view-hjem .views-row {
-width: 300px;
+border-top: 1px solid #CCCCCC;
 float: left;
+height: 300px;
+margin-bottom: 20px;
+padding-top: 30px;
 position: relative;
-margin-bottom: 30px;
+width: 300px;
 }
 
 .view-hjem .views-row-even {
-margin-left: 20px;
+padding-left: 20px;
+}
+
+.view-hjem .views-row-1, .view-hjem .views-row-2 {
+padding-top: 0;
+border: 0;
 }
 
 .view-hjem img {

@@ -71,4 +71,8 @@ h2#comment-wrapper-title {}
 /* Theme comment status. */
 .comment .unpublished {}
 
+/* Diqus */
+#disqus_thread {
+margin: 30px 0;
+}
 
