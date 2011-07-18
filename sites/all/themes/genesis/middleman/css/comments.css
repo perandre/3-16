@@ -73,6 +73,9 @@ h2#comment-wrapper-title {}
 
 /* Diqus */
 #disqus_thread {
-margin: 30px 0;
+background: none repeat scroll 0 0 #EEEEEE;
+border-top: 1px solid #CCCCCC;
+margin-bottom: 20px;
+padding: 20px 30px;
 }
 
