@@ -32,6 +32,19 @@ line-height: 24px;
 margin-bottom: 20px;
 }
 
+.node-article .field-name-field-teaser {
+padding-bottom: 20px;
+border-bottom: 3px solid #999;
+}
+
+.node-article .field-name-body {
+padding: 10px 45px;
+font-size: 14px;
+line-height: 25px;
+color: #333;
+}
+
+
 /* Field items zebra */
 .field-items .odd  {}
 .field-items .even {}
