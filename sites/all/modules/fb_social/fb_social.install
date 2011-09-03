@@ -9,16 +9,12 @@
  * Implements hook_install().
  */
 function fb_social_install() {
-  // TODO The drupal_(un)install_schema functions are called automatically in D7.
-  // drupal_install_schema('fb_social')
 }
 
 /**
  * Implements hook_uninstall().
  */
 function fb_social_uninstall() {
-  // The drupal_(un)install_schema functions are called automatically in D7.
-  // drupal_uninstall_schema('fb_social')
 
   // delete system variables
   variable_del('fb_social_appid');

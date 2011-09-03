@@ -53,6 +53,20 @@ function fb_social_admin_settings_form($form, &$form_state) {
     '#description' => t('The url version of your post you want to be shown in fb. Aliased - http://example.com/mypage, Unaliased - http://example.com/node/34'),
   );
 
+  $form['fb_social_urls']['fb_social_base_url'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Base URL'),
+    '#default_value' => variable_get('fb_social_base_url', ''),
+    '#description' => t('Specify a base URL for all links presented to Facebook. This URL replaces the actual URL currently shown in the browser. This setting is useful for sites running on multiple domains but want to recognize Facebook likes cross-domain. Please include http:// or https:// in this setting. Leave empty for default behaviour.'),
+  );
+
+  $form['fb_social_urls']['fb_social_url_strip_lang'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Strip language'),
+    '#default_value' => variable_get('fb_social_url_strip_lang', 0),
+    '#description' => t('Strip the language tag from the URL sent to Facebook. This has two implications: First, for Facebook users that click on the link, the usual language determination is used. Second all comments, likes, etc. made in the different language versions are counted and shown on all pages, even in different languages.'),
+  );
+
   $form['fb_social_languages'] = array(
     '#type' => 'fieldset',
     '#title' => t('Languages mapping'),
