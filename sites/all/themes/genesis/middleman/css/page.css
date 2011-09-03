@@ -74,7 +74,9 @@ padding: 20px 24px;
 }
 
 /* Main content wrappers*/
-#main-content {}
+.front #main-content, .page-ung #main-content { /* This is set mainly to fix problem with overflow in ie7*/
+  width: 620px;
+}
 #content {}
 
 
