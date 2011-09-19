@@ -3,7 +3,7 @@
 $plugin = array(
     'title' => t('activityfeed'), 
     'description' => t('Facebook activityfeed plugin'), 
-    'html tag name' => 'activityfeed' 
+    'html tag name' => 'activity' 
 )
 ;
 
