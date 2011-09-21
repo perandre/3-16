@@ -179,17 +179,17 @@ function fb_social_theme() {
 /**
  * Implementation of hook_content_extra_fields.
  */
-function fb_social_content_extra_fields($type_name){
+function fb_social_field_extra_fields(){
   $extras = array();
   $presets = fb_social_get_presets();
+
   foreach ( $presets as $preset ) {
     $plugin = fb_social_fb_plugin_load($preset->plugin_type);
     $function = ctools_plugin_get_function($plugin, 'content_extra_fields callback');
     if ($function) {
-      $extras = $function($preset, $type_name);
+      $function($extras, $preset);
     }
   }
-  
   return $extras;
 }
 

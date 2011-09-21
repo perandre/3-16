@@ -156,16 +156,20 @@ function like_preprocess_options(&$options){
 /**
  * content_extra_fields callback for this plugin
  */
-function fb_social_like_content_extra_fields($preset, $type_name){
-  $extras = array();
-  if (fb_social_preset_node_types($preset, $type_name) && $preset->settings['plugin_location']['location']) {
-    $extras['node'][$type_name]['display']['fb_social_like_' . $preset->name] = array(
-        'label' => t('Facebook social:  like plugin'), 
+function fb_social_like_content_extra_fields(&$extras, $preset){
+
+  $types = ($preset->settings['node_types']['types']);
+
+  foreach ( $types as $type => $value ) {
+    if (! empty($value)) {
+      $extras['node'][$type]['display']['fb_social_' . $preset->name] = array(
+        'label' => t('Facebook like: ' . $preset->name), 
         'description' => t('The "like" plugin field from ' . $preset->name . ' preset'), 
-        'weight' => - 10 
-    );
+        'weight' => 15 
+      );
+    
+    }
   }
-  return $extras;
 }
 
 /**
@@ -178,7 +182,7 @@ function fb_social_like_nodeapi_view($preset, &$node, $view_mode = 'full'){
       $preset->fb_attrs['href'] = fb_social_url('node/' . $node->nid);
       $output = fb_social_preset_view($preset);
       //$weight = (module_exists('content')) ? content_extra_field_weight($node->type, 'fb_social_like_' . $preset->name) : - 10;
-      $node->content['fb_social_like_' . $preset->name] = array(
+      $node->content['fb_social_' . $preset->name] = array(
           '#markup' => $output 
       );
     
