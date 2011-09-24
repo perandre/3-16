@@ -10,7 +10,6 @@ $plugin = array(
 
 function send_defaults(){
   return array(
-      'href' => '',
       'font' => '', 
       'colorscheme' => 'light' 
   );
@@ -21,13 +20,6 @@ function send_fb_settings($options){
 
   $form = array();
 
-  $form['href'] = array(
-    '#type' => 'textfield',
-    '#title' => t('URL to send'),
-    '#description' => t('The URL to send.'),
-    //'#required' => TRUE,
-  );
-  
   $form['font'] = array(
       '#type' => 'select', 
       '#title' => t('Font'), 
@@ -101,4 +93,8 @@ function send_drupal_settings($options){
   );
   return $form;
 
+}
+
+function send_preprocess_options(&$options){
+  $options['href'] = empty($options['href']) ? $url = fb_social_url($_GET['q']) : $options['href'];
 }

@@ -137,13 +137,13 @@ function fb_social_block_info(){
   $blocks = array();
   
   // load all presets
-  $presets = fb_social_get_presets();
-
-  foreach ( $presets as $preset ) {
-    if ($preset->settings['block']) {
-      $blocks[$preset->name] = array(
-        'info' => $preset->name . ' block' 
-      );
+  if ($presets = fb_social_get_presets()) {
+    foreach ( $presets as $preset ) {
+      if ($preset->settings['block']) {
+        $blocks[$preset->name] = array(
+          'info' => $preset->name . ' block' 
+        );
+      }
     }
   }
   return $blocks;
@@ -181,13 +181,14 @@ function fb_social_theme() {
  */
 function fb_social_field_extra_fields(){
   $extras = array();
-  $presets = fb_social_get_presets();
-
-  foreach ( $presets as $preset ) {
-    $plugin = fb_social_fb_plugin_load($preset->plugin_type);
-    $function = ctools_plugin_get_function($plugin, 'content_extra_fields callback');
-    if ($function) {
-      $function($extras, $preset);
+  if ($presets = fb_social_get_presets()) {
+    
+    foreach ( $presets as $preset ) {
+      $plugin = fb_social_fb_plugin_load($preset->plugin_type);
+      $function = ctools_plugin_get_function($plugin, 'content_extra_fields callback');
+      if ($function) {
+        $function($extras, $preset);
+      }
     }
   }
   return $extras;
@@ -202,24 +203,24 @@ function fb_social_node_view($node, $view_mode = 'full'){
   $links = fb_social_link('node', $node, $view_mode == 'teaser');
   if ($links) {
     $node->content['links']['fb_social_like'] = array(
-        '#theme' => 'links__node__fb_social', 
-        '#links' => $links, 
-        '#attributes' => array(
-            'class' => array(
-                'links', 
-                'inline' 
-            ) 
+      '#theme' => 'links__node__fb_social', 
+      '#links' => $links, 
+      '#attributes' => array(
+        'class' => array(
+          'links', 
+          'inline' 
         ) 
+      ) 
     );
   }
   
-  $presets = fb_social_get_presets();
-  
-  foreach ( $presets as $preset ) {
-    $plugin = fb_social_fb_plugin_load($preset->plugin_type);
-    $function = ctools_plugin_get_function($plugin, 'nodeapi_view callback');
-    if ($function) {
-      $function($preset, $node, $view_mode);
+  if ($presets = fb_social_get_presets()) {
+    foreach ( $presets as $preset ) {
+      $plugin = fb_social_fb_plugin_load($preset->plugin_type);
+      $function = ctools_plugin_get_function($plugin, 'nodeapi_view callback');
+      if ($function) {
+        $function($preset, $node, $view_mode);
+      }
     }
   }
 }
@@ -228,12 +229,13 @@ function fb_social_node_view($node, $view_mode = 'full'){
  *Fake hook_link (as in D6); for easy maintanance only
  */
 function fb_social_link($type, $object, $teaser = FALSE){
-  $presets = fb_social_get_presets();
-  foreach ( $presets as $preset ) {
-    $plugin = fb_social_fb_plugin_load($preset->plugin_type);
-    $function = ctools_plugin_get_function($plugin, 'hook_link callback');
-    if ($function) {
-      return $function($preset, $type, $object, $teaser);
+  if ($presets = fb_social_get_presets()) {
+    foreach ( $presets as $preset ) {
+      $plugin = fb_social_fb_plugin_load($preset->plugin_type);
+      $function = ctools_plugin_get_function($plugin, 'hook_link callback');
+      if ($function) {
+        return $function($preset, $type, $object, $teaser);
+      }
     }
   }
 }
@@ -379,15 +381,17 @@ function fb_social_get_presets($name = NULL, $enabled = TRUE, $reset = FALSE){
  * @see ctools_export_load_object()
  */
 function _fb_social_enabled_presets_filter($preset){
-  return (isset($preset -> disabled) && ($preset -> disabled)) ? FALSE : TRUE;
+  return (isset($preset->disabled) && ($preset->disabled)) ? FALSE : TRUE;
 }
 
 function fb_social_get_presets_by_type($type, $en = TRUE){
-  $result = array(); 
-  $presets = fb_social_get_presets( $name = NULL, $enabled = $en);
-  foreach ($presets as $preset){
-    if ($preset -> plugin_type == $type){
-      $result[] = $preset;
+  $result = array();
+  $presets = fb_social_get_presets($name = NULL, $enabled = $en);
+  if (! empty($presets)) {
+    foreach ( $presets as $preset ) {
+      if ($preset->plugin_type == $type) {
+        $result[] = $preset;
+      }
     }
   }
   
@@ -404,7 +408,6 @@ function fb_social_boxes_plugins(){
   $path = drupal_get_path('module', 'fb_social') . '/plugins/boxes';
   
   $info['fb_social_default'] = array(
-    'title' => '',  // important . We dont /box-add/fb_social_boxes_default
     'handler' => array(
       'class' => 'fb_social_default', 
       'file' => 'fb_social_default.inc', 
@@ -414,7 +417,7 @@ function fb_social_boxes_plugins(){
   );
   
   $info['fb_social_like'] = array(
-    'title' => 'facebook social like', 
+    'title' => 'facebook like', 
     'handler' => array(
       'class' => 'fb_social_like', 
       'file' => 'fb_social_like.inc', 
@@ -424,7 +427,7 @@ function fb_social_boxes_plugins(){
   );
   
   $info['fb_social_likebox'] = array(
-    'title' => 'facebook social likebox', 
+    'title' => 'facebook likebox', 
     'handler' => array(
       'class' => 'fb_social_likebox', 
       'file' => 'fb_social_likebox.inc', 
@@ -434,7 +437,7 @@ function fb_social_boxes_plugins(){
   );
   
   $info['fb_social_send'] = array(
-    'title' => 'facebook social send', 
+    'title' => 'facebook send', 
     'handler' => array(
       'class' => 'fb_social_send', 
       'file' => 'fb_social_send.inc', 
@@ -444,7 +447,7 @@ function fb_social_boxes_plugins(){
   );
   
   $info['fb_social_facepile'] = array(
-    'title' => 'facebook social facepile', 
+    'title' => 'facebook facepile', 
     'handler' => array(
       'class' => 'fb_social_facepile', 
       'file' => 'fb_social_facepile.inc', 
@@ -454,7 +457,7 @@ function fb_social_boxes_plugins(){
   );
   
   $info['fb_social_livestream'] = array(
-    'title' => 'facebook social livestream', 
+    'title' => 'facebook livestream', 
     'handler' => array(
       'class' => 'fb_social_livestream', 
       'file' => 'fb_social_livestream.inc', 
@@ -464,7 +467,7 @@ function fb_social_boxes_plugins(){
   );
   
   $info['fb_social_comments'] = array(
-    'title' => 'facebook social comments', 
+    'title' => 'facebook comments', 
     'handler' => array(
       'class' => 'fb_social_comments', 
       'file' => 'fb_social_comments.inc', 
@@ -477,7 +480,7 @@ function fb_social_boxes_plugins(){
   // table is limited to 32 characters.
   
   $info['fb_social_recommend'] = array(
-    'title' => 'facebook social recommendations', 
+    'title' => 'facebook recommendations', 
     'handler' => array(
       'class' => 'fb_social_recommendations', 
       'file' => 'fb_social_recommendations.inc', 
@@ -487,7 +490,7 @@ function fb_social_boxes_plugins(){
   );
   
   $info['fb_social_activityf'] = array(
-    'title' => 'facebook social activity feed', 
+    'title' => 'facebook activity feed', 
     'handler' => array(
       'class' => 'fb_social_activityfeed', 
       'file' => 'fb_social_activityfeed.inc', 
