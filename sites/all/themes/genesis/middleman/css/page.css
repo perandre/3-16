@@ -74,7 +74,7 @@ padding: 20px 24px;
 }
 
 /* Main content wrappers*/
-.front #main-content, .page-ung #main-content { /* This is set mainly to fix problem with overflow in ie7*/
+.front #main-content, .page-ung #main-content, .page-barn #main-content, .page-voksen #main-content { /* This is set mainly to fix problem with overflow in ie7*/
   width: 620px;
 }
 #content {}
