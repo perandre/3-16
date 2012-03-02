@@ -5,9 +5,9 @@ core = 7.x
 files[] = auto_nodetitle.install
 files[] = auto_nodetitle.module
 files[] = auto_nodetitle.js
-; Information added by drupal.org packaging script on 2011-02-25
+; Information added by drupal.org packaging script on 2011-09-09
 version = "7.x-1.x-dev"
 core = "7.x"
 project = "auto_nodetitle"
-datestamp = "1298618867"
+datestamp = "1315526618"
 
