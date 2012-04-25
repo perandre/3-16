@@ -57,6 +57,10 @@ padding: 10px;
 border-radius: 3px
 }
 
+#views-exposed-form-undervisning-undervisning .form-text {
+  width: 212px;
+}
+
 #edit-submit-undervisning {
   margin-top: 1.9em;
 }
