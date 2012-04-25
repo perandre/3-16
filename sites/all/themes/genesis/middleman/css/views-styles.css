@@ -2,6 +2,68 @@
 /**********************************************************
  *                    Views Styles
  **********************************************************/
+/* Tags */
+.view-tags {
+  padding-top: 10px;
+}
+
+.view-tags a {
+  background: #6EC4E3;
+  border-radius: 3px 3px 3px 3px;
+  color: #FFFFFF;
+  float: left;
+  font-size: 12px;
+  margin: 0 2px 2px 0;
+  padding: 1px 6px;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.view-tags a:hover {
+  background: #444444;
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+#sidebar-second #block-views-tags-block {
+  margin-top: 51px;
+}
+
+/* Undervisning */
+.view-undervisning .image {
+  border: 1px solid #E5E5E5;
+  box-shadow: 1px 1px 3px #F5F5F5;
+  float: left;
+  margin: 0 20px 0 0;
+  padding: 8px;
+  background: #fff;
+}
+
+.view-undervisning .views-row {
+  border-bottom: 1px dotted #CCCCCC;
+  margin-bottom: 25px;
+  padding-bottom: 25px;
+  clear: both;
+  overflow: auto;
+}
+
+.view-undervisning .views-field-field-teaser {
+  margin-bottom: 10px;
+  font-size: 13px;
+}
+
+#views-exposed-form-undervisning-undervisning {
+background: #fff;
+padding: 10px;
+border-radius: 3px
+}
+
+#edit-submit-undervisning {
+  margin-top: 1.9em;
+}
+
+.page-undervisning .tweets-pulled-listing {
+  display: none;
+}
 
 /* Front page slideshow */
 
