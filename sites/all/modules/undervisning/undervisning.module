@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Undervisning feature.
+ */
+
+include_once('undervisning.features.inc');
