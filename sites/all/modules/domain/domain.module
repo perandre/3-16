@@ -135,7 +135,9 @@ function domain_init() {
   }
 
   // Set the site name to the domain-specific name.
-  $conf['site_name'] = $_domain['sitename'];
+  if (variable_get('domain_sitename_override', 1)) {
+    $conf['site_name'] = $_domain['sitename'];
+  }
 }
 
 /**
@@ -248,7 +250,7 @@ function domain_menu() {
         'page arguments' => array($key),
         'file' => 'domain.admin.inc',
         'description' => isset($value['#description']) ? $value['#description'] : '',
-        'weight' => $value['#weight']
+        'weight' => isset($value['#weight']) ? $value['#weight'] : 0,
       );
     }
   }
@@ -1184,13 +1186,34 @@ function domain_domains($reset = FALSE) {
   if (empty($domains) || $reset) {
     $domains = array();
     // Query the db for active domain records.
-    $result = db_query("SELECT domain_id FROM {domain} ORDER BY weight", array(), array('fetch' => PDO::FETCH_ASSOC));
-    foreach ($result as $data) {
-      $domain = domain_lookup($data['domain_id'], NULL, $reset);
+    $result = domain_id_list($reset);
+    foreach ($result as $domain_id) {
+      $domain = domain_lookup($domain_id, NULL, $reset);
       $domains[$domain['domain_id']] = $domain;
     }
   }
   return $domains;
+}
+
+/**
+ * Return all active domain_ids.
+ *
+ * @param $reset
+ *   A boolean flag indicating whether to reset the static array or not.
+ *
+ * @return
+ *   An array of domain_ids, keyed by machine_name.
+ */
+function domain_id_list($reset = FALSE) {
+  $list = &drupal_static(__FUNCTION__);
+  if (isset($list) && empty($reset)) {
+    return $list;
+  }
+  $result = db_query("SELECT domain_id, machine_name FROM {domain} ORDER BY weight");
+  foreach ($result as $data) {
+    $list[$data->machine_name] = $data->domain_id;
+  }
+  return $list;
 }
 
 /**
@@ -1241,9 +1264,11 @@ function domain_validate($subdomain) {
  */
 function domain_valid_domain($subdomain) {
   $error_list = array();
-  // Check for at least one dot.
-  if (substr_count($subdomain, '.') == 0 && $subdomain != 'localhost') {
-    $error_list[] = t('At least one dot (.) is required, except for <em>localhost</em>.');
+  // Check for at least one dot or the use of 'localhost'.
+  // Note that localhost can specify a port.
+  $localhost_check = explode(':', $subdomain);
+  if (substr_count($subdomain, '.') == 0 && $localhost_check[0] != 'localhost') {
+    $error_list[] = t('At least one dot (.) is required, except when using <em>localhost</em>.');
   }
   // Check for one colon only.
   if (substr_count($subdomain, ':') > 1) {
@@ -1275,6 +1300,10 @@ function domain_valid_domain($subdomain) {
   // Check for lower case.
   if ($subdomain != drupal_strtolower($subdomain)) {
     $error_list[] = t('Only lower-case characters are allowed.');
+  }
+  // Check for 'www' prefix if redirection / handling is enabled under global domain settings.
+  if (variable_get('domain_www', 1) && (substr($subdomain, 0, strpos($subdomain, '.')) == 'www')) {
+    $error_list[] = t('WWW prefix handling: Domains must be registered without the www. prefix.');
   }
   // Allow modules to alter this behavior.
   drupal_alter('domain_validate', $error_list, $subdomain);
@@ -1340,7 +1369,7 @@ function domain_get_user_domains($account, $add_roles = TRUE, $reset = FALSE) {
           // If this role is assigned to "All domains"
           if (!empty($filter['all'])) {
             // Add all active domains to the user
-            foreach (domain_domains() as $domain_id => $domain) {
+            foreach (domain_id_list() as $domain_id) {
               $domains[$uid][$domain_id] = $domain_id;
             }
             // We don't need to loop anymore, as all roles have already been added.
@@ -2475,7 +2504,9 @@ function domain_form_alter(&$form, &$form_state, $form_id) {
  * Update the default domain's sitename.
  */
 function domain_form_system_site_information_settings_alter(&$form, &$form_state) {
-  $form['#submit'][] = 'domain_form_sitename_submit';
+  if (variable_get('domain_sitename_override', 1)) {
+    $form['#submit'][] = 'domain_form_sitename_submit';
+  }
 }
 
 /**
@@ -2885,15 +2916,15 @@ function domain_domain_batch() {
   //Change all the site names at once.
   $batch['sitename'] = array(
     '#form' => array(
-      '#title' => t('Site names'),
+      '#title' => t('Names'),
       '#type' => 'textfield',
       '#size' => 40,
       '#maxlength' => 80,
-      '#description' => t('The site name to display for this domain.'),
+      '#description' => t('The human-readable name for this domain.'),
       '#required' => TRUE,
     ),
     '#domain_action' => 'domain',
-    '#meta_description' => t('Edit all domain site names.'),
+    '#meta_description' => t('Edit all domain names.'),
     '#data_type' => 'string',
     '#update_all' => FALSE,
     '#weight' => -10,
@@ -3332,6 +3363,9 @@ function domain_alter_node_query(QueryAlterableInterface $query, $type) {
  *   is 200 "found".
  */
 function domain_check_response($domain, $drush = FALSE) {
+  if (variable_get('domain_skip_domain_check', 0)) {
+    return t('Domain response checks have been disabled. Saving an incorrect domain may affect your site.');
+  }
   $url = domain_get_path($domain) . drupal_get_path('module', 'domain') . '/tests/200.png';
   $response = drupal_http_request($url, array('method' => 'HEAD', 'absolute' => TRUE));
   if ($response->code != 200) {
@@ -3534,7 +3568,10 @@ function domain_features_load($module, $hook, $return = TRUE) {
  *  An array of form options. Not that we cannot use _ in keys.
  */
 function domain_features_get_options() {
-  $options = array('all-domains' => t('Export all domains'));
+  $options = array(
+    'wipe-domain-tables' => t('Wipe tables on revert/rebuild'),
+    'all-domains' => t('Export all domains'),
+  );
   foreach (domain_domains() as $domain) {
     $options[$domain['machine_name']] = $domain['subdomain'];
   }
@@ -3566,6 +3603,59 @@ function domain_features_selection($data) {
     }
   }
   return $list;
+}
+
+/**
+ * Tells Features revert whether to perform a wipe/rebuild.
+ *
+ * @param &$defaults
+ *  The default values from the feature, passed by reference.
+ *
+ * @return boolean
+ */
+function domain_features_wipe_tables(&$defaults) {
+  if (!empty($defaults['wipe-domain-tables'])) {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+/**
+ * Tells Features export how to process a wipe/rebuild statement to code.
+ *
+ * @param &$data
+ *  The data for the feature, passed by reference.
+ * @param $code
+ *  The code array to export, passed by reference.
+ * @param $export
+ *  Boolean indicator that we are generator (exporting) or testing code.
+ * @param $type
+ *  A string indicating the type of domain data to export.
+ *
+ * @return boolean
+ */
+function domain_features_export_wipe_tables_code(&$data, &$code, $export, $type) {
+  if ((!empty($export) && !empty($data['wipe-domain-tables'])) || in_array('wipe-domain-tables', $data)) {
+    $code[] = "  \${$type}['wipe-domain-tables'] = 'wipe-domain-tables';";
+    return TRUE;
+  }
+  return FALSE;
+}
+
+/**
+ * Tells Features export how to set a wipe/rebuild statement in the $data.
+ *
+ * @param &$export
+ *  The feature component $export array, passed by reference.
+ * @param $data
+ *  The data for the feature.
+ * @param $type
+ *  A string indicating the type of domain data to export.
+ */
+function domain_features_export_set_wipe_tables(&$export, $data, $type) {
+  if (in_array('wipe-domain-tables', $data)) {
+    $export['features'][$type]['wipe-domain-tables'] = 'wipe-domain-tables';
+  }
 }
 
 /**
@@ -3608,7 +3698,7 @@ function domain_update_module_check() {
 function domain_test_schema($schema = array()) {
   $tables = array();
   foreach ($schema as $name => $table) {
-    if (isset($table['fields']['domain_id']['type']) && $table['fields']['domain_id']['type'] == 'int') {
+    if (db_table_exists($name) && isset($table['fields']['domain_id']['type']) && $table['fields']['domain_id']['type'] == 'int') {
       $query = db_select($name)
         ->condition('domain_id', 0);
       $check = $query->countQuery()->execute()->fetchField();

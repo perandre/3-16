@@ -11,9 +11,9 @@ files[] = settings_custom_url.inc
 files[] = settings.inc
 files[] = tests/domain.test
 
-; Information added by drupal.org packaging script on 2012-01-11
-version = "7.x-3.3"
+; Information added by drupal.org packaging script on 2012-05-30
+version = "7.x-3.4"
 core = "7.x"
 project = "domain"
-datestamp = "1326295538"
+datestamp = "1338415255"
 

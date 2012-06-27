@@ -68,7 +68,7 @@ function domain_schema() {
     'fields' => array(
       'domain_id' => array('type' => 'serial', 'not null' => TRUE, 'description' => 'Domain id. Automatic master key.'),
       'machine_name' => array('type' => 'varchar', 'length' => '255', 'not null' => TRUE, 'default' => '', 'description' => 'The machine name for this domain.')),
-    'primary key' => array('machine_name'),
+    'unique keys' => array('machine_name' => array('machine_name')),
     'indexes' => array(
       'domain_id' => array('domain_id')
     ),
@@ -95,6 +95,7 @@ function domain_uninstall() {
     'domain_paths',
     'domain_search',
     'domain_select_format',
+    'domain_sitename_override',
     'domain_seo',
     'domain_vertical_tab',
     'domain_www',
@@ -333,7 +334,7 @@ function domain_requirements($phase) {
       if ($error = domain_valid_domain($root)) {
         $requirements['domain'] = array(
           'title' => t('Domain Access'),
-          'value' => $error . t('If you are using drush, please ensure to provide the --uri option.'),
+          'value' => $error . t('If you are using drush, please provide the --uri option (e.g. drush en domain --uri="http://example.com/optional_subdirectory").'),
           'severity' => REQUIREMENT_ERROR,
         );
       }

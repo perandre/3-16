@@ -210,7 +210,8 @@ class DomainCreateTest extends DomainTestCase {
   // Try to create badly formed domains.
   function testDomainValidate() {
     $tests = array(
-      'localhost' => array(),
+      'localhost' => array(), // localhost is allowed.
+      'localhost:80' => array(), // localhost may specify a port.
       'nodotsinstring' => array(t('At least one dot (.) is required, except for <em>localhost</em>.')),
       'example.com:2000:1' => array(t('Only one colon (:) is allowed.')),
       'example.com:foo' => array(t('The port protocol must be an integer.')),
@@ -221,16 +222,25 @@ class DomainCreateTest extends DomainTestCase {
     );
     foreach ($tests as $subdomain => $error) {
       $return = domain_validate($subdomain);
-      if ($subdomain == 'localhost' && empty($return)) {
+      // Special handling for localhost. This test needs refactoring.
+      if (substr_count($subdomain, 'localhost') > 0 && empty($return)) {
         $return = TRUE;
       }
-      $this->assertTrue(!empty($return), t('!message', array('!message' => !empty($error) ? $error[0] : t('<em>localhost</em> is an allowed domain string.'))));
+      $this->assertTrue(!empty($return), t('!message', array('!message' => !empty($error) ? $error[0] : t('%subdomain is an allowed domain string.', array('%subdomain' => $subdomain)))));
     }
     // Test for the non-alphanumeric character override.
     global $conf;
     $conf['domain_allow_non_ascii'] = TRUE;
     $return = domain_validate('$%#!.com');
     $this->assertTrue(empty($return), t('ASCII character override value allowed.'));
+    // Test for the www. prefix when 'WWW prefix handling' is disabled.
+    $conf['domain_www'] = 0;
+    $return = domain_validate('www.example.com');
+    $this->assertTrue(empty($return), t('<em>WWW prefix handling</em> disabled: Domains can be registered with the www. prefix.'));
+    // Test for the www. prefix when 'WWW prefix handling' is enabled.
+    $conf['domain_www'] = 1;
+    $return = domain_validate('www.example.com');
+    $this->assertTrue(!empty($return), t('<em>WWW prefix handling</em> enabled: Domains must be registered without the www. prefix.'));
   }
 
 }
@@ -742,6 +752,23 @@ class DomainUpdateTest extends DomainTestCase {
   }
 
   function testDomainUpdate() {
+    // Test a false positive $schema missing table.
+    $schema = array('foo' => array('fields' => array('domain_id' => array('type' => 'int'))));
+    $tables = domain_test_schema($schema);
+    $this->assertTrue(empty($tables), t('domain_test_schema() returned correctly for missing table.'));
+    // Test a false positive $schema type mismatch.
+    $schema = array('foo' => array('fields' => array('domain_id' => array('type' => 'serial'))));
+    $tables = domain_test_schema($schema);
+    $this->assertTrue(empty($tables), t('domain_test_schema() returned correctly for type mismatch.'));
+    // Test a false positive $schema missing column.
+    $schema = array('domain_conf' => array('fields' => array('field_id' => array('type' => 'int'))));
+    $tables = domain_test_schema($schema);
+    $this->assertTrue(empty($tables), t('domain_test_schema() returned correctly for missing column.'));
+    // Test a proper match.
+    $schema = array('domain_conf' => drupal_get_schema('domain_conf'));
+    $tables = domain_test_schema($schema);
+    $this->assertTrue(!empty($tables), t('domain_test_schema() returned correctly for database table.'));
+    // Test the update functionality.
     $count = db_query("SELECT COUNT(domain_id) FROM {domain_conf} WHERE domain_id = 0")->fetchField();
     $this->assertTrue($count == 1, t('Domain id of 0 inserted in {domain_conf}.'));
     $list = domain_update_module_check();
@@ -935,5 +962,87 @@ class DomainTokenTest extends DomainTestCase {
       $return[$token] = "[$type:$token]";
     }
     return $return;
+  }
+}
+
+class DomainSitenameTest extends DomainTestCase {
+
+  public static function getInfo() {
+    return array(
+      'name' => 'Sitename override',
+      'description' => 'Tests behavior of sitenames and domain names.',
+      'group' => 'Domain Access',
+    );
+  }
+
+  function setUp($list = array()) {
+    // install domain_conf module
+    if (!in_array('domain_conf', $list)) {
+      $list[] = 'domain_conf';
+    }
+    parent::setUp($list);
+
+    $admin_account = $this->drupalCreateUser(array('administer domains', 'administer site configuration'));
+    $this->drupalLogin($admin_account);
+  }
+
+  // Test that domain name overrides sitename if override is enabled (=default)
+  function testOverrideEnabled() {
+    $domain = domain_default();
+
+    // Assume that override is enabled (default behavior)
+    // $this->drupalPost('admin/structure/domain/settings', array('domain_sitename_override' => TRUE), t('Save configuration'));
+
+    // Update domain name on domain edit form
+    $domainname_new = $this->randomName(32);
+    $this->drupalPost('admin/structure/domain/view/' . $domain['domain_id'] . '/edit', array('sitename' => $domainname_new), t('Save domain record'));
+
+    // Check that new domain name is displayed on frontpage
+    $this->drupalGet('');
+    $this->assertText($domainname_new, 'Frontpage shows updated domain name.');
+
+    // Check that site-information form also shows updated domain name
+    $this->drupalGet('admin/config/system/site-information');
+    $this->assertFieldByName('site_name', $domainname_new, 'Site information form shows domain name.');
+
+    // Try to update site name on system form
+    $sitename_new = $this->randomName(32);
+    $this->drupalPost('admin/config/system/site-information', array('site_name' => $sitename_new), t('Save configuration'));
+
+    // Check that domain name has not changed
+    $domainname = db_query("SELECT sitename FROM {domain} WHERE is_default = 1")->fetchField();
+    $this->assertTrue($domainname == $domainname_new, 'Domain name not updated to new site name.');
+
+    // Check that frontpage still shows domainname_new
+    $this->drupalGet('');
+    $this->assertText($domainname_new, 'Frontpage still shows domain name, new site name ignored.');
+  }
+
+  // Test that sitename is independent of domain name if override is disabled
+  function testOverrideDisabled() {
+    $domain = domain_default();
+
+    // disable override
+    $this->drupalPost('admin/structure/domain/settings', array('domain_sitename_override' => FALSE), t('Save configuration'));
+
+    // Update sitename on system form
+    $sitename_new = $this->randomName(32);
+    $this->drupalPost('admin/config/system/site-information', array('site_name' => $sitename_new), t('Save configuration'));
+
+    // Check that new sitename is displayed on frontpage
+    $this->drupalGet('');
+    $this->assertText($sitename_new, 'Frontpage shows new site name.');
+
+    // Check that name of default domain has NOT been updated
+    $domainname = db_query("SELECT sitename FROM {domain} WHERE is_default = 1")->fetchField();
+    $this->assertFalse($domainname == $sitename_new, 'Domain name not updated to new site name.');
+
+    // Update domain name on domain edit form
+    $domainname_new = $this->randomName(32);
+    $this->drupalPost('admin/structure/domain/view/' . $domain['domain_id'] . '/edit', array('sitename' => $domainname_new), t('Save domain record'));
+
+    // Check that frontpage still shows sitename_new instead of domainname_new
+    $this->drupalGet('');
+    $this->assertText($sitename_new, 'Frontpage shows site name instead of domain name.');
   }
 }
