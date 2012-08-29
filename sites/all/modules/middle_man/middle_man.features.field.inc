@@ -5,12 +5,12 @@
  */
 
 /**
- * Implementation of hook_field_default_fields().
+ * Implements hook_field_default_fields().
  */
 function middle_man_field_default_fields() {
   $fields = array();
 
-  // Exported field: 'node-article-body'
+  // Exported field: 'node-article-body'.
   $fields['node-article-body'] = array(
     'field_config' => array(
       'active' => '1',
@@ -33,6 +33,7 @@ function middle_man_field_default_fields() {
           0 => 'format',
         ),
       ),
+      'locked' => '0',
       'module' => 'text',
       'settings' => array(),
       'translatable' => '1',
@@ -80,11 +81,11 @@ function middle_man_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-article-field_aktivitet'
+  // Exported field: 'node-article-field_aktivitet'.
   $fields['node-article-field_aktivitet'] = array(
     'field_config' => array(
       'active' => '1',
-      'cardinality' => '1',
+      'cardinality' => '-1',
       'deleted' => '0',
       'entity_types' => array(),
       'field_name' => 'field_aktivitet',
@@ -101,12 +102,13 @@ function middle_man_field_default_fields() {
           0 => 'tid',
         ),
       ),
+      'locked' => '0',
       'module' => 'taxonomy',
       'settings' => array(
         'allowed_values' => array(
           0 => array(
-            'parent' => '0',
             'vocabulary' => 'aktivitetstype',
+            'parent' => '0',
           ),
         ),
       ),
@@ -121,10 +123,9 @@ function middle_man_field_default_fields() {
       'display' => array(
         'default' => array(
           'label' => 'above',
-          'module' => 'taxonomy',
           'settings' => array(),
-          'type' => 'taxonomy_term_reference_link',
-          'weight' => '4',
+          'type' => 'hidden',
+          'weight' => '6',
         ),
         'teaser' => array(
           'label' => 'above',
@@ -150,7 +151,7 @@ function middle_man_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-article-field_files'
+  // Exported field: 'node-article-field_files'.
   $fields['node-article-field_files'] = array(
     'field_config' => array(
       'active' => '1',
@@ -171,6 +172,7 @@ function middle_man_field_default_fields() {
           0 => 'fid',
         ),
       ),
+      'locked' => '0',
       'module' => 'file',
       'settings' => array(
         'display_default' => 0,
@@ -190,7 +192,7 @@ function middle_man_field_default_fields() {
           'module' => 'file',
           'settings' => array(),
           'type' => 'file_default',
-          'weight' => '5',
+          'weight' => '4',
         ),
         'teaser' => array(
           'label' => 'above',
@@ -231,7 +233,7 @@ function middle_man_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-article-field_gallery'
+  // Exported field: 'node-article-field_gallery'.
   $fields['node-article-field_gallery'] = array(
     'field_config' => array(
       'active' => '1',
@@ -252,6 +254,7 @@ function middle_man_field_default_fields() {
           0 => 'fid',
         ),
       ),
+      'locked' => '0',
       'module' => 'image',
       'settings' => array(
         'default_image' => 0,
@@ -321,7 +324,7 @@ function middle_man_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-article-field_image'
+  // Exported field: 'node-article-field_image'.
   $fields['node-article-field_image'] = array(
     'field_config' => array(
       'active' => '1',
@@ -342,6 +345,7 @@ function middle_man_field_default_fields() {
           0 => 'fid',
         ),
       ),
+      'locked' => '0',
       'module' => 'image',
       'settings' => array(
         'default_image' => 0,
@@ -359,7 +363,7 @@ function middle_man_field_default_fields() {
           'label' => 'hidden',
           'module' => 'image',
           'settings' => array(
-            'image_link' => 'file',
+            'image_link' => '',
             'image_style' => 'node-full',
           ),
           'type' => 'image',
@@ -411,7 +415,7 @@ function middle_man_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-article-field_tags'
+  // Exported field: 'node-article-field_tags'.
   $fields['node-article-field_tags'] = array(
     'field_config' => array(
       'active' => '1',
@@ -432,6 +436,7 @@ function middle_man_field_default_fields() {
           0 => 'tid',
         ),
       ),
+      'locked' => '0',
       'module' => 'taxonomy',
       'settings' => array(
         'allowed_values' => array(
@@ -454,7 +459,7 @@ function middle_man_field_default_fields() {
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => '6',
+          'weight' => '7',
         ),
         'teaser' => array(
           'label' => 'above',
@@ -482,7 +487,7 @@ function middle_man_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-article-field_teaser'
+  // Exported field: 'node-article-field_teaser'.
   $fields['node-article-field_teaser'] = array(
     'field_config' => array(
       'active' => '1',
@@ -503,6 +508,7 @@ function middle_man_field_default_fields() {
           0 => 'format',
         ),
       ),
+      'locked' => '0',
       'module' => 'text',
       'settings' => array(),
       'translatable' => '1',
@@ -549,11 +555,11 @@ function middle_man_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-banner-field_aktivitet'
+  // Exported field: 'node-banner-field_aktivitet'.
   $fields['node-banner-field_aktivitet'] = array(
     'field_config' => array(
       'active' => '1',
-      'cardinality' => '1',
+      'cardinality' => '-1',
       'deleted' => '0',
       'entity_types' => array(),
       'field_name' => 'field_aktivitet',
@@ -570,12 +576,13 @@ function middle_man_field_default_fields() {
           0 => 'tid',
         ),
       ),
+      'locked' => '0',
       'module' => 'taxonomy',
       'settings' => array(
         'allowed_values' => array(
           0 => array(
-            'parent' => '0',
             'vocabulary' => 'aktivitetstype',
+            'parent' => '0',
           ),
         ),
       ),
@@ -619,7 +626,7 @@ function middle_man_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-banner-field_body'
+  // Exported field: 'node-banner-field_body'.
   $fields['node-banner-field_body'] = array(
     'field_config' => array(
       'active' => '1',
@@ -640,6 +647,7 @@ function middle_man_field_default_fields() {
           0 => 'format',
         ),
       ),
+      'locked' => '0',
       'module' => 'text',
       'settings' => array(),
       'translatable' => '1',
@@ -685,7 +693,7 @@ function middle_man_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-banner-field_image'
+  // Exported field: 'node-banner-field_image'.
   $fields['node-banner-field_image'] = array(
     'field_config' => array(
       'active' => '1',
@@ -706,6 +714,7 @@ function middle_man_field_default_fields() {
           0 => 'fid',
         ),
       ),
+      'locked' => '0',
       'module' => 'image',
       'settings' => array(
         'default_image' => 0,
@@ -746,7 +755,7 @@ function middle_man_field_default_fields() {
         'file_extensions' => 'png gif jpg jpeg',
         'max_filesize' => '',
         'max_resolution' => '',
-        'min_resolution' => '',
+        'min_resolution' => '907x297',
         'title_field' => 0,
         'user_register_form' => FALSE,
       ),
@@ -754,15 +763,6 @@ function middle_man_field_default_fields() {
         'active' => 1,
         'module' => 'image',
         'settings' => array(
-          'insert' => 0,
-          'insert_class' => '',
-          'insert_default' => array(
-            0 => 'auto',
-          ),
-          'insert_styles' => array(
-            0 => 'auto',
-          ),
-          'insert_width' => '',
           'preview_image_style' => 'thumbnail',
           'progress_indicator' => 'throbber',
         ),
@@ -772,7 +772,7 @@ function middle_man_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-banner-field_link'
+  // Exported field: 'node-banner-field_link'.
   $fields['node-banner-field_link'] = array(
     'field_config' => array(
       'active' => '1',
@@ -782,6 +782,7 @@ function middle_man_field_default_fields() {
       'field_name' => 'field_link',
       'foreign keys' => array(),
       'indexes' => array(),
+      'locked' => '0',
       'module' => 'link',
       'settings' => array(
         'attributes' => array(
@@ -849,7 +850,7 @@ function middle_man_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-blog-field_body'
+  // Exported field: 'node-blog-field_body'.
   $fields['node-blog-field_body'] = array(
     'field_config' => array(
       'active' => '1',
@@ -870,6 +871,7 @@ function middle_man_field_default_fields() {
           0 => 'format',
         ),
       ),
+      'locked' => '0',
       'module' => 'text',
       'settings' => array(),
       'translatable' => '1',
@@ -915,7 +917,7 @@ function middle_man_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-blog-field_image'
+  // Exported field: 'node-blog-field_image'.
   $fields['node-blog-field_image'] = array(
     'field_config' => array(
       'active' => '1',
@@ -936,6 +938,7 @@ function middle_man_field_default_fields() {
           0 => 'fid',
         ),
       ),
+      'locked' => '0',
       'module' => 'image',
       'settings' => array(
         'default_image' => 0,
@@ -1002,7 +1005,7 @@ function middle_man_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-blog-field_tags'
+  // Exported field: 'node-blog-field_tags'.
   $fields['node-blog-field_tags'] = array(
     'field_config' => array(
       'active' => '1',
@@ -1023,6 +1026,7 @@ function middle_man_field_default_fields() {
           0 => 'tid',
         ),
       ),
+      'locked' => '0',
       'module' => 'taxonomy',
       'settings' => array(
         'allowed_values' => array(
@@ -1075,7 +1079,7 @@ function middle_man_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-blog-field_teaser'
+  // Exported field: 'node-blog-field_teaser'.
   $fields['node-blog-field_teaser'] = array(
     'field_config' => array(
       'active' => '1',
@@ -1096,6 +1100,7 @@ function middle_man_field_default_fields() {
           0 => 'format',
         ),
       ),
+      'locked' => '0',
       'module' => 'text',
       'settings' => array(),
       'translatable' => '1',
@@ -1141,7 +1146,7 @@ function middle_man_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-event-body'
+  // Exported field: 'node-event-body'.
   $fields['node-event-body'] = array(
     'field_config' => array(
       'active' => '1',
@@ -1164,6 +1169,7 @@ function middle_man_field_default_fields() {
           0 => 'format',
         ),
       ),
+      'locked' => '0',
       'module' => 'text',
       'settings' => array(),
       'translatable' => '1',
@@ -1214,11 +1220,11 @@ function middle_man_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-event-field_aktivitet'
+  // Exported field: 'node-event-field_aktivitet'.
   $fields['node-event-field_aktivitet'] = array(
     'field_config' => array(
       'active' => '1',
-      'cardinality' => '1',
+      'cardinality' => '-1',
       'deleted' => '0',
       'entity_types' => array(),
       'field_name' => 'field_aktivitet',
@@ -1235,12 +1241,13 @@ function middle_man_field_default_fields() {
           0 => 'tid',
         ),
       ),
+      'locked' => '0',
       'module' => 'taxonomy',
       'settings' => array(
         'allowed_values' => array(
           0 => array(
-            'parent' => '0',
             'vocabulary' => 'aktivitetstype',
+            'parent' => '0',
           ),
         ),
       ),
@@ -1257,7 +1264,7 @@ function middle_man_field_default_fields() {
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => '3',
+          'weight' => '5',
         ),
         'teaser' => array(
           'label' => 'above',
@@ -1283,7 +1290,7 @@ function middle_man_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-event-field_date'
+  // Exported field: 'node-event-field_date'.
   $fields['node-event-field_date'] = array(
     'field_config' => array(
       'active' => '1',
@@ -1293,6 +1300,7 @@ function middle_man_field_default_fields() {
       'field_name' => 'field_date',
       'foreign keys' => array(),
       'indexes' => array(),
+      'locked' => '0',
       'module' => 'date',
       'settings' => array(
         'granularity' => array(
@@ -1366,7 +1374,84 @@ function middle_man_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-event-field_image'
+  // Exported field: 'node-event-field_fbevent'.
+  $fields['node-event-field_fbevent'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_fbevent',
+      'foreign keys' => array(),
+      'indexes' => array(),
+      'locked' => '0',
+      'module' => 'link',
+      'settings' => array(
+        'attributes' => array(
+          'class' => '',
+          'rel' => '',
+          'target' => 'default',
+        ),
+        'display' => array(
+          'url_cutoff' => 80,
+        ),
+        'enable_tokens' => 1,
+        'title' => 'optional',
+        'title_value' => '',
+        'url' => 0,
+      ),
+      'translatable' => '1',
+      'type' => 'link_field',
+    ),
+    'field_instance' => array(
+      'bundle' => 'event',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'hidden',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => '4',
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_fbevent',
+      'label' => 'Facebook even',
+      'required' => 0,
+      'settings' => array(
+        'attributes' => array(
+          'class' => '',
+          'rel' => '',
+          'target' => '_blank',
+        ),
+        'display' => array(
+          'url_cutoff' => '80',
+        ),
+        'enable_tokens' => 0,
+        'title' => 'value',
+        'title_value' => 'Se event på Facebook →',
+        'url' => 0,
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 0,
+        'module' => 'link',
+        'settings' => array(),
+        'type' => 'link_field',
+        'weight' => '5',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-event-field_image'.
   $fields['node-event-field_image'] = array(
     'field_config' => array(
       'active' => '1',
@@ -1387,6 +1472,7 @@ function middle_man_field_default_fields() {
           0 => 'fid',
         ),
       ),
+      'locked' => '0',
       'module' => 'image',
       'settings' => array(
         'default_image' => 0,
@@ -1453,7 +1539,7 @@ function middle_man_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-page-body'
+  // Exported field: 'node-page-body'.
   $fields['node-page-body'] = array(
     'field_config' => array(
       'active' => '1',
@@ -1476,6 +1562,7 @@ function middle_man_field_default_fields() {
           0 => 'format',
         ),
       ),
+      'locked' => '0',
       'module' => 'text',
       'settings' => array(),
       'translatable' => '1',
@@ -1526,7 +1613,7 @@ function middle_man_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-page-field_document'
+  // Exported field: 'node-page-field_document'.
   $fields['node-page-field_document'] = array(
     'field_config' => array(
       'active' => '1',
@@ -1547,6 +1634,7 @@ function middle_man_field_default_fields() {
           0 => 'fid',
         ),
       ),
+      'locked' => '0',
       'module' => 'file',
       'settings' => array(
         'display_default' => 0,
@@ -1607,7 +1695,7 @@ function middle_man_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-page-field_for'
+  // Exported field: 'node-page-field_for'.
   $fields['node-page-field_for'] = array(
     'field_config' => array(
       'active' => '1',
@@ -1628,6 +1716,7 @@ function middle_man_field_default_fields() {
           0 => 'tid',
         ),
       ),
+      'locked' => '0',
       'module' => 'taxonomy',
       'settings' => array(
         'allowed_values' => array(
@@ -1648,9 +1737,8 @@ function middle_man_field_default_fields() {
       'display' => array(
         'default' => array(
           'label' => 'above',
-          'module' => 'taxonomy',
           'settings' => array(),
-          'type' => 'taxonomy_term_reference_link',
+          'type' => 'hidden',
           'weight' => '4',
         ),
         'teaser' => array(
@@ -1677,7 +1765,7 @@ function middle_man_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-page-field_image'
+  // Exported field: 'node-page-field_image'.
   $fields['node-page-field_image'] = array(
     'field_config' => array(
       'active' => '1',
@@ -1698,6 +1786,7 @@ function middle_man_field_default_fields() {
           0 => 'fid',
         ),
       ),
+      'locked' => '0',
       'module' => 'image',
       'settings' => array(
         'default_image' => 0,
@@ -1764,7 +1853,7 @@ function middle_man_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-page-field_sidetext'
+  // Exported field: 'node-page-field_sidetext'.
   $fields['node-page-field_sidetext'] = array(
     'field_config' => array(
       'active' => '1',
@@ -1785,6 +1874,7 @@ function middle_man_field_default_fields() {
           0 => 'format',
         ),
       ),
+      'locked' => '0',
       'module' => 'text',
       'settings' => array(),
       'translatable' => '1',
@@ -1800,7 +1890,7 @@ function middle_man_field_default_fields() {
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => '6',
+          'weight' => '5',
         ),
         'teaser' => array(
           'label' => 'above',
@@ -1829,7 +1919,7 @@ function middle_man_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-page-field_teaser'
+  // Exported field: 'node-page-field_teaser'.
   $fields['node-page-field_teaser'] = array(
     'field_config' => array(
       'active' => '1',
@@ -1850,6 +1940,7 @@ function middle_man_field_default_fields() {
           0 => 'format',
         ),
       ),
+      'locked' => '0',
       'module' => 'text',
       'settings' => array(),
       'translatable' => '1',
@@ -1895,7 +1986,7 @@ function middle_man_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-tune-field_audio'
+  // Exported field: 'node-tune-field_audio'.
   $fields['node-tune-field_audio'] = array(
     'field_config' => array(
       'active' => '1',
@@ -1916,6 +2007,7 @@ function middle_man_field_default_fields() {
           0 => 'fid',
         ),
       ),
+      'locked' => '0',
       'module' => 'file',
       'settings' => array(
         'display_default' => 0,
@@ -1970,7 +2062,7 @@ function middle_man_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-tune-field_document'
+  // Exported field: 'node-tune-field_document'.
   $fields['node-tune-field_document'] = array(
     'field_config' => array(
       'active' => '1',
@@ -1991,6 +2083,7 @@ function middle_man_field_default_fields() {
           0 => 'fid',
         ),
       ),
+      'locked' => '0',
       'module' => 'file',
       'settings' => array(
         'display_default' => 0,
@@ -2045,7 +2138,7 @@ function middle_man_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-tune-field_link'
+  // Exported field: 'node-tune-field_link'.
   $fields['node-tune-field_link'] = array(
     'field_config' => array(
       'active' => '1',
@@ -2055,6 +2148,7 @@ function middle_man_field_default_fields() {
       'field_name' => 'field_link',
       'foreign keys' => array(),
       'indexes' => array(),
+      'locked' => '0',
       'module' => 'link',
       'settings' => array(
         'attributes' => array(
@@ -2116,7 +2210,7 @@ function middle_man_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-tune-field_style'
+  // Exported field: 'node-tune-field_style'.
   $fields['node-tune-field_style'] = array(
     'field_config' => array(
       'active' => '1',
@@ -2137,6 +2231,7 @@ function middle_man_field_default_fields() {
           0 => 'tid',
         ),
       ),
+      'locked' => '0',
       'module' => 'taxonomy',
       'settings' => array(
         'allowed_values' => array(
@@ -2180,7 +2275,7 @@ function middle_man_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-worship-body'
+  // Exported field: 'node-worship-body'.
   $fields['node-worship-body'] = array(
     'field_config' => array(
       'active' => '1',
@@ -2203,6 +2298,7 @@ function middle_man_field_default_fields() {
           0 => 'format',
         ),
       ),
+      'locked' => '0',
       'module' => 'text',
       'settings' => array(),
       'translatable' => '1',
@@ -2253,7 +2349,7 @@ function middle_man_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-worship-field_date'
+  // Exported field: 'node-worship-field_date'.
   $fields['node-worship-field_date'] = array(
     'field_config' => array(
       'active' => '1',
@@ -2263,6 +2359,7 @@ function middle_man_field_default_fields() {
       'field_name' => 'field_date',
       'foreign keys' => array(),
       'indexes' => array(),
+      'locked' => '0',
       'module' => 'date',
       'settings' => array(
         'granularity' => array(
@@ -2328,7 +2425,7 @@ function middle_man_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-worship-field_tunes'
+  // Exported field: 'node-worship-field_tunes'.
   $fields['node-worship-field_tunes'] = array(
     'field_config' => array(
       'active' => '1',
@@ -2349,6 +2446,7 @@ function middle_man_field_default_fields() {
           0 => 'nid',
         ),
       ),
+      'locked' => '0',
       'module' => 'node_reference',
       'settings' => array(
         'referenceable_types' => array(
@@ -2415,6 +2513,7 @@ function middle_man_field_default_fields() {
   t('Brødtekst');
   t('Dato');
   t('Enter a comma-separated list of words to describe your content.');
+  t('Facebook even');
   t('Filer');
   t('Galleri');
   t('Image');

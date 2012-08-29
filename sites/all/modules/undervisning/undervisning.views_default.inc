@@ -5,7 +5,7 @@
  */
 
 /**
- * Implementation of hook_views_default_views().
+ * Implements hook_views_default_views().
  */
 function undervisning_views_default_views() {
   $export = array();
@@ -74,7 +74,7 @@ function undervisning_views_default_views() {
     t('Master'),
     t('Tags'),
     t('more'),
-    t('Apply'),
+    t('Gjør det'),
     t('Nullstill'),
     t('Sort by'),
     t('Asc'),
@@ -132,9 +132,9 @@ function undervisning_views_default_views() {
   $handler->display->display_options['fields']['field_image']['element_class'] = 'image';
   $handler->display->display_options['fields']['field_image']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_image']['element_default_classes'] = 0;
-  $handler->display->display_options['fields']['field_image']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['field_image']['hide_empty'] = 1;
   $handler->display->display_options['fields']['field_image']['empty_zero'] = 0;
-  $handler->display->display_options['fields']['field_image']['hide_alter_empty'] = 0;
+  $handler->display->display_options['fields']['field_image']['hide_alter_empty'] = 1;
   $handler->display->display_options['fields']['field_image']['click_sort_column'] = 'fid';
   $handler->display->display_options['fields']['field_image']['settings'] = array(
     'image_style' => 'small',
@@ -286,7 +286,7 @@ function undervisning_views_default_views() {
     t('Master'),
     t('Undervisning'),
     t('more'),
-    t('Apply'),
+    t('Gjør det'),
     t('Nullstill'),
     t('Sortér på'),
     t('Asc'),

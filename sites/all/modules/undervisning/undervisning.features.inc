@@ -5,22 +5,19 @@
  */
 
 /**
- * Implementation of hook_views_api().
+ * Implements hook_views_api().
  */
 function undervisning_views_api() {
-  list($module, $api) = func_get_args();
-  if ($module == "views" && $api == "views_default") {
-    return array("version" => 3.0);
-  }
+  return array("version" => "3.0");
 }
 
 /**
- * Implementation of hook_image_default_styles().
+ * Implements hook_image_default_styles().
  */
 function undervisning_image_default_styles() {
   $styles = array();
 
-  // Exported image style: small
+  // Exported image style: small.
   $styles['small'] = array(
     'name' => 'small',
     'effects' => array(

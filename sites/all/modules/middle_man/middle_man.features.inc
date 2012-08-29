@@ -5,32 +5,29 @@
  */
 
 /**
- * Implementation of hook_ctools_plugin_api().
+ * Implements hook_ctools_plugin_api().
  */
 function middle_man_ctools_plugin_api() {
   list($module, $api) = func_get_args();
   if ($module == "context" && $api == "context") {
-    return array("version" => 3);
+    return array("version" => "3");
   }
 }
 
 /**
- * Implementation of hook_views_api().
+ * Implements hook_views_api().
  */
 function middle_man_views_api() {
-  list($module, $api) = func_get_args();
-  if ($module == "views" && $api == "views_default") {
-    return array("version" => 3.0);
-  }
+  return array("version" => "3.0");
 }
 
 /**
- * Implementation of hook_image_default_styles().
+ * Implements hook_image_default_styles().
  */
 function middle_man_image_default_styles() {
   $styles = array();
 
-  // Exported image style: 4col
+  // Exported image style: 4col.
   $styles['4col'] = array(
     'name' => '4col',
     'effects' => array(
@@ -38,6 +35,7 @@ function middle_man_image_default_styles() {
         'label' => 'Skaler og beskjær',
         'help' => 'Skaler og beskjær vil beholde størrelsesforhold i det originale bildet og så beskjære den største dimensjonen. Dette er mest nyttig for å lage perfekte kvadratiske miniatyrbilder uten å strekke bildet.',
         'effect callback' => 'image_scale_and_crop_effect',
+        'dimensions callback' => 'image_resize_dimensions',
         'form callback' => 'image_resize_form',
         'summary theme' => 'image_resize_summary',
         'module' => 'image',
@@ -51,7 +49,7 @@ function middle_man_image_default_styles() {
     ),
   );
 
-  // Exported image style: node-full
+  // Exported image style: node-full.
   $styles['node-full'] = array(
     'name' => 'node-full',
     'effects' => array(
@@ -59,6 +57,7 @@ function middle_man_image_default_styles() {
         'label' => 'Skala',
         'help' => 'Skalering vil beholde størrelsesforhold i det originale bildet. Hvis bare en dimensjon er oppgitt, så beregnes den andre dimensjonen.',
         'effect callback' => 'image_scale_effect',
+        'dimensions callback' => 'image_scale_dimensions',
         'form callback' => 'image_scale_form',
         'summary theme' => 'image_scale_summary',
         'module' => 'image',
@@ -73,7 +72,7 @@ function middle_man_image_default_styles() {
     ),
   );
 
-  // Exported image style: slideshow
+  // Exported image style: slideshow.
   $styles['slideshow'] = array(
     'name' => 'slideshow',
     'effects' => array(
@@ -81,6 +80,7 @@ function middle_man_image_default_styles() {
         'label' => 'Skaler og beskjær',
         'help' => 'Skaler og beskjær vil beholde størrelsesforhold i det originale bildet og så beskjære den største dimensjonen. Dette er mest nyttig for å lage perfekte kvadratiske miniatyrbilder uten å strekke bildet.',
         'effect callback' => 'image_scale_and_crop_effect',
+        'dimensions callback' => 'image_resize_dimensions',
         'form callback' => 'image_resize_form',
         'summary theme' => 'image_resize_summary',
         'module' => 'image',
@@ -98,7 +98,7 @@ function middle_man_image_default_styles() {
 }
 
 /**
- * Implementation of hook_node_info().
+ * Implements hook_node_info().
  */
 function middle_man_node_info() {
   $items = array(
