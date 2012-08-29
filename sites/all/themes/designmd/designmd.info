@@ -1,0 +1,61 @@
+;Theme DESIGNMD
+name = 'Designmd'
+description = 'Clean and modern responsive Drupal theme.'
+core = '7.x'
+engine = 'phptemplate'
+screenshot = 'screenshot.png'
+
+
+;Stylesheets
+
+stylesheets[all][] = 'css/reset.css'
+stylesheets[all][] = 'css/style.css'
+stylesheets[all][] = 'css/responsive.css'
+stylesheets[all][] = 'css/prettyPhoto.css'
+
+
+;scripts[] = js/jquery.min.js
+scripts[] = js/jquery.easing.1.3.js
+scripts[] = js/respond.js
+scripts[] = js/hoverIntent.js
+scripts[] = js/jquery.prettyPhoto.js
+scripts[] = js/jflickrfeed.min.js
+scripts[] = js/jquery.tweet.js
+scripts[] = js/jquery.elastislide.js
+scripts[] = js/jquery.flexslider.js
+scripts[] = js/main.js
+
+
+;regions[header] = Header
+regions[help] = Help
+regions[page_top] = Page top
+regions[page_bottom] = Page bottom
+regions[highlighted] = Highlighted
+regions[social] = Social links
+regions[menu_bar] = Menu Bar
+regions[titlebar] = Title Bar
+regions[maintop] = Main Top
+regions[slider] = Slider
+regions[featured] = Featured
+regions[content] = Content
+;regions[sidebar_first] = Sidebar first
+regions[sidebar_second] = Sidebar second
+
+regions[postscript_first] = Postscript First
+regions[postscript_second] = Postscript Second
+regions[postscript_third] = Postscript Third
+regions[postscript_fourth] = Postscript Fourth
+regions[bottom_1] = Bottom 1
+regions[bottom_2] = Bottom 2
+regions[bottom_3] = Bottom 3
+regions[bottom_4] = Bottom 4
+regions[footer_top] = Footer Top
+regions[footer_firstcolumn] = Footer first column
+regions[footer_secondcolumn] = Footer second column
+regions[footer_thirdcolumn] = Footer third column
+regions[footer_fourthcolumn] = Footer fourth column
+regions[footer_fifthcolumn] = Footer fifth column
+regions[footer-a] = Footer a
+regions[footer-b] = Footer b
+
+
