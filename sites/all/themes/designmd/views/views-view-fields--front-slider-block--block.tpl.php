@@ -1,8 +1,9 @@
 <li>
-<img src="<?php print image_style_url('1200x570', $row->_field_data['nid']['entity']->field_slider_image['und'][0]['uri']);?>" alt="Images" />
+<img src="<?php print 
+image_style_url('1200x570', $row->_field_data['nid']['entity']->field_image['nb'][0]['uri']); ?>" alt="Bilder" />
  <div>
 <h2><?php print $fields['title']->content; ?></h2>
-<?php print $fields['body']->content; ?>
+<?php print $fields['field_	body']->content; ?>
 </div>
 </li>
  
