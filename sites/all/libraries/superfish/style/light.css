@@ -1,0 +1,260 @@
+.sf-menu.sf-style-light {
+  float: left;
+  margin: 0;
+  padding: 0;
+}
+
+.sf-menu.sf-style-light ul {
+ 
+}
+.sf-menu.sf-style-light ul a{
+  display: block;
+        padding: 10px 0px;
+        color: #717171;
+        font-family: 'Droid Sans', sans-serif;
+        font-size: 12px;
+}
+.sf-menu.sf-style-light ul a:hover{
+ color: #E34B39;
+}
+
+.sf-menu.sf-style-light li {
+ float: left;
+        margin-right: 30px;
+		  margin-left: 0;
+		  margin-bottom: 0;
+       /* position: relative;*/
+}
+
+.sf-menu.sf-style-light a {
+ /* border-bottom: 1px solid #eee;*/
+  color: #333;
+
+ 
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 12px;
+        font-weight: bold;
+       
+        font-family: 'Arial', sans-serif;
+}
+
+/* "Have child" Item */
+.sf-menu.sf-style-light li.menuparent {
+}
+
+.sf-menu.sf-style-light a.menuparent {
+}
+
+/* Child Menu */
+.sf-menu.sf-style-light ul {
+	position: absolute;
+    	width: 170px;
+        padding: 0 15px;
+        background-color: #fff;
+       
+        
+}
+
+.sf-menu.sf-style-light ul li {
+   position: relative;
+    	border-bottom: 1px solid #f2f2f2;
+}
+
+/* Hover Links */
+.sf-menu.sf-style-light li:hover,
+.sf-menu.sf-style-light li.sfHover {
+}
+
+.sf-menu.sf-style-light a:hover,
+.sf-menu.sf-style-light a:focus,
+.sf-menu.sf-style-light a:active {
+  
+  color: #E34B39;
+}
+
+/* Child Menu Items Hover */
+.sf-menu.sf-style-light ul li:hover,
+.sf-menu.sf-style-light ul li.sfHover,
+.sf-menu.sf-style-light ul li a:focus,
+.sf-menu.sf-style-light ul li a:hover,
+.sf-menu.sf-style-light ul li a:active {
+  color: #E34B39;
+}
+
+/* Active Links */
+.sf-menu.sf-style-light li.active-trail a.menuparent {
+  color: #E34B39;
+}
+
+.sf-menu.sf-style-light a.active {
+ 
+ color: #E34B39;
+}
+
+/* Child Menu Items Active */
+.sf-menu.sf-style-light ul li a.active {
+color: #E34B39;
+}
+
+/* Navbar */
+.sf-menu.sf-style-light.sf-navbar {
+  width: 100%;
+}
+
+/* Child Menu */
+.sf-menu.sf-style-light.sf-navbar li ul {
+  top: 4.5em;
+}
+
+.sf-menu.sf-style-light.sf-navbar li ul li {
+  padding: 0 10px;
+}
+
+.sf-menu.sf-style-light.sf-navbar li ul li a {
+  border: 0;
+  font-weight: normal;
+  padding: 3px 6px;
+  text-transform: none;
+}
+
+.sf-menu.sf-style-light.sf-navbar li ul li a:hover,
+.sf-menu.sf-style-light.sf-navbar li ul li a:focus,
+.sf-menu.sf-style-light.sf-navbar li ul li a:active {
+   color: #E34B39;
+}
+
+/* Horizontal style */
+.sf-menu.sf-style-light.sf-horizontal li ul {
+  background-color: #FFFFFF;
+    border-top: 2px solid #E34B39;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 0 15px;
+    position: absolute;
+    width: 170px;
+	
+		left: 0;
+    	top: 57px;
+    	z-index: 99;
+}
+
+.sf-menu.sf-style-light.sf-horizontal li ul li ul{
+  background-color: #FFFFFF;
+    border-top: 2px solid #E34B39;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 0 15px;
+    position: absolute;
+    width: 170px;
+	margin-left:15px;
+		left: 0px;
+    	top: -2px;
+    	z-index: 99;
+}
+.sf-menu.sf-style-light.sf-horizontal li ul li.menuparent {
+ background: url('images/menu-arrow.png') no-repeat right center;
+}
+  .sf-menu.sf-style-light.sf-horizontal li ul li.menuparent:hover{
+        background: url('images/menu-arrow-hover.png') no-repeat right center;
+    }
+
+.sf-menu.sf-style-light.sf-horizontal a:hover,
+.sf-menu.sf-style-light.sf-horizontal a:focus,
+.sf-menu.sf-style-light.sf-horizontal a:active {
+  border: 0;
+   color: #E34B39;
+}
+
+.sf-menu.sf-style-light.sf-horizontal li ul li a {
+  padding: 10px 0;
+  text-transform: none;
+}
+
+.sf-menu.sf-style-light.sf-horizontal li ul li a:hover,
+.sf-menu.sf-style-light.sf-horizontal li ul li a:focus,
+.sf-menu.sf-style-light.sf-horizontal li ul li a:active {
+  
+  color: #E34B39;
+}
+
+.sf-menu.sf-style-light.sf-horizontal li ul li a.active {
+ 
+}
+
+/* MegaMenu */
+.sf-menu.sf-style-light span.sf-description {
+color: #717171;
+		text-decoration:none;
+		display: block !important;
+		/*-line-height: 0;*/
+		margin-top: 5px;
+		text-transform: capitalize;
+        font-weight: normal;
+        font-size: 10px;
+        font-style: italic;
+        font-family: 'Droid Serif', serif;
+}
+
+.sf-menu.sf-style-light a.sf-with-ul {
+  padding-right: 2.25em;
+}
+
+.sf-menu.sf-style-light.rtl a.sf-with-ul {
+  padding-left: 2.25em; /* RTL */
+  padding-right: 1em;
+}
+
+.sf-menu.sf-style-light ul.sf-megamenu li.sf-megamenu-wrapper ol li.sf-megamenu-column {
+  display: inline;
+  float: left;
+  width: 12em;
+}
+
+.sf-menu.sf-style-light.rtl ul.sf-megamenu li.sf-megamenu-wrapper ol li.sf-megamenu-column {
+  float: right; /* RTL */
+}
+
+.sf-menu.sf-style-light ul.sf-megamenu li.sf-megamenu-wrapper ol,
+.sf-menu.sf-style-light ul.sf-megamenu li.sf-megamenu-wrapper ol li {
+  margin: 0;
+  padding: 0;
+}
+
+.sf-menu.sf-style-light li.sf-parent-children-1 ul.sf-megamenu {
+  width: 12em;
+}
+
+.sf-menu.sf-style-light li.sf-parent-children-10 ul.sf-megamenu {
+  width: 120em;
+}
+
+.sf-menu.sf-style-light li.sf-parent-children-2 ul.sf-megamenu {
+  width: 24em;
+}
+
+.sf-menu.sf-style-light li.sf-parent-children-3 ul.sf-megamenu {
+  width: 36em;
+}
+
+.sf-menu.sf-style-light li.sf-parent-children-4 ul.sf-megamenu {
+  width: 48em;
+}
+
+.sf-menu.sf-style-light li.sf-parent-children-5 ul.sf-megamenu {
+  width: 60em;
+}
+
+.sf-menu.sf-style-light li.sf-parent-children-6 ul.sf-megamenu {
+  width: 72em;
+}
+
+.sf-menu.sf-style-light li.sf-parent-children-7 ul.sf-megamenu {
+  width: 84em;
+}
+
+.sf-menu.sf-style-light li.sf-parent-children-8 ul.sf-megamenu {
+  width: 96em;
+}
+
+.sf-menu.sf-style-light li.sf-parent-children-9 ul.sf-megamenu {
+  width: 108em;
+}
