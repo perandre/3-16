@@ -147,7 +147,7 @@ td code {
     
 }
 
-#block-jump-menu-jump-menu-m-main-menu {
+#block-jump-menu-jump-menu-m-menu-main-menu-popsk {
 	display:none;
 	}
 
@@ -270,7 +270,7 @@ td code {
     /* related-post */
     .related-post div{width: 119px;}
         
-#block-jump-menu-jump-menu-m-main-menu {
+#block-jump-menu-jump-menu-m-menu-main-menu-popsk {
 	display:none;
 	}
 }
@@ -308,7 +308,7 @@ td code {
     #footer .one-three, #footer .one-four, #page,
     #footer .one-four{margin-bottom: 40px;}
     
-    #logo, #block-jump-menu-jump-menu-main-menu, .divider.mob, .clear.mob{display: block;}
+    #logo, #block-jump-menu-jump-menu-menu-main-menu-popsk, .divider.mob, .clear.mob{display: block;}
     
     #social, #footer-menu{display: inline-block;}   
     
@@ -330,7 +330,7 @@ td code {
         padding-top: 0;
         display: none;
     }
-    #block-jump-menu-jump-menu-m-main-menu{
+    #block-jump-menu-jump-menu-m-menu-main-menu-popsk{
 		display:block;
         width: 408px;
         padding: 5px;
@@ -462,7 +462,7 @@ td code {
     #logo, #social, .newsletters div, .about-work > div, .team > div,
     .breadcrumbs h2, .m-bottom, .pricing-box{margin-bottom: 30px;}
     
-    #logo, #block-jump-menu-jump-menu-main-menu, .divider.mob, .clear.mob{display: block;}
+    #logo, #block-jump-menu-jump-menu-menu-main-menu-popsk, .divider.mob, .clear.mob{display: block;}
     
     #social, #footer-menu{display: inline-block;}
     
@@ -495,7 +495,7 @@ td code {
         padding-top: 0;
         display: none;
     }
-    #block-jump-menu-jump-menu-m-main-menu{
+    #block-jump-menu-jump-menu-m-menu-main-menu-popsk{
 		display:block;
         width: 238px;
         padding: 5px;
