@@ -23,8 +23,8 @@
 
 
                         <div class="border-img">
-                            <img src="<?php print file_create_url($row->_field_data['nid']['entity']->field_portfolio_image['und'][0]['uri']);?>" alt="Images"/>
-                            <a href="<?php print file_create_url($row->_field_data['nid']['entity']->field_portfolio_image['und'][0]['uri']);?>" data-rel="prettyPhoto" title="<?php print $fields['title_1']->content; ?>" class="img-view"></a>
+                            <img src="<?php print file_create_url($row->_field_data['nid']['entity']->field_image['nb'][0]['uri']); dpm($row); ?>" alt="Images"/>
+                            <a href="<?php print file_create_url($row->_field_data['nid']['entity']->field_image['nb'][0]['uri']); ?>" data-rel="prettyPhoto" title="<?php print $fields['title_1']->content; ?>" class="img-view"></a>
                              <?php print $fields['view_node_1']->content; ?>
                         </div>
                         <h2 class="title"><?php print $fields['title']->content; ?></h2>
