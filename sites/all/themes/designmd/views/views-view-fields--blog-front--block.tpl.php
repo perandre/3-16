@@ -22,7 +22,7 @@
 
  <div>
  
-                 <a href="<?php print $fields['path']->content; ?>"><img src="<?php print image_style_url('blog_93x57', $row->_field_data['nid']['entity']->field_blog_image['und'][0]['uri']);?>" alt="Images" class="alignleft border-img"/></a>
+                 <a href="<?php print $fields['path']->content; ?>"><img src="<?php print image_style_url('pOpskole-nyhet-93x57', $row->_field_data['nid']['entity']->field_image['nb'][0]['uri']);?>" alt="Images" class="alignleft border-img"/></a>
                 <?php print $fields['title']->content; ?>
                  <?php print $fields['created']->content; ?>
                 
