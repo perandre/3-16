@@ -83,8 +83,10 @@ clear: both;
 }
 
 .field-name-field-gallery .field-item {
-float: left;
-margin: 10px 20px 10px 0;
+  display: inline-block;
+  margin: 10px 20px 10px 0;
+  zoom: 1;
+  *display: inline;
 }
 
 .field-type-number-decimal    {}
