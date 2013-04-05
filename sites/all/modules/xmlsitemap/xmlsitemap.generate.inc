@@ -1,5 +1,4 @@
 <?php
-// $Id: xmlsitemap.generate.inc,v 1.17 2010/04/29 16:19:09 davereid Exp $
 
 /**
  * @file
@@ -18,7 +17,7 @@
  * @param $path
  *   An internal Drupal path.
  * @param $language
- *   A language code to look use when looking up the paths.
+ *   A language code to use when looking up the paths.
  */
 function xmlsitemap_get_path_alias($path, $language) {
   static $aliases;
@@ -48,12 +47,8 @@ function xmlsitemap_get_path_alias($path, $language) {
  * Perform operations before rebuilding the sitemap.
  */
 function _xmlsitemap_regenerate_before() {
-  // Attempt to increase the available processing time and memory limit.
-  drupal_set_time_limit(240);
+  // Attempt to increase the memory limit.
   _xmlsitemap_set_memory_limit();
-
-  // Set a timer so we can track how long this takes.
-  timer_start('xmlsitemap_regenerate');
 
   if (variable_get('xmlsitemap_developer_mode', 0)) {
     watchdog('xmlsitemap', 'Starting XML sitemap generation. Memory usage: @memory-peak.', array(
@@ -62,10 +57,6 @@ function _xmlsitemap_regenerate_before() {
       WATCHDOG_DEBUG
     );
   }
-
-  // Clear the maximum chunk and file size variables.
-  variable_set('xmlsitemap_max_chunks', 0);
-  variable_set('xmlsitemap_max_filesize', 0);
 }
 
 function _xmlsitemap_get_memory_usage($start = FALSE) {
@@ -121,129 +112,33 @@ function _xmlsitemap_set_memory_limit($new_limit = NULL) {
 }
 
 /**
- * Perform operations after rebuilding the sitemap.
- */
-function _xmlsitemap_regenerate_after() {
-  // Show a watchdog message that the sitemap was regenerated.
-  watchdog('xmlsitemap',
-    'Finished XML sitemap generation in @timer ms. Memory usage: @memory-peak.',
-    array(
-      '@timer' => timer_read('xmlsitemap_regenerate'),
-      '@memory-peak' => format_size(memory_get_peak_usage(TRUE)),
-    ),
-    WATCHDOG_NOTICE
-  );
-
-  // Unset the regenerate flag.
-  variable_set('xmlsitemap_regenerate_needed', FALSE);
-
-  variable_set('xmlsitemap_generated_last', REQUEST_TIME);
-}
-
-/**
- * Fetch the data from {xmlsitemap}, generates the sitemap, then caches it.
- *
- * @param $sitemap
- *   An unserialized data array for an XML sitemap.
- * @param $chunk
- *   An integer representing the integer of the sitemap page chunk.
- * @return
- *   TRUE on success; otherwise FALSE
- *
- * @todo Revise/simplify or remove the function.
- */
-function xmlsitemap_generate(array $sitemap, $chunk) {
-  if ($chunk != 'index' && !is_numeric($chunk)) {
-    // Don't bother translating this string.
-    trigger_error('Improper condition hit in xmlsitemap_generate(). Chunk: ' . $chunk);
-    return FALSE;
-  }
-
-  $file = xmlsitemap_sitemap_get_file($sitemap, $chunk);
-
-  if (!$handle = fopen($file, 'wb')) {
-    trigger_error(t('Could not open file @file for writing.', array('@file' => $file)));
-    return FALSE;
-  }
-
-  $status = TRUE;
-  if ($chunk == 'index') {
-    xmlsitemap_generate_index($sitemap, $handle, $status);
-  }
-  else {
-    $links = xmlsitemap_generate_chunk($sitemap, $handle, $status, $chunk);
-    // @todo Fix this up.
-    fclose($handle);
-    return $links;
-  }
-  fclose($handle);
-
-  // Track the maximum filesize.
-  $filesize = filesize($file);
-  if ($filesize > variable_get('xmlsitemap_max_filesize', 0)) {
-    variable_set('xmlsitemap_max_filesize', $filesize);
-  }
-
-  if (!$status) {
-    trigger_error(t('Unknown error occurred while writing to file @file.', array('@file' => $file)));
-  }
-  elseif (xmlsitemap_var('gz')) {
-    $file_gz = $file . '.gz';
-    file_put_contents($file_gz, gzencode(file_get_contents($file), 9));
-  }
-
-  return $status;
-}
-
-/**
- * Write the proper XML sitemap header.
- *
- * @param $sitemap
- *   An unserialized data array for an XML sitemap.
- * @param $type
- * @param $handle
- *   A file system pointer resource that is typically created using fopen().
- * @param $status
- */
-function xmlsitemap_generate_chunk_header($type, array $sitemap, $handle, &$status) {
-  $output = '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL;
-
-  // Add the stylesheet link.
-  if (variable_get('xmlsitemap_xsl', 1)) {
-    $xsl_url = url('sitemap.xsl', $sitemap['uri']['options'] + array('alias' => TRUE));
-    $output .= '<?xml-stylesheet type="text/xsl" href="' . $xsl_url . '"?>' . PHP_EOL;
-  }
-
-  $output .= '<' . $type . ' xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . PHP_EOL;
-
-  // This is the full XML header required for schema validation.
-  //$schemas = array('sitemapindex' => 'siteindex.xsd', 'urlset' => 'sitemap.xsd');
-  //$output .= '<' . $type . ' xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"' . PHP_EOL;
-  //$output .= '  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' . PHP_EOL;
-  //$output .= '  xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9' . PHP_EOL;
-  //$output .= '  http://www.sitemaps.org/schemas/sitemap/0.9/' . $schemas[$type] . '">' . PHP_EOL;
-
-  $status &= (bool) fwrite($handle, $output);
-  return $status;
-}
-
-/**
  * Generate one page (chunk) of the sitemap.
  *
  * @param $sitemap
  *   An unserialized data array for an XML sitemap.
- * @param $handle
- *   A file system pointer resource that is typically created using fopen().
- * @param $status
- *   A boolean that will be altered by reference with the success status of
- *   writing to $handle.
- * @param $chunk
- *   An integer representing the integer of the sitemap page chunk.
+ * @param $page
+ *   An integer of the specific page of the sitemap to generate.
  */
-function xmlsitemap_generate_chunk(array $sitemap, $handle, &$status, $chunk) {
+function xmlsitemap_generate_page(stdClass $sitemap, $page) {
+  try {
+    $writer = new XMLSitemapWriter($sitemap, $page);
+    $writer->startDocument();
+    $writer->generateXML();
+    $writer->endDocument();
+  }
+  catch (Exception $e) {
+    watchdog_exception('xmlsitemap', $e);
+    throw $e;
+    return FALSE;
+  }
+
+  return $writer->getSitemapElementCount();
+}
+
+function xmlsitemap_generate_chunk(stdClass $sitemap, XMLSitemapWriter $writer, $chunk) {
   $lastmod_format = variable_get('xmlsitemap_lastmod_format', XMLSITEMAP_LASTMOD_MEDIUM);
 
-  $url_options = $sitemap['uri']['options'];
+  $url_options = $sitemap->uri['options'];
   $url_options += array(
     'absolute' => TRUE,
     'base_url' => variable_get('xmlsitemap_base_url', $GLOBALS['base_url']),
@@ -256,10 +151,10 @@ function xmlsitemap_generate_chunk(array $sitemap, $handle, &$status, $chunk) {
 
   $query = db_select('xmlsitemap', 'x');
   $query->fields('x', array('loc', 'lastmod', 'changefreq', 'changecount', 'priority', 'language', 'access', 'status'));
-  $query->condition('access', 1);
-  $query->condition('status', 1);
-  $query->orderBy('language', 'DESC');
-  $query->orderBy('loc');
+  $query->condition('x.access', 1);
+  $query->condition('x.status', 1);
+  $query->orderBy('x.language', 'DESC');
+  $query->orderBy('x.loc');
   $query->addTag('xmlsitemap_generate');
   $query->addMetaData('sitemap', $sitemap);
 
@@ -268,15 +163,18 @@ function xmlsitemap_generate_chunk(array $sitemap, $handle, &$status, $chunk) {
   $query->range($offset, $limit);
   $links = $query->execute();
 
-  // Add the XML header and XSL if desired.
-  xmlsitemap_generate_chunk_header('urlset', $sitemap, $handle, $status);
-
   while ($link = $links->fetchAssoc()) {
     $link['language'] = $link['language'] != LANGUAGE_NONE ? xmlsitemap_language_load($link['language']) : $url_options['language'];
     if ($url_options['alias']) {
       $link['loc'] = xmlsitemap_get_path_alias($link['loc'], $link['language']->language);
     }
-    $link_url = url($link['loc'], array('language' => $link['language']) + $url_options);
+    $link_options = array(
+      'language' => $link['language'],
+      'xmlsitemap_link' => $link,
+      'xmlsitemap_sitemap' => $sitemap,
+    );
+    // @todo Add a separate hook_xmlsitemap_link_url_alter() here?
+    $link_url = url($link['loc'], $link_options + $url_options);
 
     // Skip this link if it was a duplicate of the last one.
     // @todo Figure out a way to do this before generation so we can report
@@ -290,9 +188,10 @@ function xmlsitemap_generate_chunk(array $sitemap, $handle, &$status, $chunk) {
       $link_count++;
     }
 
-    $link_output = '<url><loc>' . $link_url . '</loc>';
+    $element = array();
+    $element['loc'] = $link_url;
     if ($link['lastmod']) {
-      $link_output .= '<lastmod>' . gmdate($lastmod_format, $link['lastmod']) . '</lastmod>';
+      $element['lastmod'] = gmdate($lastmod_format, $link['lastmod']);
       // If the link has a lastmod value, update the changefreq so that links
       // with a short changefreq but updated two years ago show decay.
       // We use abs() here just incase items were created on this same cron run
@@ -300,20 +199,16 @@ function xmlsitemap_generate_chunk(array $sitemap, $handle, &$status, $chunk) {
       $link['changefreq'] = (abs(REQUEST_TIME - $link['lastmod']) + $link['changefreq']) / 2;
     }
     if ($link['changefreq']) {
-      $link_output .= '<changefreq>' . xmlsitemap_get_changefreq($link['changefreq']) . '</changefreq>';
+      $element['changefreq'] = xmlsitemap_get_changefreq($link['changefreq']);
     }
     if (isset($link['priority']) && $link['priority'] != 0.5) {
       // Don't output the priority value for links that have 0.5 priority. This
       // is the default 'assumed' value if priority is not included as per the
       // sitemaps.org specification.
-      $link_output .= '<priority>' . number_format($link['priority'], 1) . '</priority>';
+      $element['priority'] = number_format($link['priority'], 1);
     }
-    $link_output .= '</url>' . PHP_EOL;
-    $status &= (bool) fwrite($handle, $link_output);
+    $writer->writeSitemapElement('url', $element);
   }
-
-  // Close the XML file.
-  $status &= (bool) fwrite($handle, '</urlset>' . PHP_EOL);
 
   return $link_count;
 }
@@ -323,38 +218,21 @@ function xmlsitemap_generate_chunk(array $sitemap, $handle, &$status, $chunk) {
  *
  * @param $sitemap
  *   An unserialized data array for an XML sitemap.
- * @param $handle
- *   A file system pointer resource that is typically created using fopen().
- * @param $status
  */
-function xmlsitemap_generate_index(array $sitemap, $handle, &$status) {
-  $lastmod_format = variable_get('xmlsitemap_lastmod_format', XMLSITEMAP_LASTMOD_MEDIUM);
-
-  $url_options = $sitemap['uri']['options'];
-  $url_options += array(
-    'absolute' => TRUE,
-    'base_url' => variable_get('xmlsitemap_base_url', $GLOBALS['base_url']),
-    'language' => language_default(),
-    'alias' => TRUE,
-  );
-
-  // Add the XML header and XSL if desired.
-  xmlsitemap_generate_chunk_header('sitemapindex', $sitemap, $handle, $status);
-
-  for ($i = 1; $i <= $sitemap['chunks']; $i++) {
-    $output = '<sitemap>';
-    $url_options['query']['page'] = $i;
-    $output .= '<loc>' . url('sitemap.xml', $url_options) . '</loc>';
-    // @todo Use the actual lastmod value of the chunk file.
-    $output .= '<lastmod>' . gmdate($lastmod_format, REQUEST_TIME) . '</lastmod>';
-    $output .= '</sitemap>' . PHP_EOL;
-    $status &= (bool) fwrite($handle, $output);
+function xmlsitemap_generate_index(stdClass $sitemap) {
+  try {
+    $writer = new XMLSitemapIndexWriter($sitemap);
+    $writer->startDocument();
+    $writer->generateXML();
+    $writer->endDocument();
+  }
+  catch (Exception $e) {
+    watchdog_exception('xmlsitemap', $e);
+    throw $e;
+    return FALSE;
   }
 
-  // Close the XML file.
-  $status &= (bool) fwrite($handle, '</sitemapindex>' . PHP_EOL);
-
-  return $sitemap['chunks'];
+  return $writer->getSitemapElementCount();
 }
 
 // BATCH OPERATIONS ------------------------------------------------------------
@@ -380,13 +258,20 @@ function xmlsitemap_regenerate_batch(array $smids = array()) {
     'file' => drupal_get_path('module', 'xmlsitemap') . '/xmlsitemap.generate.inc',
   );
 
-  // Generate all the sitemap pages for each context.
+  // Set the regenerate flag in case something fails during file generation.
+  $batch['operations'][] = array('xmlsitemap_batch_variable_set', array(array('xmlsitemap_regenerate_needed' => TRUE)));
+
+  // @todo Get rid of this batch operation.
   $batch['operations'][] = array('_xmlsitemap_regenerate_before', array());
+
+  // Generate all the sitemap pages for each context.
   foreach ($smids as $smid) {
     $batch['operations'][] = array('xmlsitemap_regenerate_batch_generate', array($smid));
     $batch['operations'][] = array('xmlsitemap_regenerate_batch_generate_index', array($smid));
   }
-  $batch['operations'][] = array('_xmlsitemap_regenerate_after', array());
+
+  // Clear the regeneration flag.
+  $batch['operations'][] = array('xmlsitemap_batch_variable_set', array(array('xmlsitemap_regenerate_needed' => FALSE)));
 
   return $batch;
 }
@@ -397,8 +282,8 @@ function xmlsitemap_regenerate_batch(array $smids = array()) {
 function xmlsitemap_regenerate_batch_generate($smid, array &$context) {
   if (!isset($context['sandbox']['sitemap'])) {
     $context['sandbox']['sitemap'] = xmlsitemap_sitemap_load($smid);
-    $context['sandbox']['sitemap']['chunks'] = 1;
-    $context['sandbox']['sitemap']['links'] = 0;
+    $context['sandbox']['sitemap']->chunks = 1;
+    $context['sandbox']['sitemap']->links = 0;
     $context['sandbox']['max'] = XMLSITEMAP_MAX_SITEMAP_LINKS;
 
     // Clear the cache directory for this sitemap before generating any files.
@@ -407,29 +292,30 @@ function xmlsitemap_regenerate_batch_generate($smid, array &$context) {
   }
 
   $sitemap = &$context['sandbox']['sitemap'];
-  $links = xmlsitemap_generate($sitemap, $sitemap['chunks']);
-  $context['message'] = t('Now generating %sitemap-url.', array('%sitemap-url' => url('sitemap.xml', $sitemap['uri']['options'] + array('query' => array('page' => $sitemap['chunks'])))));
+  $links = xmlsitemap_generate_page($sitemap, $sitemap->chunks);
+  $context['message'] = t('Now generating %sitemap-url.', array('%sitemap-url' => url('sitemap.xml', $sitemap->uri['options'] + array('query' => array('page' => $sitemap->chunks)))));
 
   if ($links) {
-    $sitemap['links'] += $links;
-    $sitemap['chunks']++;
+    $sitemap->links += $links;
+    $sitemap->chunks++;
   }
   else {
     // Cleanup the 'extra' empty file.
-    $file = xmlsitemap_sitemap_get_file($sitemap, $sitemap['chunks']);
-    if (file_exists($file)) {
+    $file = xmlsitemap_sitemap_get_file($sitemap, $sitemap->chunks);
+    if (file_exists($file) && $sitemap->chunks > 1) {
       file_unmanaged_delete($file);
     }
-    $sitemap['chunks']--;
+    $sitemap->chunks--;
 
     // Save the updated chunks and links values.
-    $context['sandbox']['max'] = $sitemap['chunks'];
-    $sitemap['updated'] = REQUEST_TIME;
+    $context['sandbox']['max'] = $sitemap->chunks;
+    $sitemap->updated = REQUEST_TIME;
+    xmlsitemap_sitemap_get_max_filesize($sitemap);
     xmlsitemap_sitemap_save($sitemap);
   }
 
-  if ($sitemap['chunks'] != $context['sandbox']['max']) {
-    $context['finished'] = $sitemap['chunks'] / $context['sandbox']['max'];
+  if ($sitemap->chunks != $context['sandbox']['max']) {
+    $context['finished'] = $sitemap->chunks / $context['sandbox']['max'];
   }
 }
 
@@ -438,23 +324,31 @@ function xmlsitemap_regenerate_batch_generate($smid, array &$context) {
  */
 function xmlsitemap_regenerate_batch_generate_index($smid, array &$context) {
   $sitemap = xmlsitemap_sitemap_load($smid);
-  if ($sitemap['chunks'] > 1) {
-    xmlsitemap_generate($sitemap, 'index');
-    $context['message'] = t('Now generating sitemap index %sitemap-url.', array('%sitemap-url' => url('sitemap.xml', $sitemap['uri']['options'])));
+  if ($sitemap->chunks > 1) {
+    xmlsitemap_generate_index($sitemap);
+    $context['message'] = t('Now generating sitemap index %sitemap-url.', array('%sitemap-url' => url('sitemap.xml', $sitemap->uri['options'])));
   }
 }
 
 /**
  * Batch callback; sitemap regeneration finished.
  */
-function xmlsitemap_regenerate_batch_finished($success, $results, $operations) {
-  if ($success) {
-    // Reset the rebuild flag since it was successful.
-    variable_set('xmlsitemap_regenerate_needed', FALSE);
+function xmlsitemap_regenerate_batch_finished($success, $results, $operations, $elapsed) {
+  if ($success && !variable_get('xmlsitemap_regenerate_needed', FALSE)) {
+    variable_set('xmlsitemap_generated_last', REQUEST_TIME);
     //drupal_set_message(t('The sitemaps were regenerated.'));
+    // Show a watchdog message that the sitemap was regenerated.
+    watchdog('xmlsitemap',
+      'Finished XML sitemap generation in @elapsed. Memory usage: @memory-peak.',
+      array(
+        '@elapsed' => $elapsed,
+        '@memory-peak' => format_size(memory_get_peak_usage(TRUE)),
+      ),
+      WATCHDOG_NOTICE
+    );
   }
   else {
-    drupal_set_message(t('The sitemaps was not successfully regenerated.'), 'error');
+    drupal_set_message(t('The sitemaps were not successfully regenerated.'), 'error');
   }
 }
 
@@ -469,7 +363,8 @@ function xmlsitemap_rebuild_batch(array $entities, $save_custom = FALSE) {
     'file' => drupal_get_path('module', 'xmlsitemap') . '/xmlsitemap.generate.inc',
   );
 
-  $batch['operations'][] = array('xmlsitemap_rebuild_batch_prerebuild', array());
+  // Set the rebuild flag in case something fails during the rebuild.
+  $batch['operations'][] = array('xmlsitemap_batch_variable_set', array(array('xmlsitemap_rebuild_needed' => TRUE)));
 
   // Purge any links first.
   $batch['operations'][] = array('xmlsitemap_rebuild_batch_clear', array($entities, (bool) $save_custom));
@@ -480,6 +375,9 @@ function xmlsitemap_rebuild_batch(array $entities, $save_custom = FALSE) {
     $batch['operations'][] = array($info['xmlsitemap']['rebuild callback'], array($entity));
   }
 
+  // Clear the rebuild flag.
+  $batch['operations'][] = array('xmlsitemap_batch_variable_set', array(array('xmlsitemap_rebuild_needed' => FALSE)));
+
   // Add the regeneration batch.
   $regenerate_batch = xmlsitemap_regenerate_batch();
   $batch['operations'] = array_merge($batch['operations'], $regenerate_batch['operations']);
@@ -488,13 +386,12 @@ function xmlsitemap_rebuild_batch(array $entities, $save_custom = FALSE) {
 }
 
 /**
- * Batch callback; perform operations before rebuilding the sitemap data.
+ * Batch callback; set an array of variables and their values.
  */
-function xmlsitemap_rebuild_batch_prerebuild() {
-  // Set the rebuild flag in case something fails during the rebuild.
-  variable_set('xmlsitemap_rebuild_needed', TRUE);
-
-  timer_start('xmlsitemap_rebuild');
+function xmlsitemap_batch_variable_set(array $variables) {
+  foreach ($variables as $variable => $value) {
+    variable_set($variable, $value);
+  }
 }
 
 /**
@@ -529,19 +426,18 @@ function xmlsitemap_rebuild_batch_fetch($entity, &$context) {
   }
   $info = $context['sandbox']['info'];
 
-  $query = db_select($info['base table']);
-  $query->addField($info['base table'], $info['entity keys']['id']);
-  $query->condition($info['entity keys']['id'], $context['sandbox']['last_id'], '>');
-  if (!empty($info['entity keys']['bundle'])) {
-    $bundles = xmlsitemap_get_link_type_enabled_bundles($entity);
-    $query->condition($info['entity keys']['bundle'], $bundles);
-  }
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', $entity);
+  $query->entityCondition('entity_id', $context['sandbox']['last_id'], '>');
+  $query->addTag('xmlsitemap_link_bundle_access');
   $query->addTag('xmlsitemap_rebuild');
   $query->addMetaData('entity', $entity);
   $query->addMetaData('entity_info', $info);
 
   if (!isset($context['sandbox']['max'])) {
-    $context['sandbox']['max'] = $query->countQuery()->execute()->fetchField();
+    $count_query = clone $query;
+    $count_query->count();
+    $context['sandbox']['max'] = $count_query->execute();
     if (!$context['sandbox']['max']) {
       // If there are no items to process, skip everything else.
       return;
@@ -549,18 +445,23 @@ function xmlsitemap_rebuild_batch_fetch($entity, &$context) {
   }
 
   // PostgreSQL cannot have the ORDERED BY in the count query.
-  $query->orderBy($info['entity keys']['id']);
+  $query->entityOrderBy('entity_id');
 
   $limit = 20; //variable_get('xmlsitemap_batch_limit', 100)
   $query->range(0, $limit);
 
-  $ids = $query->execute()->fetchCol();
+  $result = $query->execute();
+  $ids = array_keys($result[$entity]);
+
   $info['xmlsitemap']['process callback']($ids);
   $context['sandbox']['last_id'] = end($ids);
   $context['sandbox']['progress'] += count($ids);
   $context['message'] = t('Now processing %entity @last_id (@progress of @count).', array('%entity' => $entity, '@last_id' => $context['sandbox']['last_id'], '@progress' => $context['sandbox']['progress'], '@count' => $context['sandbox']['max']));
 
-  if ($context['sandbox']['progress'] != $context['sandbox']['max']) {
+  if ($context['sandbox']['progress'] >= $context['sandbox']['max']) {
+    $context['finished'] = 1;
+  }
+  else {
     $context['finished'] = $context['sandbox']['progress'] / $context['sandbox']['max'];
   }
 }
@@ -568,14 +469,12 @@ function xmlsitemap_rebuild_batch_fetch($entity, &$context) {
 /**
  * Batch callback; sitemap rebuild finished.
  */
-function xmlsitemap_rebuild_batch_finished($success, $results, $operations) {
-  if ($success) {
-    // Reset the rebuild flag since it was successful.
-    variable_set('xmlsitemap_rebuild_needed', FALSE);
-    drupal_set_message(t('The sitemap was rebuilt.'));
+function xmlsitemap_rebuild_batch_finished($success, $results, $operations, $elapsed) {
+  if ($success && !variable_get('xmlsitemap_rebuild_needed', FALSE)) {
+    drupal_set_message(t('The sitemap links were rebuilt.'));
   }
   else {
-    drupal_set_message(t('The sitemap was not successfully rebuilt.'), 'error');
+    drupal_set_message(t('The sitemap links were not successfully rebuilt.'), 'error');
   }
 }
 

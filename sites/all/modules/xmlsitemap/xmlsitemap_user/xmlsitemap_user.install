@@ -1,5 +1,4 @@
 <?php
-// $Id: xmlsitemap_user.install,v 1.9 2010/04/29 16:19:03 davereid Exp $
 
 /**
  * @file
@@ -18,7 +17,7 @@ function xmlsitemap_user_requirements($phase) {
       $requirements['xmlsitemap_user_anonymous_permission'] = array(
         'title' => $t('XML sitemap user'),
         'value' => $t('Anonymous access to user profiles'),
-        'description' => $t('In order to list user profile links in the sitemap, the anonymous user must have the <a href="@perm-link"><em>access user profiles</em> permission</a>.', array('@perm-link' => url('admin/config/people/permissions', array('fragment' => 'module-user')))),
+        'description' => $t('In order to list user profile links in the sitemap, the anonymous user must have the <a href="@perm-link"><em>View user profiles</em> permission</a>.', array('@perm-link' => url('admin/people/permissions/' . DRUPAL_ANONYMOUS_RID, array('fragment' => 'module-user')))),
         'severity' => REQUIREMENT_ERROR,
       );
     }
@@ -33,7 +32,6 @@ function xmlsitemap_user_requirements($phase) {
 function xmlsitemap_user_uninstall() {
   drupal_load('module', 'user');
   drupal_load('module', 'xmlsitemap');
-  db_query("DELETE FROM {variable} WHERE name LIKE 'xmlsitemap_settings_user_%%");
   xmlsitemap_link_bundle_delete('user', 'user');
 }
 

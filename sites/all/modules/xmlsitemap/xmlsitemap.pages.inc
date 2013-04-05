@@ -1,5 +1,4 @@
 <?php
-// $Id: xmlsitemap.pages.inc,v 1.17 2010/04/29 16:19:09 davereid Exp $
 
 /**
  * @file
@@ -11,10 +10,10 @@
 /**
  * Get the sitemap chunk/page of the current request.
  */
-function xmlsitemap_get_current_chunk(array $sitemap) {
+function xmlsitemap_get_current_chunk(stdClass $sitemap) {
   // Check if we should be displaing the index.
   if (!isset($_GET['page']) || !is_numeric($_GET['page'])) {
-    if ($sitemap['chunks'] > 1) {
+    if ($sitemap->chunks > 1) {
       return 'index';
     }
     else {
@@ -109,7 +108,10 @@ function xmlsitemap_file_transfer($uri, $headers) {
   }
   drupal_send_headers();
 
-  $scheme = $scheme = variable_get('file_default_scheme', 'public');
+  // Attempt to increase time to transfer file.
+  drupal_set_time_limit(240);
+
+  $scheme = variable_get('file_default_scheme', 'public');
   // Transfer file in 16 KB chunks to save memory usage.
   if ($scheme && file_stream_wrapper_valid_scheme($scheme) && $fd = fopen($uri, 'rb')) {
     while (!feof($fd)) {

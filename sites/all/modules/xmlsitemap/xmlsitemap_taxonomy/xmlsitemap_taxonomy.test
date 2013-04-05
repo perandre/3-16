@@ -1,5 +1,4 @@
 <?php
-// $Id: xmlsitemap_taxonomy.test,v 1.2 2010/04/15 16:16:40 davereid Exp $
 
 /**
  * @file
@@ -18,8 +17,10 @@ class XMLSitemapTaxonomyFunctionalTest extends XMLSitemapTestHelper {
     );
   }
 
-  function setUp() {
-    parent::setUp('xmlsitemap_taxonomy', 'taxonomy');
+  function setUp($modules = array()) {
+    $modules[] = 'xmlsitemap_taxonomy';
+    $modules[] = 'taxonomy';
+    parent::setUp($modules);
 
     $this->admin_user = $this->drupalCreateUser(array('administer taxonomy', 'administer xmlsitemap'));
     $this->normal_user = $this->drupalCreateUser(array('access content'));
@@ -36,10 +37,7 @@ class XMLSitemapTaxonomyFunctionalTest extends XMLSitemapTestHelper {
     );
     $this->drupalPost('admin/structure/taxonomy/add', $edit, 'Save');
     $this->assertText("Created new vocabulary {$edit['name']}.");
-
-    $vocabularies = taxonomy_vocabulary_get_names();
-    $vid = $vocabularies[$edit['machine_name']]->vid;
-    $vocabulary = taxonomy_vocabulary_load($vid);
+    $vocabulary = taxonomy_vocabulary_machine_name_load($edit['machine_name']);
 
     $edit = array(
       'name' => $this->randomName(),
