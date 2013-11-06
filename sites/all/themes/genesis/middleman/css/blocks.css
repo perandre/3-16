@@ -87,6 +87,11 @@ margin-top: 0;
   padding: 0;
 }
 
+/* block reset */
+.block-reset .block-content {
+  background: none !important;
+  padding: 0 !important;
+}
 /**********************************************************
  *                  Region blocks
  **********************************************************/
