@@ -1,0 +1,7 @@
+name = Views
+description = Collection of views
+core = 7.x
+package = Features
+version = 7.x-1.0
+project = views_collection
+features[features_api][] = api:2
