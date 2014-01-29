@@ -13,9 +13,9 @@ function middle_man_taxonomy_default_vocabularies() {
       'name' => 'Aktivitetstype',
       'machine_name' => 'aktivitetstype',
       'description' => 'Barn, voksne, ungdom, live, osv?',
-      'hierarchy' => '0',
+      'hierarchy' => 0,
       'module' => 'taxonomy',
-      'weight' => '0',
+      'weight' => 0,
       'metatags' => array(),
       'rdf_mapping' => array(
         'rdftype' => array(
@@ -37,9 +37,9 @@ function middle_man_taxonomy_default_vocabularies() {
       'name' => 'Mest for',
       'machine_name' => 'mest_for',
       'description' => 'Målgruppe',
-      'hierarchy' => '0',
+      'hierarchy' => 0,
       'module' => 'taxonomy',
-      'weight' => '0',
+      'weight' => 0,
       'metatags' => array(),
       'rdf_mapping' => array(
         'rdftype' => array(
@@ -61,9 +61,9 @@ function middle_man_taxonomy_default_vocabularies() {
       'name' => 'Style',
       'machine_name' => 'style',
       'description' => 'Musikkstil',
-      'hierarchy' => '0',
+      'hierarchy' => 0,
       'module' => 'taxonomy',
-      'weight' => '0',
+      'weight' => 0,
       'metatags' => array(),
       'rdf_mapping' => array(
         'rdftype' => array(
@@ -85,9 +85,9 @@ function middle_man_taxonomy_default_vocabularies() {
       'name' => 'Tags',
       'machine_name' => 'tags',
       'description' => 'Use tags to group articles on similar topics into categories.',
-      'hierarchy' => '0',
+      'hierarchy' => 1,
       'module' => 'taxonomy',
-      'weight' => '0',
+      'weight' => 0,
       'metatags' => array(),
       'rdf_mapping' => array(
         'rdftype' => array(

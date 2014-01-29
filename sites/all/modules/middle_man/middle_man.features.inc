@@ -7,8 +7,7 @@
 /**
  * Implements hook_ctools_plugin_api().
  */
-function middle_man_ctools_plugin_api() {
-  list($module, $api) = func_get_args();
+function middle_man_ctools_plugin_api($module = NULL, $api = NULL) {
   if ($module == "context" && $api == "context") {
     return array("version" => "3");
   }
@@ -17,8 +16,8 @@ function middle_man_ctools_plugin_api() {
 /**
  * Implements hook_views_api().
  */
-function middle_man_views_api() {
-  return array("version" => "3.0");
+function middle_man_views_api($module = NULL, $api = NULL) {
+  return array("api" => "3.0");
 }
 
 /**
@@ -41,10 +40,10 @@ function middle_man_image_default_styles() {
         'module' => 'image',
         'name' => 'image_scale_and_crop',
         'data' => array(
-          'width' => '290',
-          'height' => '186',
+          'width' => 290,
+          'height' => 186,
         ),
-        'weight' => '1',
+        'weight' => 1,
       ),
     ),
   );
@@ -63,11 +62,11 @@ function middle_man_image_default_styles() {
         'module' => 'image',
         'name' => 'image_scale',
         'data' => array(
-          'width' => '554',
+          'width' => 554,
           'height' => '',
           'upscale' => 0,
         ),
-        'weight' => '1',
+        'weight' => 1,
       ),
     ),
   );
@@ -86,10 +85,10 @@ function middle_man_image_default_styles() {
         'module' => 'image',
         'name' => 'image_scale_and_crop',
         'data' => array(
-          'width' => '907',
-          'height' => '297',
+          'width' => 907,
+          'height' => 297,
         ),
-        'weight' => '1',
+        'weight' => 1,
       ),
     ),
   );
