@@ -7,8 +7,8 @@
 /**
  * Implements hook_views_api().
  */
-function undervisning_views_api() {
-  return array("version" => "3.0");
+function undervisning_views_api($module = NULL, $api = NULL) {
+  return array("api" => "3.0");
 }
 
 /**
@@ -31,10 +31,10 @@ function undervisning_image_default_styles() {
         'module' => 'image',
         'name' => 'image_scale_and_crop',
         'data' => array(
-          'width' => '136',
-          'height' => '102',
+          'width' => 136,
+          'height' => 102,
         ),
-        'weight' => '1',
+        'weight' => 1,
       ),
     ),
   );
