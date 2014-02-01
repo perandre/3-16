@@ -88,6 +88,72 @@ function middle_man_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-article-field_audio_file'
+  $field_instances['node-article-field_audio_file'] = array(
+    'bundle' => 'article',
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'jplayer',
+        'settings' => array(
+          'autoplay' => 0,
+          'backgroundColor' => '000000',
+          'mode' => 'single',
+          'muted' => 0,
+          'preload' => 'metadata',
+          'repeat' => 'none',
+          'solution' => 'html, flash',
+          'volume' => 80,
+        ),
+        'type' => 'jplayer_player',
+        'weight' => 3,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_audio_file',
+    'label' => 'Audio file',
+    'required' => 0,
+    'settings' => array(
+      'description_field' => 1,
+      'file_directory' => 'audio-files',
+      'file_extensions' => 'mp3',
+      'max_filesize' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'file',
+      'settings' => array(
+        'filefield_sources' => array(
+          'filefield_sources' => array(
+            'attach' => 0,
+            'reference' => 0,
+            'remote' => 0,
+          ),
+          'source_attach' => array(
+            'absolute' => 0,
+            'attach_mode' => 'copy',
+            'path' => 'file_attach',
+          ),
+          'source_reference' => array(
+            'autocomplete' => 0,
+          ),
+        ),
+        'progress_indicator' => 'throbber',
+      ),
+      'type' => 'file_generic',
+      'weight' => 11,
+    ),
+  );
+
   // Exported field_instance: 'node-article-field_files'
   $field_instances['node-article-field_files'] = array(
     'bundle' => 'article',
@@ -1652,6 +1718,7 @@ function middle_man_field_default_field_instances() {
   t('Aktivitet');
   t('Aktivitetstype');
   t('Audio');
+  t('Audio file');
   t('Bilde');
   t('Blekke');
   t('Body');
