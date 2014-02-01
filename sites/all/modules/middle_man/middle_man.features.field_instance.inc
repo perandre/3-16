@@ -1359,6 +1359,232 @@ function middle_man_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-sound-body'
+  $field_instances['node-sound-body'] = array(
+    'bundle' => 'sound',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 2,
+      ),
+      'teaser' => array(
+        'label' => 'hidden',
+        'module' => 'text',
+        'settings' => array(
+          'trim_length' => 600,
+        ),
+        'type' => 'text_summary_or_trimmed',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'body',
+    'label' => 'Body',
+    'required' => FALSE,
+    'settings' => array(
+      'display_summary' => TRUE,
+      'text_processing' => 1,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 20,
+        'summary_rows' => 5,
+      ),
+      'type' => 'text_textarea_with_summary',
+      'weight' => 3,
+    ),
+  );
+
+  // Exported field_instance: 'node-sound-field_audio'
+  $field_instances['node-sound-field_audio'] = array(
+    'bundle' => 'sound',
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'jplayer',
+        'settings' => array(
+          'autoplay' => 0,
+          'backgroundColor' => '000000',
+          'mode' => 'single',
+          'muted' => 0,
+          'preload' => 'metadata',
+          'repeat' => 'none',
+          'solution' => 'html, flash',
+          'volume' => 80,
+        ),
+        'type' => 'jplayer_player',
+        'weight' => 1,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_audio',
+    'label' => 'Lydfil',
+    'required' => 0,
+    'settings' => array(
+      'description_field' => 1,
+      'file_directory' => 'audio-files',
+      'file_extensions' => 'mp3',
+      'max_filesize' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'file',
+      'settings' => array(
+        'filefield_sources' => array(
+          'filefield_sources' => array(
+            'attach' => 0,
+            'reference' => 0,
+            'remote' => 0,
+          ),
+          'source_attach' => array(
+            'absolute' => 0,
+            'attach_mode' => 'copy',
+            'path' => 'file_attach',
+          ),
+          'source_reference' => array(
+            'autocomplete' => 0,
+          ),
+        ),
+        'progress_indicator' => 'throbber',
+      ),
+      'type' => 'file_generic',
+      'weight' => 2,
+    ),
+  );
+
+  // Exported field_instance: 'node-sound-field_image'
+  $field_instances['node-sound-field_image'] = array(
+    'bundle' => 'sound',
+    'deleted' => 0,
+    'description' => 'Brukes hvis innholdet skal vises i nyhets-feed på forsiden',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 4,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_image',
+    'label' => 'Image',
+    'required' => 0,
+    'settings' => array(
+      'alt_field' => 1,
+      'file_directory' => 'field/image',
+      'file_extensions' => 'png gif jpg jpeg',
+      'max_filesize' => '',
+      'max_resolution' => '1200x1200',
+      'min_resolution' => '',
+      'title_field' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'image',
+      'settings' => array(
+        'filefield_sources' => array(
+          'filefield_sources' => array(
+            'attach' => 0,
+            'reference' => 0,
+            'remote' => 0,
+          ),
+          'source_attach' => array(
+            'absolute' => 0,
+            'attach_mode' => 'copy',
+            'path' => 'file_attach',
+          ),
+          'source_reference' => array(
+            'autocomplete' => 0,
+          ),
+        ),
+        'preview_image_style' => 'thumbnail',
+        'progress_indicator' => 'throbber',
+      ),
+      'type' => 'image_image',
+      'weight' => 4,
+    ),
+  );
+
+  // Exported field_instance: 'node-sound-field_take_date'
+  $field_instances['node-sound-field_take_date'] = array(
+    'bundle' => 'sound',
+    'deleted' => 0,
+    'description' => 'Opptaksdato. F.eks. når talen ble tatt opp.',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'date',
+        'settings' => array(
+          'format_type' => 'short',
+          'fromto' => 'both',
+          'multiple_from' => '',
+          'multiple_number' => '',
+          'multiple_to' => '',
+          'show_repeat_rule' => 'show',
+        ),
+        'type' => 'date_default',
+        'weight' => 0,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_take_date',
+    'label' => 'Opptaksdato',
+    'required' => 0,
+    'settings' => array(
+      'default_format' => 'short',
+      'default_value' => 'now',
+      'default_value2' => 'blank',
+      'default_value_code' => '',
+      'default_value_code2' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'date',
+      'settings' => array(
+        'increment' => 1,
+        'input_format' => 'd/m/Y - H:i:s',
+        'input_format_custom' => '',
+        'label_position' => 'above',
+        'repeat_collapsed' => 0,
+        'text_parts' => array(),
+        'year_range' => '-3:+3',
+      ),
+      'type' => 'date_select',
+      'weight' => 1,
+    ),
+  );
+
   // Exported field_instance: 'node-tune-field_audio'
   $field_instances['node-tune-field_audio'] = array(
     'bundle' => 'tune',
@@ -1722,6 +1948,7 @@ function middle_man_field_default_field_instances() {
   t('Bilde');
   t('Blekke');
   t('Body');
+  t('Brukes hvis innholdet skal vises i nyhets-feed på forsiden');
   t('Brødtekst');
   t('Dato');
   t('Enter a comma-separated list of words to describe your content.');
@@ -1733,8 +1960,11 @@ function middle_man_field_default_field_instances() {
   t('Innledende, kort tekst med større font.');
   t('Link');
   t('Litt tekst i sidebar, sier du? Skriv her, da vettu.');
+  t('Lydfil');
   t('Låter');
   t('Mest for');
+  t('Opptaksdato');
+  t('Opptaksdato. F.eks. når talen ble tatt opp.');
   t('Sidetekst');
   t('Stil');
   t('Tags');

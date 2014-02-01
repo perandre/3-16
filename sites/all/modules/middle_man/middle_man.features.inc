@@ -141,6 +141,14 @@ function middle_man_node_info() {
       'title_label' => t('Title'),
       'help' => '',
     ),
+    'sound' => array(
+      'name' => t('Lyd'),
+      'base' => 'node_content',
+      'description' => t('Brukes til taler'),
+      'has_title' => '1',
+      'title_label' => t('Tittel'),
+      'help' => '',
+    ),
     'tune' => array(
       'name' => t('Tune'),
       'base' => 'node_content',
