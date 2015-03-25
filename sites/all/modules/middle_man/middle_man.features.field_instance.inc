@@ -248,6 +248,7 @@ function middle_man_field_default_field_instances() {
     'required' => 0,
     'settings' => array(
       'alt_field' => 0,
+      'default_image' => 0,
       'file_directory' => 'gallery',
       'file_extensions' => 'png gif jpg jpeg',
       'max_filesize' => '',
@@ -321,6 +322,7 @@ function middle_man_field_default_field_instances() {
     'required' => FALSE,
     'settings' => array(
       'alt_field' => TRUE,
+      'default_image' => 0,
       'file_directory' => 'field/image',
       'file_extensions' => 'png gif jpg jpeg',
       'max_filesize' => '',
@@ -545,6 +547,7 @@ function middle_man_field_default_field_instances() {
     'required' => 0,
     'settings' => array(
       'alt_field' => 0,
+      'default_image' => 0,
       'file_directory' => '',
       'file_extensions' => 'png gif jpg jpeg',
       'max_filesize' => '',
@@ -694,6 +697,7 @@ function middle_man_field_default_field_instances() {
     'required' => 0,
     'settings' => array(
       'alt_field' => 0,
+      'default_image' => 0,
       'file_directory' => '',
       'file_extensions' => 'png gif jpg jpeg',
       'max_filesize' => '',
@@ -938,6 +942,7 @@ function middle_man_field_default_field_instances() {
       'active' => 1,
       'module' => 'date',
       'settings' => array(
+        'display_all_day' => 0,
         'increment' => 1,
         'input_format' => 'j M Y - H:i:s',
         'input_format_custom' => '',
@@ -1028,6 +1033,7 @@ function middle_man_field_default_field_instances() {
     'required' => 0,
     'settings' => array(
       'alt_field' => 0,
+      'default_image' => 0,
       'file_directory' => '',
       'file_extensions' => 'png gif jpg jpeg',
       'max_filesize' => '',
@@ -1240,6 +1246,7 @@ function middle_man_field_default_field_instances() {
     'required' => 0,
     'settings' => array(
       'alt_field' => 0,
+      'default_image' => 0,
       'file_directory' => '',
       'file_extensions' => 'png gif jpg jpeg',
       'max_filesize' => '',
@@ -1494,6 +1501,7 @@ function middle_man_field_default_field_instances() {
     'required' => 0,
     'settings' => array(
       'alt_field' => 1,
+      'default_image' => 0,
       'file_directory' => 'field/image',
       'file_extensions' => 'png gif jpg jpeg',
       'max_filesize' => '',
@@ -1572,6 +1580,7 @@ function middle_man_field_default_field_instances() {
       'active' => 1,
       'module' => 'date',
       'settings' => array(
+        'display_all_day' => 0,
         'increment' => 1,
         'input_format' => 'd/m/Y - H:i:s',
         'input_format_custom' => '',
@@ -1885,6 +1894,7 @@ function middle_man_field_default_field_instances() {
       'active' => 1,
       'module' => 'date',
       'settings' => array(
+        'display_all_day' => 0,
         'increment' => 1,
         'input_format' => 'd/m/Y - H:i:s',
         'input_format_custom' => '',

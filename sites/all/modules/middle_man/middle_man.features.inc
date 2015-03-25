@@ -46,6 +46,7 @@ function middle_man_image_default_styles() {
         'weight' => 1,
       ),
     ),
+    'label' => '4col',
   );
 
   // Exported image style: node-full.
@@ -69,6 +70,7 @@ function middle_man_image_default_styles() {
         'weight' => 1,
       ),
     ),
+    'label' => 'node-full',
   );
 
   // Exported image style: slideshow.
@@ -91,6 +93,7 @@ function middle_man_image_default_styles() {
         'weight' => 1,
       ),
     ),
+    'label' => 'slideshow',
   );
 
   return $styles;
