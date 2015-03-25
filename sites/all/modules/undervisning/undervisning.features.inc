@@ -37,6 +37,7 @@ function undervisning_image_default_styles() {
         'weight' => 1,
       ),
     ),
+    'label' => 'small',
   );
 
   return $styles;
